@@ -14,7 +14,7 @@ public class Main {
 
         Scanner scan=new Scanner(System.in);
 
-        String input="(2.43+ -2.43)*2";
+        String input="(2.43+ -2.43)*2 + PI + WORD123__$1";
 
         Lexer obj=new Lexer(input);
 
@@ -26,13 +26,13 @@ public class Main {
         }
         System.out.println();
 
-        final List<Expression> expressions=new Parser(tokens).parse();
-
-        for (Expression e:
-             expressions) {
-            System.out.println(e+" = "+e.eval());
-
-        }
+//        final List<Expression> expressions=new Parser(tokens).parse();
+//
+//        for (Expression e:
+//             expressions) {
+//            System.out.println(e+" = "+e.eval());
+//
+//        }
 
 
     }

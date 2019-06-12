@@ -49,9 +49,9 @@ public final class Lexer {
     private void tokenizeWord() {
         final StringBuilder buffer=new StringBuilder();
         char current=peek(0);
-        while (Character.isLetterOrDigit(current) || current!='_' || current!='$'){
+        while (Character.isLetterOrDigit(current) || current=='_' || current=='$'){
             buffer.append(current);
-            next();
+            current=next();
         }
         addToken(TokenType.WORD,buffer.toString());
     }
