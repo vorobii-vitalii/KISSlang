@@ -16,4 +16,9 @@ public class StringExpression implements Expression {
         return new StringValue(value);
     }
 
+    @Override
+    public String toString() {
+        return value;
+    }
+
 }

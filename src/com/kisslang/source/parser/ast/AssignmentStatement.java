@@ -1,15 +1,16 @@
 package com.kisslang.source.parser.ast;
 
 import com.kisslang.source.library.NumberValue;
+import com.kisslang.source.library.StringValue;
 import com.kisslang.source.library.Value;
 import com.kisslang.source.library.Variables;
 
 public class AssignmentStatement implements Statement {
 
 
-    private final String variableName;
+    protected final String variableName;
 
-    private final Expression expression;
+    protected final Expression expression;
 
     public AssignmentStatement(String variableName,Expression expression){
         this.variableName=variableName;
@@ -18,7 +19,16 @@ public class AssignmentStatement implements Statement {
 
     @Override
     public void execute() {
-        Value value=new NumberValue(expression.eval().asDouble());
+
+        Value value;
+
+        if (expression.eval().isString()){
+                value=new StringValue(expression.eval().asString());
+        }
+        else {
+                value=new NumberValue(expression.eval().asDouble());
+        }
+
         Variables.add(variableName,value);
     }
 

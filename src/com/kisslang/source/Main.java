@@ -13,10 +13,10 @@ public class Main {
 
     public static void main(String[] args) {
 
-        String input=" abc=( 2.43+ -2.43 ) *2 + PI^3 \n Print abc";
+//        String input=" abc=( 2.43+ -2.43 ) *2 + PI^3 \n Print abc";
 
 //        String input="ABC=25*3\nB=25+PI+ABC \nprint ABC";
-//        String input="Print \"string value\"+\"anothervalue\" ";
+        String input="abs='be '\nPrint abs+\" happy\" ";
 
         System.out.println(input);
 
@@ -26,7 +26,7 @@ public class Main {
 
         System.out.println();
         for (Token token:tokens) {
-            System.out.println(token+" ");
+            System.out.println(token);
         }
         System.out.println();
 
