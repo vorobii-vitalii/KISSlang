@@ -5,4 +5,6 @@ public interface Value {
     double asDouble();
 
     String asString();
+
+    boolean canBeRepresentedAsNumber();
 }

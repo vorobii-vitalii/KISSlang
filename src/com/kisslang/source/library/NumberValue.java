@@ -17,4 +17,9 @@ public class NumberValue implements Value {
     public String asString() {
         return Double.toString(value);
     }
+
+    @Override
+    public boolean canBeRepresentedAsNumber() {
+        return true;
+    }
 }

@@ -24,4 +24,16 @@ public class StringValue implements Value {
         }
         return result;
     }
+
+    @Override
+    public boolean canBeRepresentedAsNumber() {
+        double result;
+        try{
+            result=Double.parseDouble(value);
+        }
+        catch (NumberFormatException e){
+            return false;
+        }
+        return true;
+    }
 }

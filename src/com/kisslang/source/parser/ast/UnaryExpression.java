@@ -6,6 +6,7 @@ import com.kisslang.source.library.Value;
 public final class UnaryExpression implements Expression {
 
     private final Expression expr1;
+
     private final char operation;
 
     public UnaryExpression(char operation, Expression expr1) {
