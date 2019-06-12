@@ -1,18 +1,20 @@
 package com.kisslang.source.parser.ast;
 
-public class NumberExpression implements Expression {
+public final class NumberExpression implements Expression {
 
     private final double value;
 
-    public NumberExpression(double value){
-        this.value=value;
+    public NumberExpression(double value) {
+        this.value = value;
     }
 
-    public double eval(){
+    @Override
+    public double eval() {
         return value;
     }
 
-    public String toString(){
+    @Override
+    public String toString() {
         return Double.toString(value);
     }
 }

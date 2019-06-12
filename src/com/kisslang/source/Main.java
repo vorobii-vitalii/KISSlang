@@ -14,7 +14,7 @@ public class Main {
 
         Scanner scan=new Scanner(System.in);
 
-        String input=scan.next();
+        String input="(2+2)*2";
 
         Lexer obj=new Lexer(input);
 

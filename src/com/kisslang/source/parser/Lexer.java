@@ -6,85 +6,91 @@ import java.util.List;
 
 public final class Lexer {
 
-    private String input;
-
-    private static final String OPERATOR_CHARS="+-*/";
-
-    private static final TokenType [] OPERATOR_TOKENS={
-        TokenType.PLUS,TokenType.MINUS,TokenType.STAR,TokenType.SLASH
+    private static final String OPERATOR_CHARS = "+-*/()";
+    private static final TokenType[] OPERATOR_TOKENS = {
+            TokenType.PLUS, TokenType.MINUS,
+            TokenType.STAR, TokenType.SLASH,
+            TokenType.LPAREN, TokenType.RPAREN,
     };
+
+    private final String input;
+    private final int length;
 
     private final List<Token> tokens;
 
     private int pos;
 
-    private final int length;
+    public Lexer(String input) {
+        this.input = input;
+        length = input.length();
 
-    public Lexer(String input){
-        this.input=input;
-        this.length=input.length();
-        tokens=new ArrayList<>();
+        tokens = new ArrayList<>();
     }
 
-    private char peek(int relPos){
-        final int position=pos+relPos;
-
-        if (position>=length){
-            return '\0';
+    public List<Token> tokenize() {
+        while (pos < length) {
+            final char current = peek(0);
+            if (Character.isDigit(current)) tokenizeNumber();
+            else if (current == '#') {
+                next();
+                tokenizeHexNumber();
+            }
+            else if (OPERATOR_CHARS.indexOf(current) != -1) {
+                tokenizeOperator();
+            } else {
+                // whitespaces
+                next();
+            }
         }
-        return input.charAt(position);
+        return tokens;
     }
 
-    private char next(){
+    private void tokenizeNumber() {
+        final StringBuilder buffer = new StringBuilder();
+        char current = peek(0);
+        while (Character.isDigit(current)) {
+            buffer.append(current);
+            current = next();
+        }
+        addToken(TokenType.NUMBER, buffer.toString());
+    }
+
+    private void tokenizeHexNumber() {
+        final StringBuilder buffer = new StringBuilder();
+        char current = peek(0);
+        while (Character.isDigit(current) || isHexNumber(current)) {
+            buffer.append(current);
+            current = next();
+        }
+        addToken(TokenType.HEX_NUMBER, buffer.toString());
+    }
+
+    private static boolean isHexNumber(char current) {
+        return "abcdef".indexOf(Character.toLowerCase(current)) != -1;
+    }
+
+    private void tokenizeOperator() {
+        final int position = OPERATOR_CHARS.indexOf(peek(0));
+        addToken(OPERATOR_TOKENS[position]);
+        next();
+    }
+
+    private char next() {
         pos++;
         return peek(0);
     }
 
-    public List<Token> tokenize(){
-
-        while(pos<length){
-
-            final char current=peek(0);
-
-            if (Character.isDigit(current)){
-                tokenizeNumber();
-            }
-            else if(OPERATOR_CHARS.indexOf(current)!=-1){
-                tokenizeOperator();
-            }
-            else{
-                next();
-            }
-
-        }
-
-        return tokens;
+    private char peek(int relativePosition) {
+        final int position = pos + relativePosition;
+        if (position >= length) return '\0';
+        return input.charAt(position);
     }
 
-    private void tokenizeOperator() {
-        final int position=OPERATOR_CHARS.indexOf(peek(0));
-        tokens.add(new Token(OPERATOR_TOKENS[position]));
-        next();
+    private void addToken(TokenType type) {
+        addToken(type, "");
     }
 
-    private void tokenizeNumber() {
-        char current=peek(0);
-        final StringBuilder buffer=new StringBuilder();
-        while (Character.isDigit(current)){
-            buffer.append(current);
-            current=next();
-        }
-        addToken(TokenType.NUMBER,buffer.toString());
+    private void addToken(TokenType type, String text) {
+        tokens.add(new Token(type, text));
     }
-
-    private void addToken(TokenType type){
-        tokens.add(new Token(type));
-    }
-
-    private void addToken(TokenType type,String text){
-        tokens.add(new Token(type,text));
-    }
-
-
-
 }
