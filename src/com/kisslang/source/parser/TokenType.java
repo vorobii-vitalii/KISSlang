@@ -9,10 +9,11 @@ public enum TokenType {
     MINUS,
     NUMBER,
     PLUS,
+    PRINT,
     RPAREN, // )
     SLASH,
     STAR,
-    WORD,
-    PRINT
+    STRING_TEXT,
+    WORD
 
 }

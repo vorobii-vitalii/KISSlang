@@ -22,4 +22,9 @@ public class NumberValue implements Value {
     public boolean canBeRepresentedAsNumber() {
         return true;
     }
+
+    @Override
+    public String toString() {
+        return asString();
+    }
 }

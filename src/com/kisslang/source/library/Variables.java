@@ -1,6 +1,5 @@
 package com.kisslang.source.library;
 
-import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.Map;
 

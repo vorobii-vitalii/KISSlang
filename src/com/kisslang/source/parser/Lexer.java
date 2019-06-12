@@ -37,6 +37,16 @@ public final class Lexer {
                 next();
                 tokenizeHexNumber();
             }
+            else if(current=='"' || current=='\''){
+                next();
+                if(current=='"'){
+                    tokenizeStringValue('"');
+                }
+                else{
+                    tokenizeStringValue('\'');
+                }
+
+            }
             else if (OPERATOR_CHARS.indexOf(current) != -1) {
                 tokenizeOperator();
             } else {
@@ -45,6 +55,17 @@ public final class Lexer {
             }
         }
         return tokens;
+    }
+
+    private void tokenizeStringValue(char c) {
+        final StringBuilder buffer=new StringBuilder();
+        char current=peek(0);
+        while(current!=c){
+            buffer.append(current);
+            current=next();
+        }
+        next();
+        addToken(TokenType.STRING_TEXT,buffer.toString());
     }
 
     private void tokenizeWord() {

@@ -36,4 +36,9 @@ public class StringValue implements Value {
         }
         return true;
     }
+
+    @Override
+    public String toString() {
+        return asString();
+    }
 }
