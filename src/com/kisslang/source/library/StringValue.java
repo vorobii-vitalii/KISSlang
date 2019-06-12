@@ -15,6 +15,13 @@ public class StringValue implements Value {
 
     @Override
     public double asDouble() {
-        return Double.parseDouble(value);
+        double result;
+        try {
+            result=Double.parseDouble(value);
+        }
+        catch (NumberFormatException e){
+            result=Double.NaN;
+        }
+        return result;
     }
 }

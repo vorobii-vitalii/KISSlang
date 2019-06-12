@@ -6,27 +6,29 @@ import java.util.Map;
 
 public final class Variables {
 
-    private static Map<String,Double> variables;
+    private static Map<String,Value> variables;
+
+    private static final Value NUMBER_VALUE_NOT_FOUND=new NumberValue(0);
 
     static {
-        variables=new HashMap<String,Double>();
-        variables.put("PI",Math.PI);
-        variables.put("E",Math.E);
-        variables.put("GOLDEN RATIO",1.618);
+        variables=new HashMap<String,Value>();
+        variables.put("PI",new NumberValue(Math.PI));
+        variables.put("E",new NumberValue(Math.E));
+        variables.put("GOLDEN_RATIO",new NumberValue(1.618));
     }
 
     public static boolean isExists(String key){
         return variables.containsKey(key) ;
     }
 
-    public static double get(String key){
+    public static Value get(String key){
         if(!isExists(key)){
-            return 0;
+            return NUMBER_VALUE_NOT_FOUND;
         }
         return variables.get(key);
     }
 
-    public static void add(String name,double value){
+    public static void add(String name,Value value){
         variables.put(name,value);
     }
 

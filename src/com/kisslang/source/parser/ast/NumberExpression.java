@@ -1,5 +1,8 @@
 package com.kisslang.source.parser.ast;
 
+import com.kisslang.source.library.NumberValue;
+import com.kisslang.source.library.Value;
+
 public final class NumberExpression implements Expression {
 
     private final double value;
@@ -9,8 +12,8 @@ public final class NumberExpression implements Expression {
     }
 
     @Override
-    public double eval() {
-        return value;
+    public Value eval() {
+        return new NumberValue(value);
     }
 
     @Override

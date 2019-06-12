@@ -1,5 +1,6 @@
 package com.kisslang.source.parser.ast;
 
+import com.kisslang.source.library.Value;
 import com.kisslang.source.library.Variables;
 
 public class ConstantExpression implements Expression {
@@ -11,7 +12,7 @@ public class ConstantExpression implements Expression {
     }
 
     @Override
-    public double eval() {
+    public Value eval() {
         if(Variables.isExists(text)){
             return Variables.get(text);
         }

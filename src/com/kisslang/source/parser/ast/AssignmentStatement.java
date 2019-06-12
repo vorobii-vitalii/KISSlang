@@ -1,5 +1,7 @@
 package com.kisslang.source.parser.ast;
 
+import com.kisslang.source.library.NumberValue;
+import com.kisslang.source.library.Value;
 import com.kisslang.source.library.Variables;
 
 public class AssignmentStatement implements Statement {
@@ -16,7 +18,7 @@ public class AssignmentStatement implements Statement {
 
     @Override
     public void execute() {
-        double value=expression.eval();
+        Value value=new NumberValue(expression.eval().asDouble());
         Variables.add(variableName,value);
     }
 
