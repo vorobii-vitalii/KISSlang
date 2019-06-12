@@ -31,6 +31,7 @@ public final class Lexer {
         while (pos < length) {
             final char current = peek(0);
             if (Character.isDigit(current)) tokenizeNumber();
+            else if(Character.isLetter(current)) tokenizeWord();
             else if (current == '#') {
                 next();
                 tokenizeHexNumber();
@@ -43,6 +44,16 @@ public final class Lexer {
             }
         }
         return tokens;
+    }
+
+    private void tokenizeWord() {
+        final StringBuilder buffer=new StringBuilder();
+        char current=peek(0);
+        while (Character.isLetterOrDigit(current) || current!='_' || current!='$'){
+            buffer.append(current);
+            next();
+        }
+        addToken(TokenType.WORD,buffer.toString());
     }
 
     private void tokenizeNumber() {
