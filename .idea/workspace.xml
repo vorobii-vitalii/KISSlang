@@ -3,7 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="18546633-be88-45f5-80f3-245f25d79d28" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/KISSlang/com/kisslang/source/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/KISSlang/com/kisslang/source/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kisslang/source/parser/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kisslang/source/parser/Parser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kisslang/source/parser/TokenType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kisslang/source/parser/TokenType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kisslang/source/parser/ast/UnaryExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kisslang/source/parser/ast/UnaryExpression.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -20,7 +22,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/kisslang/source/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
+            <state relative-caret-position="-528">
               <caret column="28" lean-forward="true" selection-start-column="28" selection-end-column="28" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -29,11 +31,15 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/kisslang/source/parser/ast/UnaryExpression.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="44">
-              <caret line="2" column="28" selection-start-line="2" selection-start-column="28" selection-end-line="2" selection-end-column="28" />
+            <state relative-caret-position="220">
+              <caret line="21" column="5" lean-forward="true" selection-start-line="21" selection-start-column="5" selection-end-line="21" selection-end-column="5" />
+              <folding>
+                <element signature="e#486#487#0" expanded="true" />
+                <element signature="e#570#571#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -41,8 +47,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/kisslang/source/parser/Parser.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="223">
-              <caret line="51" column="19" selection-start-line="51" selection-start-column="19" selection-end-line="51" selection-end-column="19" />
+            <state relative-caret-position="289">
+              <caret line="92" selection-start-line="92" selection-end-line="92" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#716#717#0" expanded="true" />
@@ -64,8 +70,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/kisslang/source/parser/ast/NumberExpression.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="242">
-              <caret line="15" column="38" selection-start-line="15" selection-start-column="38" selection-end-line="15" selection-end-column="38" />
+            <state relative-caret-position="88">
+              <caret line="4" column="4" lean-forward="true" selection-start-line="4" selection-start-column="4" selection-end-line="16" selection-end-column="5" />
               <folding>
                 <element signature="e#292#293#0" expanded="true" />
                 <element signature="e#331#332#0" expanded="true" />
@@ -77,8 +83,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/kisslang/source/parser/ast/BinaryExpression.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="475">
-              <caret line="39" column="64" selection-start-line="39" selection-start-column="64" selection-end-line="39" selection-end-column="64" />
+            <state relative-caret-position="550">
+              <caret line="29" selection-start-line="29" selection-end-line="29" />
               <folding>
                 <element signature="e#925#926#0" expanded="true" />
                 <element signature="e#962#963#0" expanded="true" />
@@ -112,11 +118,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/kisslang/source/parser/TokenType.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="176">
-              <caret line="8" column="10" selection-start-line="8" selection-start-column="10" selection-end-line="8" selection-end-column="10" />
+            <state relative-caret-position="220">
+              <caret line="10" column="12" selection-start-line="10" selection-start-column="12" selection-end-line="10" selection-end-column="12" />
             </state>
           </provider>
         </entry>
@@ -138,20 +144,21 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/com/kisslang/source/parser/TokenType.java" />
         <option value="$PROJECT_DIR$/src/com/kisslang/source/parser/Lexer.java" />
         <option value="$PROJECT_DIR$/src/com/kisslang/source/parser/Token.java" />
         <option value="$PROJECT_DIR$/src/com/kisslang/source/parser/ast/Expression.java" />
         <option value="$PROJECT_DIR$/src/com/kisslang/source/parser/ast/BinaryExpression.java" />
         <option value="$PROJECT_DIR$/src/com/kisslang/source/parser/ast/NumberExpression.java" />
         <option value="$PROJECT_DIR$/src/com/kisslang/source/Main.java" />
+        <option value="$PROJECT_DIR$/src/com/kisslang/source/parser/ast/UnaryExpression.java" />
         <option value="$PROJECT_DIR$/src/com/kisslang/source/parser/Parser.java" />
+        <option value="$PROJECT_DIR$/src/com/kisslang/source/parser/TokenType.java" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="898" />
-    <option name="y" value="89" />
+    <option name="x" value="976" />
+    <option name="y" value="123" />
     <option name="width" value="1360" />
     <option name="height" value="835" />
   </component>
@@ -253,11 +260,18 @@
       <option name="project" value="LOCAL" />
       <updated>1560320430460</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Added UnaryExpression">
+      <created>1560321113362</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1560321113362</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="877" y="183" width="1360" height="835" extended-state="0" />
+    <frame x="976" y="123" width="1360" height="835" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1978691" />
@@ -276,7 +290,7 @@
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" />
-      <window_info anchor="bottom" id="Version Control" order="9" />
+      <window_info anchor="bottom" id="Version Control" order="9" weight="0.32892805" />
       <window_info anchor="bottom" id="Messages" order="10" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -290,7 +304,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Updated parser classes. Managed to parse math expressions" />
-    <option name="LAST_COMMIT_MESSAGE" value="Updated parser classes. Managed to parse math expressions" />
+    <MESSAGE value="Added UnaryExpression" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added UnaryExpression" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/com/kisslang/source/parser/Lexer.java">
@@ -314,35 +329,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/kisslang/source/parser/TokenType.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="176">
-          <caret line="8" column="10" selection-start-line="8" selection-start-column="10" selection-end-line="8" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/kisslang/source/parser/ast/BinaryExpression.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="475">
-          <caret line="39" column="64" selection-start-line="39" selection-start-column="64" selection-end-line="39" selection-end-column="64" />
-          <folding>
-            <element signature="e#925#926#0" expanded="true" />
-            <element signature="e#962#963#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/kisslang/source/parser/ast/NumberExpression.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="242">
-          <caret line="15" column="38" selection-start-line="15" selection-start-column="38" selection-end-line="15" selection-end-column="38" />
-          <folding>
-            <element signature="e#292#293#0" expanded="true" />
-            <element signature="e#331#332#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/kisslang/source/parser/ast/Expression.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="132">
@@ -350,10 +336,42 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/kisslang/source/parser/ast/NumberExpression.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="88">
+          <caret line="4" column="4" lean-forward="true" selection-start-line="4" selection-start-column="4" selection-end-line="16" selection-end-column="5" />
+          <folding>
+            <element signature="e#292#293#0" expanded="true" />
+            <element signature="e#331#332#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/kisslang/source/parser/ast/UnaryExpression.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="220">
+          <caret line="21" column="5" lean-forward="true" selection-start-line="21" selection-start-column="5" selection-end-line="21" selection-end-column="5" />
+          <folding>
+            <element signature="e#486#487#0" expanded="true" />
+            <element signature="e#570#571#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/kisslang/source/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-528">
+          <caret column="28" lean-forward="true" selection-start-column="28" selection-end-column="28" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/kisslang/source/parser/Parser.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="223">
-          <caret line="51" column="19" selection-start-line="51" selection-start-column="19" selection-end-line="51" selection-end-column="19" />
+        <state relative-caret-position="289">
+          <caret line="92" selection-start-line="92" selection-end-line="92" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#716#717#0" expanded="true" />
@@ -362,20 +380,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/kisslang/source/Main.java">
+    <entry file="file://$PROJECT_DIR$/src/com/kisslang/source/parser/ast/BinaryExpression.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="28" lean-forward="true" selection-start-column="28" selection-end-column="28" />
+        <state relative-caret-position="550">
+          <caret line="29" selection-start-line="29" selection-end-line="29" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="e#925#926#0" expanded="true" />
+            <element signature="e#962#963#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/kisslang/source/parser/ast/UnaryExpression.java">
+    <entry file="file://$PROJECT_DIR$/src/com/kisslang/source/parser/TokenType.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="44">
-          <caret line="2" column="28" selection-start-line="2" selection-start-column="28" selection-end-line="2" selection-end-column="28" />
+        <state relative-caret-position="220">
+          <caret line="10" column="12" selection-start-line="10" selection-start-column="12" selection-end-line="10" selection-end-column="12" />
         </state>
       </provider>
     </entry>

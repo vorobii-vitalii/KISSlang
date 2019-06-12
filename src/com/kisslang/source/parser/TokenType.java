@@ -7,5 +7,7 @@ public enum TokenType {
     PLUS,
     MINUS,
     NUMBER,
+    LPARENT,
+    RPARENT,
     EOF
 }

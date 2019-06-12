@@ -3,6 +3,7 @@ package com.kisslang.source.parser;
 import com.kisslang.source.parser.ast.BinaryExpression;
 import com.kisslang.source.parser.ast.Expression;
 import com.kisslang.source.parser.ast.NumberExpression;
+import com.kisslang.source.parser.ast.UnaryExpression;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,6 +73,10 @@ public final class Parser {
 
     private Expression unary(){
 
+        if (match(TokenType.MINUS)){
+            return new UnaryExpression('-',primary());
+        }
+
         return primary();
     }
 
@@ -84,8 +89,8 @@ public final class Parser {
     }
 
     private Expression unknown(){
-        throw new RuntimeException("Unknown expression");
-//        return null;
+        //throw new RuntimeException("Unknown expression");
+        return null;
     }
 
     private Token get(int relPos){

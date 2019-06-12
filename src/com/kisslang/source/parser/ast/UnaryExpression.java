@@ -12,8 +12,9 @@ public class UnaryExpression implements Expression {
     }
 
     public double eval(){
+
         if(operation=='-'){
-            return 0-expr1.eval();
+            return -expr1.eval();
         }
         else{
             return expr1.eval();
@@ -21,6 +22,6 @@ public class UnaryExpression implements Expression {
     }
 
     public String toString(){
-        return Double.toString(expr1.eval());
+        return "Operation : "+operation+" -> "+Double.toString(expr1.eval());
     }
 }
