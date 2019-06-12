@@ -41,4 +41,9 @@ public class StringValue implements Value {
     public String toString() {
         return asString();
     }
+
+    @Override
+    public boolean isString() {
+        return true;
+    }
 }

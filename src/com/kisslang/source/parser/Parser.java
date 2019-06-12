@@ -116,6 +116,9 @@ public final class Parser {
         if (match(TokenType.WORD)){
             return new ConstantExpression(current.getText());
         }
+        if(match(TokenType.STRING_TEXT)){
+            return new StringExpression(current.getText());
+        }
         if (match(TokenType.LPAREN)) {
             Expression result = expression();
             match(TokenType.RPAREN);

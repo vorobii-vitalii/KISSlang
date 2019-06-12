@@ -7,4 +7,6 @@ public interface Value {
     String asString();
 
     boolean canBeRepresentedAsNumber();
+
+    boolean isString();
 }

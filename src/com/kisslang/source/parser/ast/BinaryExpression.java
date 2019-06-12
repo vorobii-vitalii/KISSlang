@@ -1,6 +1,7 @@
 package com.kisslang.source.parser.ast;
 
 import com.kisslang.source.library.NumberValue;
+import com.kisslang.source.library.StringValue;
 import com.kisslang.source.library.Value;
 
 import java.rmi.server.ExportException;
@@ -18,12 +19,16 @@ public final class BinaryExpression implements Expression {
 
     @Override
     public Value eval() {
+
         switch (operation) {
             case '-': return new NumberValue(expr1.eval().asDouble() - expr2.eval().asDouble());
             case '*': return new NumberValue( expr1.eval().asDouble() * expr2.eval().asDouble());
             case '/': return new NumberValue( expr1.eval().asDouble() / expr2.eval().asDouble());
             case '+':
             default:
+                if( expr1.eval().isString() || expr2.eval().isString()){
+                    return new StringValue(expr1.eval().asString() + expr2.eval().asString());
+                }
                 return new NumberValue(expr1.eval().asDouble() + expr2.eval().asDouble());
         }
     }

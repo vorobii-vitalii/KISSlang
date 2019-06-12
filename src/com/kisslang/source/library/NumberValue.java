@@ -27,4 +27,9 @@ public class NumberValue implements Value {
     public String toString() {
         return asString();
     }
+
+    @Override
+    public boolean isString() {
+        return false;
+    }
 }
