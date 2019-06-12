@@ -13,10 +13,10 @@ public class Main {
 
     public static void main(String[] args) {
 
-//        String input=" ( 2.43+ -2.43 ) *2 + PI";
+        String input=" abc=( 2.43+ -2.43 ) *2 + PI^3 \n Print abc";
 
 //        String input="ABC=25*3\nB=25+PI+ABC \nprint ABC";
-        String input="print \"string value\"";
+//        String input="Print \"string value\"+\"anothervalue\" ";
 
         System.out.println(input);
 

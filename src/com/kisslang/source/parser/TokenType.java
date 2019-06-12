@@ -7,6 +7,7 @@ public enum TokenType {
     HEX_NUMBER,
     LPAREN, // (
     MINUS,
+    POW,
     NUMBER,
     PLUS,
     PRINT,

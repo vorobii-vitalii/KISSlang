@@ -85,6 +85,10 @@ public final class Parser {
                 result = new BinaryExpression('*', result, unary());
                 continue;
             }
+            if (match(TokenType.POW)) {
+                result = new BinaryExpression('^', result, unary());
+                continue;
+            }
             if (match(TokenType.SLASH)) {
                 result = new BinaryExpression('/', result, unary());
                 continue;

@@ -17,6 +17,11 @@ public final class BinaryExpression implements Expression {
         this.expr2 = expr2;
     }
 
+    private static double getPow(double k,double n){
+        double result=Math.pow(k,n);
+        return result;
+    }
+
     @Override
     public Value eval() {
 
@@ -24,6 +29,7 @@ public final class BinaryExpression implements Expression {
             case '-': return new NumberValue(expr1.eval().asDouble() - expr2.eval().asDouble());
             case '*': return new NumberValue( expr1.eval().asDouble() * expr2.eval().asDouble());
             case '/': return new NumberValue( expr1.eval().asDouble() / expr2.eval().asDouble());
+            case '^': return new NumberValue( getPow(expr1.eval().asDouble(),expr2.eval().asDouble()));
             case '+':
             default:
                 if( expr1.eval().isString() || expr2.eval().isString()){
