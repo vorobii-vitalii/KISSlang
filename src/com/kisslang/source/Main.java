@@ -4,6 +4,7 @@ import com.kisslang.source.parser.Lexer;
 import com.kisslang.source.parser.Parser;
 import com.kisslang.source.parser.Token;
 import com.kisslang.source.parser.ast.Expression;
+import com.kisslang.source.parser.ast.Statement;
 
 import java.util.List;
 import java.util.Scanner;
@@ -12,9 +13,11 @@ public class Main {
 
     public static void main(String[] args) {
 
-        Scanner scan=new Scanner(System.in);
+//        String input=" ( 2.43+ -2.43 ) *2 + PI";
 
-        String input="(2.43+ -2.43)*2 + PI + WORD123__$1";
+        String input="ABC=25*3\nB=25+PI+ABC \nprint ABC";
+
+        System.out.println(input);
 
         Lexer obj=new Lexer(input);
 
@@ -26,13 +29,14 @@ public class Main {
         }
         System.out.println();
 
-//        final List<Expression> expressions=new Parser(tokens).parse();
-//
-//        for (Expression e:
-//             expressions) {
-//            System.out.println(e+" = "+e.eval());
-//
-//        }
+        final List<Statement> expressions=new Parser(tokens).parse();
+
+        for (Statement e:
+             expressions) {
+//            System.out.print(e);
+            e.execute();
+
+        }
 
 
     }

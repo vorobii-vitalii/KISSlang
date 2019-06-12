@@ -6,11 +6,12 @@ import java.util.List;
 
 public final class Lexer {
 
-    private static final String OPERATOR_CHARS = "+-*/()";
+    private static final String OPERATOR_CHARS = "+-*/()=";
     private static final TokenType[] OPERATOR_TOKENS = {
             TokenType.PLUS, TokenType.MINUS,
             TokenType.STAR, TokenType.SLASH,
             TokenType.LPAREN, TokenType.RPAREN,
+            TokenType.ASSIGN
     };
 
     private final String input;
@@ -53,6 +54,10 @@ public final class Lexer {
             buffer.append(current);
             current=next();
         }
+        if (buffer.toString().equals("print")){
+            addToken(TokenType.PRINT);
+            return;
+        }
         addToken(TokenType.WORD,buffer.toString());
     }
 
@@ -68,6 +73,7 @@ public final class Lexer {
             buffer.append(current);
             current = next();
         }
+
         addToken(TokenType.NUMBER, buffer.toString());
     }
 

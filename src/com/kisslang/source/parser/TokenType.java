@@ -2,16 +2,17 @@ package com.kisslang.source.parser;
 
 public enum TokenType {
 
-    NUMBER,
+    ASSIGN,
+    EOF,
     HEX_NUMBER,
-    WORD,
-    PLUS,
-    MINUS,
-    STAR,
-    SLASH,
-
     LPAREN, // (
+    MINUS,
+    NUMBER,
+    PLUS,
     RPAREN, // )
+    SLASH,
+    STAR,
+    WORD,
+    PRINT
 
-    EOF
 }

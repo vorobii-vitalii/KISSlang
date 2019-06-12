@@ -1,9 +1,6 @@
 package com.kisslang.source.parser;
 
-import com.kisslang.source.parser.ast.BinaryExpression;
-import com.kisslang.source.parser.ast.Expression;
-import com.kisslang.source.parser.ast.NumberExpression;
-import com.kisslang.source.parser.ast.UnaryExpression;
+import com.kisslang.source.parser.ast.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,12 +19,39 @@ public final class Parser {
         size = tokens.size();
     }
 
-    public List<Expression> parse() {
-        final List<Expression> result = new ArrayList<>();
+    public List<Statement> parse() {
+        final List<Statement> result = new ArrayList<>();
         while (!match(TokenType.EOF)) {
-            result.add(expression());
+            result.add(statement());
         }
         return result;
+    }
+
+    private Statement statement(){
+
+        if (match(TokenType.PRINT)){
+            return new PrintStatement(expression());
+        }
+
+        return assignmentStatement();
+    }
+
+    private Token consume(TokenType type){
+        final Token current=get(0);
+        if (type != current.getType()) throw new RuntimeException("Token current doesnt match");
+        pos++;
+        return current;
+    }
+
+    private Statement assignmentStatement() {
+        final Token current=get(0);
+        if (current.getType()==TokenType.WORD && get(1).getType()==TokenType.ASSIGN){
+            consume(TokenType.WORD);
+            final String varName=current.getText();
+            consume(TokenType.ASSIGN);
+            return new AssignmentStatement(varName,expression());
+        }
+        throw new RuntimeException("Unknown operator");
     }
 
     private Expression expression() {
@@ -88,6 +112,9 @@ public final class Parser {
         }
         if (match(TokenType.HEX_NUMBER)) {
             return new NumberExpression(Long.parseLong(current.getText(), 16));
+        }
+        if (match(TokenType.WORD)){
+            return new ConstantExpression(current.getText());
         }
         if (match(TokenType.LPAREN)) {
             Expression result = expression();
