@@ -11,4 +11,8 @@ public class NumberExpression implements Expression {
     public double eval(){
         return value;
     }
+
+    public String toString(){
+        return Double.toString(value);
+    }
 }

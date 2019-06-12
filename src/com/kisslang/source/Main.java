@@ -1,15 +1,20 @@
 package com.kisslang.source;
 
 import com.kisslang.source.parser.Lexer;
+import com.kisslang.source.parser.Parser;
 import com.kisslang.source.parser.Token;
+import com.kisslang.source.parser.ast.Expression;
 
 import java.util.List;
+import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args) {
 
-        String input="214+278-32*4";
+        Scanner scan=new Scanner(System.in);
+
+        String input=scan.next();
 
         Lexer obj=new Lexer(input);
 
@@ -20,6 +25,14 @@ public class Main {
             System.out.println(token+" ");
         }
         System.out.println();
+
+        final List<Expression> expressions=new Parser(tokens).parse();
+
+        for (Expression e:
+             expressions) {
+            System.out.println(e+" "+e.eval());
+
+        }
 
 
     }
