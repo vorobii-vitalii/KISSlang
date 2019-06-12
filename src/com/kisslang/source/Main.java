@@ -14,7 +14,7 @@ public class Main {
 
         Scanner scan=new Scanner(System.in);
 
-        String input="(2+2)*2";
+        String input="(2.43+ -2.43)*2";
 
         Lexer obj=new Lexer(input);
 
@@ -30,7 +30,7 @@ public class Main {
 
         for (Expression e:
              expressions) {
-            System.out.println(e+" "+e.eval());
+            System.out.println(e+" = "+e.eval());
 
         }
 
