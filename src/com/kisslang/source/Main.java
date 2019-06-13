@@ -3,11 +3,9 @@ package com.kisslang.source;
 import com.kisslang.source.parser.Lexer;
 import com.kisslang.source.parser.Parser;
 import com.kisslang.source.parser.Token;
-import com.kisslang.source.parser.ast.Expression;
 import com.kisslang.source.parser.ast.Statement;
 
 import java.util.List;
-import java.util.Scanner;
 
 public class Main {
 
@@ -16,7 +14,7 @@ public class Main {
 //        String input=" abc=( 2.43+ -2.43 ) *2 + PI^3 \n Print abc";
 
 //        String input="ABC=25*3\nB=25+PI+ABC \nprint ABC";
-        String input="abs='be '\nPrint abs+\" happy\" ";
+        String input="abs='be '\nPrint abs+\" happy\"+25 \nPrint 25+34+ 'hello'";
 
         System.out.println(input);
 

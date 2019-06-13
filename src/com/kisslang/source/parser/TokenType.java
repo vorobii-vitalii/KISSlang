@@ -7,13 +7,17 @@ public enum TokenType {
     HEX_NUMBER,
     LPAREN, // (
     MINUS,
-    POW,
     NUMBER,
     PLUS,
+    POW,
     PRINT,
     RPAREN, // )
     SLASH,
     STAR,
+    LOWER_THAN,
+    GREATER_THAN,
+    IF,
+    ELSE,
     STRING_TEXT,
     WORD
 
