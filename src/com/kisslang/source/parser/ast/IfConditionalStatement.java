@@ -31,6 +31,6 @@ public class IfConditionalStatement implements Statement {
 
     @Override
     public String toString() {
-        return "If : "+ifStatement.toString()+"\nelse :"+elseStatement.toString();
+        return "If : "+ifStatement.toString();
     }
 }

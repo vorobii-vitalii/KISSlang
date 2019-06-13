@@ -1,24 +1,17 @@
 package com.kisslang.source;
 
 import com.kisslang.source.compilation.KISSCompiler;
-import com.kisslang.source.parser.Lexer;
-import com.kisslang.source.parser.Parser;
-import com.kisslang.source.parser.Token;
-import com.kisslang.source.parser.ast.Statement;
 
-import java.util.List;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws java.io.IOException {
 
-//        String input=" abc=( 2.43+ -2.43 ) *2 + PI^3 \n Print abc";
+        String content = new String(Files.readAllBytes(Paths.get("/home/vitalii/eclipse-workspace/KISSlang/src/com/kisslang/source/program.kiss")));
 
-//        String input="ABC=25*3\nB=25+PI+ABC \nprint ABC";
-
-        String input="a=25>3 \nPrint a>3 \nPrint a\na=5^(2*2) \nPrint a";
-
-        KISSCompiler compiler=KISSCompiler.getInstance(input);
+        KISSCompiler compiler=KISSCompiler.getInstance(content);
 
         System.out.println(compiler.getSourceCode());
 
@@ -27,6 +20,9 @@ public class Main {
 
         compiler.execute();
 
+        System.out.println();
+
+//        compiler.printTokens();
 
     }
 }

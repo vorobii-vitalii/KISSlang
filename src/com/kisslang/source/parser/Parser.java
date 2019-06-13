@@ -32,6 +32,9 @@ public final class Parser {
         if (match(TokenType.PRINT)){
             return new PrintStatement(expression());
         }
+        if(match(TokenType.IF)){
+            return IfElse();
+        }
 
         return assignmentStatement();
     }
@@ -61,14 +64,7 @@ public final class Parser {
         if(match(TokenType.ELSE)) {
             elseStatement = statement();
         }
-        final Token current=get(0);
-        if (current.getType()==TokenType.WORD && get(1).getType()==TokenType.ASSIGN){
-            consume(TokenType.WORD);
-            final String varName=current.getText();
-            consume(TokenType.ASSIGN);
-            return new AssignmentStatement(varName,expression());
-        }
-        throw new RuntimeException("Unknown operator!");
+        return new IfConditionalStatement(condition,ifStatement,elseStatement);
     }
 
     private Expression expression() {
@@ -97,28 +93,24 @@ public final class Parser {
         Expression result = multiplicative();
 
         while (true) {
-            if (match(TokenType.ASSIGN)) {
-                if (match(TokenType.ASSIGN)) {
+            if (match(TokenType.EQUAL)) {
                     result = new ConditionalExpression("==", result, multiplicative());
                     continue;
-                }
             }
             if (match(TokenType.LOWER_THAN)) {
-                if (match(TokenType.ASSIGN)) {
-                    result = new ConditionalExpression("<=", result, multiplicative());
-                }
-                else{
                     result = new ConditionalExpression("<", result, multiplicative());
-                }
-                continue;
+                    continue;
             }
             if (match(TokenType.GREATER_THAN)) {
-                if (match(TokenType.ASSIGN)) {
-                    result = new ConditionalExpression(">=", result, multiplicative());
-                }
-                else{
                     result = new ConditionalExpression(">", result, multiplicative());
-                }
+                    continue;
+            }
+            if (match(TokenType.GREATER_OR_EQUAL_THAN)) {
+                result = new ConditionalExpression(">=", result, multiplicative());
+                continue;
+            }
+            if (match(TokenType.LOWER_OR_EQUAL_THAN)) {
+                result = new ConditionalExpression("<=", result, multiplicative());
                 continue;
             }
             break;

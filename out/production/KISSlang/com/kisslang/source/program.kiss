@@ -1,0 +1,8 @@
+a=25
+b=34
+//If (a+b)==59
+//    Print "Yes"
+//Else
+//    Print "No"
+
+Print a>b

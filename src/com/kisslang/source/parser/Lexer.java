@@ -2,18 +2,37 @@ package com.kisslang.source.parser;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public final class Lexer {
 
     private static final String OPERATOR_CHARS = "+-*/()=^<>";
-    private static final TokenType[] OPERATOR_TOKENS = {
-            TokenType.PLUS, TokenType.MINUS,
-            TokenType.STAR, TokenType.SLASH,
-            TokenType.LPAREN, TokenType.RPAREN,
-            TokenType.ASSIGN,TokenType.POW,
-            TokenType.LOWER_THAN,TokenType.GREATER_THAN
-    };
+    
+    private static Map <String,TokenType> OPERATORS;
+
+    static {
+        OPERATORS=new HashMap<>();
+        OPERATORS.put("+",TokenType.PLUS);
+        OPERATORS.put("-",TokenType.MINUS);
+        OPERATORS.put("*",TokenType.STAR);
+        OPERATORS.put("/",TokenType.SLASH);
+        OPERATORS.put("(",TokenType.LPAREN);
+        OPERATORS.put(")",TokenType.RPAREN);
+        OPERATORS.put("^",TokenType.POW);
+        OPERATORS.put("<",TokenType.LOWER_THAN);
+        OPERATORS.put("<=",TokenType.LOWER_OR_EQUAL_THAN);
+        OPERATORS.put(">",TokenType.GREATER_THAN);
+        OPERATORS.put(">=",TokenType.GREATER_OR_EQUAL_THAN);
+        OPERATORS.put("==",TokenType.EQUAL);
+        OPERATORS.put("=",TokenType.ASSIGN);
+        OPERATORS.put("!",TokenType.NOT);
+        OPERATORS.put("&",TokenType.AND);
+        OPERATORS.put("&",TokenType.AND2);
+        OPERATORS.put("|",TokenType.OR);
+        OPERATORS.put("||",TokenType.OR2);
+}
 
     private final String input;
     private final int length;
@@ -121,9 +140,58 @@ public final class Lexer {
     }
 
     private void tokenizeOperator() {
-        final int position = OPERATOR_CHARS.indexOf(peek(0));
-        addToken(OPERATOR_TOKENS[position]);
+       char current=peek(0);
+       if (current=='/'){
+           if(peek(1)=='/'){
+               //System.out.println("Found");
+               next();
+               next();
+               tokenizeSingleLineCommentary();
+               return;
+           }
+           else if(peek(1)=='*'){
+               next();
+               next();
+               tokenizeMultiLineCommentary();
+               return;
+
+           }
+       }
+       StringBuffer buffer=new StringBuffer();
+       while(true){
+           String curStr=buffer.toString();
+           if(!OPERATORS.containsKey(curStr+current) && !curStr.isEmpty()){
+               addToken(OPERATORS.get(curStr));
+               return;
+           }
+           buffer.append(current);
+           current=next();
+
+       }
+    }
+
+    private void tokenizeMultiLineCommentary() {
+
+        while(peek(0)!='*' && peek(1)!='/'){
+
+            if(peek(0)=='\0'){
+                throw new RuntimeException("Not found closing */ comment declaration");
+            }
+
+            next();
+        }
+
         next();
+        next();
+    }
+
+    private void tokenizeSingleLineCommentary() {
+        char current=peek(0);
+
+        while ("\r\n\0".indexOf(current)==-1){
+            current=next();
+        }
+
     }
 
     private char next() {

@@ -24,6 +24,11 @@ public class KISSCompiler {
         expressionsProvided=false;
     }
 
+    private KISSCompiler(){
+        this.codeToBeCompiled="";
+        expressionsProvided=false;
+    }
+
     boolean isReady() {
         return expressionsProvided;
     }
@@ -36,6 +41,14 @@ public class KISSCompiler {
 
         if (compilerSingleton==null){
             compilerSingleton=new KISSCompiler(code);
+        }
+        return compilerSingleton;
+    }
+
+    public static KISSCompiler getInstance() {
+
+        if (compilerSingleton==null){
+            compilerSingleton=new KISSCompiler();
         }
         return compilerSingleton;
     }
