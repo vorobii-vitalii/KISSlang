@@ -51,7 +51,7 @@ public final class Parser {
             consume(TokenType.ASSIGN);
             return new AssignmentStatement(varName,expression());
         }
-        throw new RuntimeException("Unknown operator");
+        throw new RuntimeException("Unknown operator!");
     }
 
     private Expression expression() {
