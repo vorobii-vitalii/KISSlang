@@ -26,6 +26,14 @@ public class StringValue implements Value {
     }
 
     @Override
+    public boolean asBoolean() {
+        if(value.equals("")){
+            return false;
+        }
+        return true;
+    }
+
+    @Override
     public boolean canBeRepresentedAsNumber() {
         double result;
         try{

@@ -8,7 +8,7 @@ import java.util.Map;
 
 public final class Lexer {
 
-    private static final String OPERATOR_CHARS = "+-*/()=^<>";
+    private static final String OPERATOR_CHARS = "+-*/()=^<>&|!";
     
     private static Map <String,TokenType> OPERATORS;
 
@@ -29,7 +29,7 @@ public final class Lexer {
         OPERATORS.put("=",TokenType.ASSIGN);
         OPERATORS.put("!",TokenType.NOT);
         OPERATORS.put("&",TokenType.AND);
-        OPERATORS.put("&",TokenType.AND2);
+        OPERATORS.put("&&",TokenType.AND2);
         OPERATORS.put("|",TokenType.OR);
         OPERATORS.put("||",TokenType.OR2);
 }

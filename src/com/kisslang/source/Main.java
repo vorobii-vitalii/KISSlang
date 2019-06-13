@@ -22,7 +22,7 @@ public class Main {
 
         System.out.println();
 
-//        compiler.printTokens();
+        compiler.printTokens();
 
     }
 }

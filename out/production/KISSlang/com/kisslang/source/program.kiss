@@ -1,8 +1,14 @@
 a=25
-b=34
-//If (a+b)==59
-//    Print "Yes"
-//Else
-//    Print "No"
 
-Print a>b
+b=34
+
+If (a+b)==59
+    Print "Yes"
+Else
+    Print "No"
+
+Print a+b
+
+Print (2^3+5)*4+24
+
+Print a && b

@@ -121,20 +121,20 @@ public final class Parser {
     }
 
     private Expression multiplicative() {
-        Expression result = unary();
+        Expression result = logical();
 
         while (true) {
             // 2 * 6 / 3
             if (match(TokenType.STAR)) {
-                result = new BinaryExpression('*', result, unary());
+                result = new BinaryExpression('*', result, logical());
                 continue;
             }
             if (match(TokenType.POW)) {
-                result = new BinaryExpression('^', result, unary());
+                result = new BinaryExpression('^', result, logical());
                 continue;
             }
             if (match(TokenType.SLASH)) {
-                result = new BinaryExpression('/', result, unary());
+                result = new BinaryExpression('/', result, logical());
                 continue;
             }
             break;
@@ -143,12 +143,35 @@ public final class Parser {
         return result;
     }
 
+    private Expression logical(){
+
+        Expression result = unary();
+
+        while (true) {
+            if (match(TokenType.AND2)) {
+                result = new LogicalBinaryExpression("&&", result, unary());
+                continue;
+            }
+            if (match(TokenType.OR2)) {
+                result = new LogicalBinaryExpression("||", result, unary());
+                continue;
+            }
+            break;
+        }
+
+        return result;
+
+    }
+
     private Expression unary() {
         if (match(TokenType.MINUS)) {
             return new UnaryExpression('-', primary());
         }
         if (match(TokenType.PLUS)) {
             return primary();
+        }
+        if (match(TokenType.NOT)) {
+            return new LogicalUnaryExpression('!', primary());
         }
         return primary();
     }

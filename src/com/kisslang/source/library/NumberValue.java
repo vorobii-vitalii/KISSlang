@@ -14,6 +14,14 @@ public class NumberValue implements Value {
     }
 
     @Override
+    public boolean asBoolean() {
+        if(value!=0){
+            return true;
+        }
+        return false;
+    }
+
+    @Override
     public String asString() {
         return Double.toString(value);
     }

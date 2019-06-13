@@ -9,4 +9,6 @@ public interface Value {
     boolean canBeRepresentedAsNumber();
 
     boolean isString();
+
+    boolean asBoolean();
 }

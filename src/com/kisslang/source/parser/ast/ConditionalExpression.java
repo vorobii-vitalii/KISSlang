@@ -38,6 +38,9 @@ public class ConditionalExpression implements Expression {
             case "==":
                 result = new LogicalValue(expr1.eval().asDouble()==expr2.eval().asDouble());
                 break;
+            case "!=":
+                result = new LogicalValue(expr1.eval().asDouble()!=expr2.eval().asDouble());
+                break;
             default:
                 result=new LogicalValue(false);
                 break;
