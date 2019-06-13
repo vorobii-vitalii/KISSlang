@@ -28,6 +28,10 @@ public class KISSCompiler {
         return expressionsProvided;
     }
 
+    public String getSourceCode(){
+        return codeToBeCompiled;
+    }
+
     public static KISSCompiler getInstance(String code) {
 
         if (compilerSingleton==null){
@@ -36,7 +40,7 @@ public class KISSCompiler {
         return compilerSingleton;
     }
 
-    public void execute(boolean showTokens,boolean showExpressions) {
+    public void execute() {
 
         provideInit();
 
@@ -91,6 +95,6 @@ public class KISSCompiler {
 
         expressionsProvided=true;
     }
-    
+
 
 }

@@ -19,7 +19,7 @@ public class LogicalValue implements Value {
 
     @Override
     public String asString() {
-        return Boolean.toString(value);
+        return Boolean.toString(value).replaceFirst(Character.toString(Boolean.toString(value).charAt(0)),Character.toString(Character.toUpperCase(Boolean.toString(value).charAt(0))));
     }
 
     @Override
