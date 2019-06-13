@@ -59,7 +59,7 @@ public final class Parser {
     }
 
     private Expression additive() {
-        Expression result = multiplicative();
+        Expression result = conditional();
 
         while (true) {
             if (match(TokenType.PLUS)) {
@@ -74,6 +74,41 @@ public final class Parser {
         }
 
         return result;
+    }
+
+    private Expression conditional(){
+        Expression result = multiplicative();
+
+        while (true) {
+            if (match(TokenType.ASSIGN)) {
+                if (match(TokenType.ASSIGN)) {
+                    result = new ConditionalExpression("==", result, multiplicative());
+                    continue;
+                }
+            }
+            if (match(TokenType.LOWER_THAN)) {
+                if (match(TokenType.ASSIGN)) {
+                    result = new ConditionalExpression("<=", result, multiplicative());
+                }
+                else{
+                    result = new ConditionalExpression("<", result, multiplicative());
+                }
+                continue;
+            }
+            if (match(TokenType.GREATER_THAN)) {
+                if (match(TokenType.ASSIGN)) {
+                    result = new ConditionalExpression(">=", result, multiplicative());
+                }
+                else{
+                    result = new ConditionalExpression(">", result, multiplicative());
+                }
+                continue;
+            }
+            break;
+        }
+
+        return result;
+
     }
 
     private Expression multiplicative() {
@@ -136,6 +171,10 @@ public final class Parser {
         if (type != current.getType()) return false;
         pos++;
         return true;
+    }
+
+    private void next(){
+        pos++;
     }
 
     private Token get(int relativePosition) {

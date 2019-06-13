@@ -8,9 +8,9 @@ public class ConditionalExpression implements Expression {
 
     private Expression expr1;
     private Expression expr2;
-    private char operation;
+    private String operation;
 
-    public ConditionalExpression(char operation,Expression expr1,Expression expr2){
+    public ConditionalExpression(String operation,Expression expr1,Expression expr2){
         this.operation=operation;
         this.expr1=expr1;
         this.expr2=expr2;
@@ -23,13 +23,19 @@ public class ConditionalExpression implements Expression {
 
         switch (operation){
 
-            case '>':
+            case ">":
                 result = new LogicalValue(expr1.eval().asDouble()>expr2.eval().asDouble());
                 break;
-            case '<':
+            case ">=":
+                result = new LogicalValue(expr1.eval().asDouble()>=expr2.eval().asDouble());
+                break;
+            case "<":
                 result = new LogicalValue(expr1.eval().asDouble()<expr2.eval().asDouble());
                 break;
-            case '=':
+            case "<=":
+                result = new LogicalValue(expr1.eval().asDouble()<=expr2.eval().asDouble());
+                break;
+            case "==":
                 result = new LogicalValue(expr1.eval().asDouble()==expr2.eval().asDouble());
                 break;
             default:

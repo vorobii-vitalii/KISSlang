@@ -14,7 +14,7 @@ public class Main {
 //        String input=" abc=( 2.43+ -2.43 ) *2 + PI^3 \n Print abc";
 
 //        String input="ABC=25*3\nB=25+PI+ABC \nprint ABC";
-        String input="abs='be '\nPrint abs+\" happy\"+25 \nPrint 25+34+ 'hello'";
+        String input="a=25 \nPrint a<3";
 
         System.out.println(input);
 
