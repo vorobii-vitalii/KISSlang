@@ -20,14 +20,14 @@ public class AssignmentStatement implements Statement {
     @Override
     public void execute() {
 
-        Value value;
+        Value value=expression.eval();
 
-        if (expression.eval().isString()){
-                value=new StringValue(expression.eval().asString());
-        }
-        else {
-                value=new NumberValue(expression.eval().asDouble());
-        }
+//        if (expression.eval().isString()){
+//                value=new StringValue(expression.eval().asString());
+//        }
+//        else {
+//                value=new NumberValue(expression.eval().asDouble());
+//        }
 
         Variables.add(variableName,value);
     }
