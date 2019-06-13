@@ -10,13 +10,11 @@ public class LogicalValue implements Value {
 
     @Override
     public double asDouble() {
-        
+
         if(value==true){
             return 1;
         }
-
         return 0;
-
     }
 
     @Override

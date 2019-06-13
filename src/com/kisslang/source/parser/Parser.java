@@ -54,6 +54,23 @@ public final class Parser {
         throw new RuntimeException("Unknown operator!");
     }
 
+    private Statement IfElse() {
+        final Expression condition=expression();
+        final Statement ifStatement=statement();
+        Statement elseStatement=null;
+        if(match(TokenType.ELSE)) {
+            elseStatement = statement();
+        }
+        final Token current=get(0);
+        if (current.getType()==TokenType.WORD && get(1).getType()==TokenType.ASSIGN){
+            consume(TokenType.WORD);
+            final String varName=current.getText();
+            consume(TokenType.ASSIGN);
+            return new AssignmentStatement(varName,expression());
+        }
+        throw new RuntimeException("Unknown operator!");
+    }
+
     private Expression expression() {
         return additive();
     }
