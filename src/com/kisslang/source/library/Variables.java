@@ -1,11 +1,14 @@
 package com.kisslang.source.library;
 
+import com.kisslang.source.library.value.NumberValue;
+import com.kisslang.source.library.value.Value;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public final class Variables {
 
-    private static Map<String,Value> variables;
+    private static Map<String, Value> variables;
 
     private static final Value NUMBER_VALUE_NOT_FOUND=new NumberValue(0);
 

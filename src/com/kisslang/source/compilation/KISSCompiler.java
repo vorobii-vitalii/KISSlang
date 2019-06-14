@@ -3,7 +3,7 @@ package com.kisslang.source.compilation;
 import com.kisslang.source.parser.Lexer;
 import com.kisslang.source.parser.Parser;
 import com.kisslang.source.parser.Token;
-import com.kisslang.source.parser.ast.Statement;
+import com.kisslang.source.parser.ast.statements.Statement;
 
 import java.util.List;
 

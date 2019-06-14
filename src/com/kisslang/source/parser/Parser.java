@@ -1,6 +1,7 @@
 package com.kisslang.source.parser;
 
-import com.kisslang.source.parser.ast.*;
+import com.kisslang.source.parser.ast.expression.*;
+import com.kisslang.source.parser.ast.statements.*;
 
 import java.util.List;
 
