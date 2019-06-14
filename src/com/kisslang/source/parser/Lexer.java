@@ -129,12 +129,17 @@ public final class Lexer {
 
     private void tokenizeNumber() {
         final StringBuilder buffer = new StringBuilder();
+
         char current = peek(0);
+
+        boolean isFloatingNumber=false;
+
         while (Character.isDigit(current) || current=='.') {
             if (current=='.'){
                 if (buffer.indexOf(".")!=-1){
                     throw new RuntimeException("Invalid number declaration");
                 }
+                isFloatingNumber=true;
             }
             buffer.append(current);
             current = next();

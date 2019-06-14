@@ -280,12 +280,12 @@ public final class Parser {
             match(TokenType.RPAREN);
             return result;
         }
-        throw new RuntimeException("Unknown expression");
+        throw new RuntimeException("Unknown expression "+current+" !");
     }
 
     private Token consume(TokenType type){
         final Token current=get(0);
-        if (type != current.getType()) throw new RuntimeException("Token current doesnt match");
+        if (type != current.getType()) throw new RuntimeException(current+" doesn't match "+type);
         pos++;
         return current;
     }
