@@ -2,15 +2,33 @@ a=25
 
 b=34
 
-If (a+b)==59
-    Print "Yes"
+//If (a+b)==59
+//    Print "Yes"
+//Else
+//    Print "No"
+
+//Print a+b
+
+//Print (2^3+5)*4+24
+
+//Print (a && b) &&  0
+
+//Print 1 && 0
+
+If (2>0){
+    Print a+b
+    Print a+b
+}
 Else
-    Print "No"
+    Print a-b
 
-Print a+b
+i=0
+Print i
+i=i+1
+Print i
 
-Print (2^3+5)*4+24
-
-Print (a && b) &&  0
-
-Print 1 && 0
+While i<10{
+    i=i+1
+    Print i
+}
+Print i

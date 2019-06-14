@@ -26,6 +26,7 @@ public class BlockStatement implements Statement {
         for (Statement s: statements) {
             s.execute();
         }
+
     }
 
     @Override

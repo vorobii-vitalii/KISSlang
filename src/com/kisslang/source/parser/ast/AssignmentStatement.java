@@ -20,6 +20,8 @@ public final class AssignmentStatement implements Statement {
 
         Value value=expression.eval();
 
+        //System.out.println(expression.eval());
+
         Variables.add(variableName,value);
     }
 

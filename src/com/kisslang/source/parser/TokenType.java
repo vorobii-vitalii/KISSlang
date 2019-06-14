@@ -29,6 +29,7 @@ public enum TokenType {
     SLASH,
     STAR,
     STRING_TEXT,
+    WHILE,
     WORD
 
 

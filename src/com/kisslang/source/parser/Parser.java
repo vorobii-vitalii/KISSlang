@@ -62,9 +62,13 @@ public final class Parser {
         if(match(TokenType.IF)){
             return IfElse();
         }
+        if(match(TokenType.WHILE)){
+            return While();
+        }
 
         return assignmentStatement();
     }
+
 
 
     private Statement assignmentStatement() {
@@ -80,12 +84,18 @@ public final class Parser {
 
     private Statement IfElse() {
         final Expression condition=expression();
-        final Statement ifStatement=statement();
+        final Statement ifStatement=blockOrSingle();
         Statement elseStatement=null;
         if(match(TokenType.ELSE)) {
-            elseStatement = statement();
+            elseStatement = blockOrSingle();
         }
         return new IfConditionalStatement(condition,ifStatement,elseStatement);
+    }
+
+    private Statement While() {
+        final Expression condition=expression();
+        final Statement statementIfTrue=blockOrSingle();
+        return new WhileStatement(condition,statementIfTrue);
     }
 
     private Expression expression() {
