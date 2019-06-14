@@ -22,14 +22,18 @@ public class LogicalValue implements Value {
         return value;
     }
 
-    @Override
-    public String asString() {
+    public String representBooleanAsString(boolean value){ //Python style
         return Boolean.toString(value).replaceFirst(Character.toString(Boolean.toString(value).charAt(0)),Character.toString(Character.toUpperCase(Boolean.toString(value).charAt(0))));
     }
 
     @Override
+    public String asString() {
+        return representBooleanAsString(value);
+    }
+
+    @Override
     public boolean canBeRepresentedAsNumber() {
-        return false;
+        return true;
     }
 
     @Override
