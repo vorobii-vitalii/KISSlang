@@ -21,7 +21,15 @@ public class ForLoopStatement implements Statement {
     public void execute() {
 
         for(init.execute();expression.eval().asBoolean()!=false;afterExpression.execute()){
-            blockOfStatements.execute();
+            try {
+                blockOfStatements.execute();
+            }
+            catch (BreakLoopStatement e){
+                break;
+            }
+            catch (ContinueLoopStatement e){
+                continue;
+            }
         }
 
     }

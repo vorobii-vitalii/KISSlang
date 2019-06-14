@@ -1,5 +1,7 @@
 package com.kisslang.source.parser.ast;
 
+import java.util.concurrent.CompletionException;
+
 public class WhileLoopStatement implements Statement {
 
     private final Expression expression;
@@ -15,7 +17,15 @@ public class WhileLoopStatement implements Statement {
     public void execute() {
 
         while(expression.eval().asBoolean()==true){
-            blockOfStatements.execute();
+            try {
+                blockOfStatements.execute();
+            }
+            catch (BreakLoopStatement e){
+                break;
+            }
+            catch (ContinueLoopStatement e){
+                continue;
+            }
         }
 
     }

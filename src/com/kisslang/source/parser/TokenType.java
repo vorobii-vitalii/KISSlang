@@ -5,6 +5,8 @@ public enum TokenType {
     AND,
     AND2,
     ASSIGN,
+    BREAK,
+    CONTINUE,
     DELIMITER_FOR,
     ELSE,
     EOF,

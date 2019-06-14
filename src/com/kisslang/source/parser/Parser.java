@@ -67,10 +67,25 @@ public final class Parser {
         if(match(TokenType.FOR)){
             return For();
         }
+        if(match(TokenType.BREAK)){
+            return Break();
+        }
+        if(match(TokenType.CONTINUE)){
+            return Continue();
+        }
 
         return assignmentStatement();
     }
 
+    private Statement Continue() {
+        next();
+        return new ContinueLoopStatement();
+    }
+
+    private Statement Break() {
+        next();
+        return new BreakLoopStatement();
+    }
 
 
     private Statement assignmentStatement() {
@@ -101,14 +116,14 @@ public final class Parser {
     }
 
     private Statement For(){
-
-        consume(TokenType.LPAREN);
+        next();
+        consume(TokenType.LPAREN,"No expected (");
         final Statement init=assignmentStatement();
-        consume(TokenType.DELIMITER_FOR);
+        consume(TokenType.DELIMITER_FOR,"No expected delimiter after initializing");
         final Expression term=expression();
-        consume(TokenType.DELIMITER_FOR);
+        consume(TokenType.DELIMITER_FOR,"No expected delimiter after expression");
         final Statement incr=assignmentStatement();
-        consume(TokenType.RPAREN);
+        consume(TokenType.RPAREN,"No expected )");
         final Statement statements=blockOrSingle();
 
         return new ForLoopStatement(init,term,incr,statements);

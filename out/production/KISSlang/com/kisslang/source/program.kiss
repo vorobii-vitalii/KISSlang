@@ -30,7 +30,14 @@ Print i
 While i<10{
     i=i+1
     If i>5{
-        Print i
+        Break
     }
 }
 Print i
+
+For(k=0;k<10;k=k+1){
+    if(k>5){
+        Continue
+    }
+    Print k
+}

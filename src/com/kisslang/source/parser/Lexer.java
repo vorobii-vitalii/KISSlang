@@ -117,6 +117,12 @@ public final class Lexer {
         if(buffer.toString().equals("For")){
             addToken(TokenType.FOR);
         }
+        if(buffer.toString().equals("Continue")){
+            addToken(TokenType.CONTINUE);
+        }
+        if(buffer.toString().equals("Break")){
+            addToken(TokenType.BREAK);
+        }
 
         addToken(TokenType.WORD,buffer.toString());
     }
