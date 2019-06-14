@@ -19,7 +19,9 @@ public final class Lexer {
         OPERATORS.put("*",TokenType.STAR);
         OPERATORS.put("/",TokenType.SLASH);
         OPERATORS.put("(",TokenType.LPAREN);
+        OPERATORS.put("{",TokenType.LPAREN_FIGURE);
         OPERATORS.put(")",TokenType.RPAREN);
+        OPERATORS.put("}",TokenType.RPAREN_FIGURE);
         OPERATORS.put("^",TokenType.POW);
         OPERATORS.put("<",TokenType.LOWER_THAN);
         OPERATORS.put("<=",TokenType.LOWER_OR_EQUAL_THAN);

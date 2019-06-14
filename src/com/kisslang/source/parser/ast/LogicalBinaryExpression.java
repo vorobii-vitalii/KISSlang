@@ -25,6 +25,7 @@ public class LogicalBinaryExpression implements Expression{
         boolean right=expr2.eval().asBoolean();
 
         switch (operation) {
+
             case "&&": return new LogicalValue(left && right);
 
             case "&": return new LogicalValue(left & right);
