@@ -2,7 +2,6 @@ package com.kisslang.source.parser;
 
 import com.kisslang.source.parser.ast.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public final class Parser {
@@ -65,6 +64,9 @@ public final class Parser {
         if(match(TokenType.WHILE)){
             return While();
         }
+        if(match(TokenType.FOR)){
+            return For();
+        }
 
         return assignmentStatement();
     }
@@ -95,7 +97,22 @@ public final class Parser {
     private Statement While() {
         final Expression condition=expression();
         final Statement statementIfTrue=blockOrSingle();
-        return new WhileStatement(condition,statementIfTrue);
+        return new WhileLoopStatement(condition,statementIfTrue);
+    }
+
+    private Statement For(){
+
+        consume(TokenType.LPAREN);
+        final Statement init=assignmentStatement();
+        consume(TokenType.DELIMITER_FOR);
+        final Expression term=expression();
+        consume(TokenType.DELIMITER_FOR);
+        final Statement incr=assignmentStatement();
+        consume(TokenType.RPAREN);
+        final Statement statements=blockOrSingle();
+
+        return new ForLoopStatement(init,term,incr,statements);
+
     }
 
     private Expression expression() {

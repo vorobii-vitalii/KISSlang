@@ -29,6 +29,8 @@ Print i
 
 While i<10{
     i=i+1
-    Print i
+    If i>5{
+        Print i
+    }
 }
 Print i
