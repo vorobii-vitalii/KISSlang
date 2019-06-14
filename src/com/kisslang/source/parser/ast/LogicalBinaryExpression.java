@@ -15,7 +15,6 @@ public class LogicalBinaryExpression implements Expression{
     }
 
     private boolean doubleAsBoolean(Value val){
-        System.out.println(val.asDouble()==1);
         return val.asDouble()==new LogicalValue(true).asDouble();
     }
 
@@ -27,7 +26,13 @@ public class LogicalBinaryExpression implements Expression{
 
         switch (operation) {
             case "&&": return new LogicalValue(left && right);
+
+            case "&": return new LogicalValue(left & right);
+
+            case "|": return new LogicalValue(left | right);
+
             case "||": return new LogicalValue( left || right);
+
             default:
                 return new LogicalValue(left && right);
         }

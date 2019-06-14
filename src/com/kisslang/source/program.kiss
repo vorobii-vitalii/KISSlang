@@ -11,4 +11,6 @@ Print a+b
 
 Print (2^3+5)*4+24
 
-Print a && b
+Print (a && b) &&  0
+
+Print 1 && 0

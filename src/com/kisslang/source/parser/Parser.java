@@ -121,20 +121,20 @@ public final class Parser {
     }
 
     private Expression multiplicative() {
-        Expression result = logical();
+        Expression result = logicalOr();
 
         while (true) {
             // 2 * 6 / 3
             if (match(TokenType.STAR)) {
-                result = new BinaryExpression('*', result, logical());
+                result = new BinaryExpression('*', result, logicalOr());
                 continue;
             }
             if (match(TokenType.POW)) {
-                result = new BinaryExpression('^', result, logical());
+                result = new BinaryExpression('^', result, logicalOr());
                 continue;
             }
             if (match(TokenType.SLASH)) {
-                result = new BinaryExpression('/', result, logical());
+                result = new BinaryExpression('/', result, logicalOr());
                 continue;
             }
             break;
@@ -143,18 +143,39 @@ public final class Parser {
         return result;
     }
 
-    private Expression logical(){
+
+    private Expression logicalOr(){
+
+        Expression result = logicalOAnd();
+
+        while (true) {
+
+            if (match(TokenType.OR2)) {
+                result = new LogicalBinaryExpression("||", result, logicalOAnd());
+                continue;
+            }
+            if(match(TokenType.OR)){
+                result=new LogicalBinaryExpression("|",result,logicalOAnd());
+            }
+            break;
+        }
+
+        return result;
+
+    }
+
+    private Expression logicalOAnd(){
 
         Expression result = unary();
 
         while (true) {
+
             if (match(TokenType.AND2)) {
                 result = new LogicalBinaryExpression("&&", result, unary());
                 continue;
             }
-            if (match(TokenType.OR2)) {
-                result = new LogicalBinaryExpression("||", result, unary());
-                continue;
+            if(match(TokenType.AND)){
+                result=new LogicalBinaryExpression("&",result,logicalOAnd());
             }
             break;
         }
