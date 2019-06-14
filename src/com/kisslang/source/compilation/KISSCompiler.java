@@ -15,7 +15,7 @@ public class KISSCompiler {
 
     private boolean expressionsProvided;
 
-    private List<Statement> expressionsKISS;
+    private Statement expressionsKISS;
 
     private volatile static KISSCompiler compilerSingleton;
 
@@ -57,10 +57,7 @@ public class KISSCompiler {
 
         provideInit();
 
-        for (Statement e:
-                expressionsKISS) {
-            e.execute();
-        }
+        expressionsKISS.execute();
 
     }
 
@@ -76,9 +73,7 @@ public class KISSCompiler {
 
         provideInit();
 
-        for (Statement e: expressionsKISS) {
-            System.out.println(e);
-        }
+        System.out.println(expressionsKISS);
 
     }
 

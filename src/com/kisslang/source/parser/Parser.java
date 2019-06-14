@@ -19,12 +19,39 @@ public final class Parser {
         size = tokens.size();
     }
 
-    public List<Statement> parse() {
-        final List<Statement> result = new ArrayList<>();
+    public Statement parse() {
+
+        final BlockStatement result = new BlockStatement();
+
         while (!match(TokenType.EOF)) {
-            result.add(statement());
+            result.addStatement(statement());
         }
+
         return result;
+    }
+
+    private BlockStatement block(){
+
+        final BlockStatement blockOfStatements=new BlockStatement();
+
+        consume(TokenType.LPAREN_FIGURE);
+
+        while (!match(TokenType.RPAREN_FIGURE)){
+            if(match(TokenType.EOF)){
+                throw new RuntimeException("Expected } , but found end of file");
+            }
+            blockOfStatements.addStatement(statement());
+        }
+
+        return blockOfStatements;
+    }
+
+    private Statement blockOrSingle(){
+
+        if(get(0).getType()==TokenType.LPAREN_FIGURE){
+            return block();
+        }
+        return statement();
     }
 
     private Statement statement(){
@@ -39,12 +66,6 @@ public final class Parser {
         return assignmentStatement();
     }
 
-    private Token consume(TokenType type){
-        final Token current=get(0);
-        if (type != current.getType()) throw new RuntimeException("Token current doesnt match");
-        pos++;
-        return current;
-    }
 
     private Statement assignmentStatement() {
         final Token current=get(0);
@@ -217,6 +238,20 @@ public final class Parser {
             return result;
         }
         throw new RuntimeException("Unknown expression");
+    }
+
+    private Token consume(TokenType type){
+        final Token current=get(0);
+        if (type != current.getType()) throw new RuntimeException("Token current doesnt match");
+        pos++;
+        return current;
+    }
+
+    private Token consume(TokenType type,String message){
+        final Token current=get(0);
+        if (type != current.getType()) throw new RuntimeException(message);
+        pos++;
+        return current;
     }
 
     private boolean match(TokenType type) {

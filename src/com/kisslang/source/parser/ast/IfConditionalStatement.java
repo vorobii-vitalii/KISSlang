@@ -16,9 +16,9 @@ public class IfConditionalStatement implements Statement {
     @Override
     public void execute() {
 
-        final double result=expression.eval().asDouble();
+        final boolean result=expression.eval().asBoolean();
 
-        if(result==1){
+        if(result==true){
             ifStatement.execute();
         }
         else{
