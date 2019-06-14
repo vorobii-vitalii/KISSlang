@@ -28,6 +28,7 @@ public enum TokenType {
     PLUS,
     POW,
     PRINT,
+    PRINTLINE,
     RPAREN, // )
     RPAREN_FIGURE,
     SLASH,

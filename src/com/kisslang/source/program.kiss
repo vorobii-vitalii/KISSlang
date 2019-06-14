@@ -42,3 +42,7 @@ For(h=0;h<10;h=h+1){
     }
     Print h
 }
+
+PrintLine 'Hello'
+
+Print 'Hello hello'

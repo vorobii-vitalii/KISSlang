@@ -59,6 +59,9 @@ public final class Parser {
         if (match(TokenType.PRINT)){
             return new PrintStatement(expression());
         }
+        if (match(TokenType.PRINTLINE)){
+            return new PrintLineStatement(expression());
+        }
         if(match(TokenType.IF)){
             return IfElse();
         }
@@ -140,11 +143,11 @@ public final class Parser {
 
         while (true) {
             if (match(TokenType.PLUS)) {
-                result = new BinaryExpression('+', result, multiplicative());
+                result = new ArithmeticBinaryExpression('+', result, multiplicative());
                 continue;
             }
             if (match(TokenType.MINUS)) {
-                result = new BinaryExpression('-', result, multiplicative());
+                result = new ArithmeticBinaryExpression('-', result, multiplicative());
                 continue;
             }
             break;
@@ -190,15 +193,15 @@ public final class Parser {
         while (true) {
             // 2 * 6 / 3
             if (match(TokenType.STAR)) {
-                result = new BinaryExpression('*', result, logicalOr());
+                result = new ArithmeticBinaryExpression('*', result, logicalOr());
                 continue;
             }
             if (match(TokenType.POW)) {
-                result = new BinaryExpression('^', result, logicalOr());
+                result = new ArithmeticBinaryExpression('^', result, logicalOr());
                 continue;
             }
             if (match(TokenType.SLASH)) {
-                result = new BinaryExpression('/', result, logicalOr());
+                result = new ArithmeticBinaryExpression('/', result, logicalOr());
                 continue;
             }
             break;
@@ -249,6 +252,7 @@ public final class Parser {
     }
 
     private Expression unary() {
+
         if (match(TokenType.MINUS)) {
             return new UnaryExpression('-', primary());
         }
@@ -258,6 +262,7 @@ public final class Parser {
         if (match(TokenType.NOT)) {
             return new LogicalUnaryExpression('!', primary());
         }
+
         return primary();
     }
 
@@ -280,6 +285,7 @@ public final class Parser {
             match(TokenType.RPAREN);
             return result;
         }
+
         throw new RuntimeException("Unknown expression "+current+" !");
     }
 

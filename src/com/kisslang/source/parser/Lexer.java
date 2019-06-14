@@ -102,6 +102,10 @@ public final class Lexer {
             addToken(TokenType.PRINT);
             return;
         }
+        if (buffer.toString().equals("PrintLine")){
+            addToken(TokenType.PRINTLINE);
+            return;
+        }
         if (buffer.toString().equals("If")){
             addToken(TokenType.IF);
             return;

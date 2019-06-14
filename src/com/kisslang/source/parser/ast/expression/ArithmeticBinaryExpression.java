@@ -4,12 +4,12 @@ import com.kisslang.source.library.value.NumberValue;
 import com.kisslang.source.library.value.StringValue;
 import com.kisslang.source.library.value.Value;
 
-public final class BinaryExpression implements Expression {
+public final class ArithmeticBinaryExpression implements Expression {
 
     private final Expression expr1, expr2;
     private final char operation;
 
-    public BinaryExpression(char operation, Expression expr1, Expression expr2) {
+    public ArithmeticBinaryExpression(char operation, Expression expr1, Expression expr2) {
         this.operation = operation;
         this.expr1 = expr1;
         this.expr2 = expr2;
