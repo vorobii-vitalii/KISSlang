@@ -42,16 +42,16 @@ public final class ArithmeticBinaryExpression implements Expression {
     public Value eval() {
 
         switch (operation) {
-            case '-': return new NumberValue(expr1.eval().asDouble() - expr2.eval().asDouble());
-            case '*': return new NumberValue( expr1.eval().asDouble() * expr2.eval().asDouble());
-            case '/': return new NumberValue( expr1.eval().asDouble() / expr2.eval().asDouble());
-            case '^': return new NumberValue( getPow(expr1.eval().asDouble(),expr2.eval().asDouble()));
+            case '-': return new NumberValue(expr1.eval().asNumber() - expr2.eval().asNumber());
+            case '*': return new NumberValue( expr1.eval().asNumber() * expr2.eval().asNumber());
+            case '/': return new NumberValue( expr1.eval().asNumber() / expr2.eval().asNumber());
+            case '^': return new NumberValue( getPow(expr1.eval().asNumber(),expr2.eval().asNumber()));
             case '+':
             default:
                 if( expr1.eval().isString() || expr2.eval().isString()){
                     return new StringValue(expr1.eval().asString() + expr2.eval().asString());
                 }
-                return new NumberValue(expr1.eval().asDouble() + expr2.eval().asDouble());
+                return new NumberValue(expr1.eval().asNumber() + expr2.eval().asNumber());
         }
     }
 

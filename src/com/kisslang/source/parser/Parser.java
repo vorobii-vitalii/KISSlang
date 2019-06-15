@@ -6,6 +6,8 @@ import com.kisslang.source.parser.ast.expression.binary.LogicalBinaryExpression;
 import com.kisslang.source.parser.ast.expression.unary.LogicalUnaryExpression;
 import com.kisslang.source.parser.ast.expression.unary.UnaryExpression;
 import com.kisslang.source.parser.ast.statements.*;
+import com.kisslang.source.parser.ast.statements.assignement.AssignementConstantStatement;
+import com.kisslang.source.parser.ast.statements.assignement.AssignmentVariableStatement;
 import com.kisslang.source.parser.ast.statements.condition.IfConditionalStatement;
 import com.kisslang.source.parser.ast.statements.loop.BreakLoopStatement;
 import com.kisslang.source.parser.ast.statements.loop.ContinueLoopStatement;
@@ -117,7 +119,7 @@ public final class Parser {
 
     private Statement Input(){
         next();
-        if(get(0).getType()==TokenType.WORD){
+        if(get(0).getType()==TokenType.VAR_NAME){
             Token current=get(0);
             next();
             return new InputStatement(current.getText());
@@ -140,11 +142,17 @@ public final class Parser {
 
     private Statement assignmentStatement() {
         final Token current=get(0);
-        if (current.getType()==TokenType.WORD && get(1).getType()==TokenType.ASSIGN){
-            consume(TokenType.WORD);
+        if (current.getType()==TokenType.VAR_NAME && get(1).getType()==TokenType.ASSIGN){
+            consume(TokenType.VAR_NAME);
             final String varName=current.getText();
             consume(TokenType.ASSIGN);
-            return new AssignmentStatement(varName,expression());
+            return new AssignmentVariableStatement(varName,expression());
+        }
+        if (current.getType()==TokenType.CONST_NAME && get(1).getType()==TokenType.ASSIGN){
+            consume(TokenType.CONST_NAME);
+            final String varName=current.getText();
+            consume(TokenType.ASSIGN);
+            return new AssignementConstantStatement(varName,expression());
         }
         throw new RuntimeException("Unknown operator!");
     }
@@ -320,7 +328,10 @@ public final class Parser {
         if (match(TokenType.HEX_NUMBER)) {
             return new NumberExpression(Long.parseLong(current.getText(), 16));
         }
-        if (match(TokenType.WORD)){
+        if (match(TokenType.VAR_NAME)){
+            return new VariableExpression(current.getText());
+        }
+        if (match(TokenType.CONST_NAME)){
             return new ConstantExpression(current.getText());
         }
         if(match(TokenType.STRING_TEXT)){

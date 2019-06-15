@@ -19,7 +19,7 @@ package com.kisslang.source.library.value.built_in;
 
 public interface Value {
 
-    double asDouble();
+    double asNumber();
 
     String asString();
 

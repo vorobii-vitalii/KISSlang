@@ -23,6 +23,7 @@ public enum TokenType {
     AND2,
     ASSIGN,
     BREAK,
+    CONST_NAME,
     CONTINUE,
     DELIMITER_FOR,
     ELSE,
@@ -52,8 +53,8 @@ public enum TokenType {
     SLASH,
     STAR,
     STRING_TEXT,
-    WHILE,
-    WORD
+    VAR_NAME,
+    WHILE
 
 
 }

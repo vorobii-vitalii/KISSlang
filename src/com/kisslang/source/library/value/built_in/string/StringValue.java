@@ -33,7 +33,7 @@ public class StringValue implements Value {
     }
 
     @Override
-    public double asDouble() {
+    public double asNumber() {
         double result;
         try {
             result=Double.parseDouble(value);

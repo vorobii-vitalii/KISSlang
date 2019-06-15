@@ -33,7 +33,7 @@ public class LogicalBinaryExpression implements Expression {
     }
 
     private boolean doubleAsBoolean(Value val){
-        return val.asDouble()==new LogicalValue(true).asDouble();
+        return val.asNumber()==new LogicalValue(true).asNumber();
     }
 
     @Override

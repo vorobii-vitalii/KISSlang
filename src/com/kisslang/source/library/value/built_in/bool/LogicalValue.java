@@ -28,7 +28,7 @@ public class LogicalValue implements Value {
     }
 
     @Override
-    public double asDouble() {
+    public double asNumber() {
 
         if(value==true){
             return 1;

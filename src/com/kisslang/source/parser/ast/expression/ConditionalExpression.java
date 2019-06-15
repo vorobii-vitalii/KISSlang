@@ -23,22 +23,22 @@ public class ConditionalExpression implements Expression {
         switch (operation){
 
             case ">":
-                result = new LogicalValue(expr1.eval().asDouble()>expr2.eval().asDouble());
+                result = new LogicalValue(expr1.eval().asNumber()>expr2.eval().asNumber());
                 break;
             case ">=":
-                result = new LogicalValue(expr1.eval().asDouble()>=expr2.eval().asDouble());
+                result = new LogicalValue(expr1.eval().asNumber()>=expr2.eval().asNumber());
                 break;
             case "<":
-                result = new LogicalValue(expr1.eval().asDouble()<expr2.eval().asDouble());
+                result = new LogicalValue(expr1.eval().asNumber()<expr2.eval().asNumber());
                 break;
             case "<=":
-                result = new LogicalValue(expr1.eval().asDouble()<=expr2.eval().asDouble());
+                result = new LogicalValue(expr1.eval().asNumber()<=expr2.eval().asNumber());
                 break;
             case "==":
-                result = new LogicalValue(expr1.eval().asDouble()==expr2.eval().asDouble());
+                result = new LogicalValue(expr1.eval().asNumber()==expr2.eval().asNumber());
                 break;
             case "!=":
-                result = new LogicalValue(expr1.eval().asDouble()!=expr2.eval().asDouble());
+                result = new LogicalValue(expr1.eval().asNumber()!=expr2.eval().asNumber());
                 break;
             default:
                 result=new LogicalValue(false);

@@ -1,5 +1,6 @@
 package com.kisslang.source.parser.ast.expression;
 
+import com.kisslang.source.library.VariableKey;
 import com.kisslang.source.library.value.built_in.Value;
 import com.kisslang.source.library.Variables;
 
@@ -14,8 +15,10 @@ public class ConstantExpression implements Expression {
     @Override
     public Value eval() {
 
-        if (Variables.isExists(text)) {
-            return Variables.get(text);
+        VariableKey key=new VariableKey(text,true);
+
+        if (Variables.isExists(key)) {
+            return Variables.get(key);
         }
 
         throw new RuntimeException("There is no such constant! -> "+text);

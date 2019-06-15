@@ -1,5 +1,6 @@
 package com.kisslang.source.parser.ast.statements.standart_lib;
 
+import com.kisslang.source.library.VariableKey;
 import com.kisslang.source.library.Variables;
 import com.kisslang.source.parser.ast.helper.InputRecognizer;
 import com.kisslang.source.parser.ast.statements.Statement;
@@ -42,7 +43,7 @@ public class InputStatement implements Statement {
             while (true) {
                 line = scanner.nextLine();
                 if (!line.isEmpty()){
-                    Variables.add(variableName,new InputRecognizer(line).recognize());
+                    Variables.add(new VariableKey(variableName,false),new InputRecognizer(line).recognize());
                     break;
                 }
             }

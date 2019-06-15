@@ -75,7 +75,7 @@ public final class Lexer {
         while (pos < length) {
             final char current = peek(0);
             if (Character.isDigit(current)) tokenizeNumber();
-            else if(Character.isLetter(current)) tokenizeWord();
+            else if(Character.isLetter(current) || current=='$') tokenizeWord();
             else if (current == '#') {
                 next();
                 tokenizeHexNumber();
@@ -150,8 +150,11 @@ public final class Lexer {
         if(buffer.toString().equals("Break")){
             addToken(TokenType.BREAK);
         }
-
-        addToken(TokenType.WORD,buffer.toString());
+        if(buffer.toString().startsWith("$")){
+            addToken(TokenType.VAR_NAME,buffer.toString().substring(1,buffer.toString().length()));
+            return;
+        }
+        addToken(TokenType.CONST_NAME,buffer.toString());
     }
 
     private void tokenizeNumber() {

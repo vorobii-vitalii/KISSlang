@@ -35,10 +35,10 @@ public final class UnaryExpression implements Expression {
     @Override
     public Value eval() {
         switch (operation) {
-            case '-': return new NumberValue( -expr1.eval().asDouble());
+            case '-': return new NumberValue( -expr1.eval().asNumber());
             case '+':
             default:
-                return new NumberValue(expr1.eval().asDouble());
+                return new NumberValue(expr1.eval().asNumber());
         }
     }
 
