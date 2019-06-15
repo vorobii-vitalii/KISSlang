@@ -1,7 +1,8 @@
-package com.kisslang.source.parser.ast.statements;
+package com.kisslang.source.parser.ast.statements.standart_lib;
 
 import com.kisslang.source.library.Variables;
 import com.kisslang.source.parser.ast.helper.InputRecognizer;
+import com.kisslang.source.parser.ast.statements.Statement;
 
 
 import java.util.Scanner;

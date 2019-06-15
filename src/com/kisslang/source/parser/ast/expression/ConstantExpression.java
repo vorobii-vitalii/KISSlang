@@ -1,6 +1,6 @@
 package com.kisslang.source.parser.ast.expression;
 
-import com.kisslang.source.library.value.Value;
+import com.kisslang.source.library.value.built_in.Value;
 import com.kisslang.source.library.Variables;
 
 public class ConstantExpression implements Expression {

@@ -1,8 +1,8 @@
 package com.kisslang.source.compilation;
 
-import com.kisslang.source.parser.Lexer;
+import com.kisslang.source.parser.lex_analysis.Lexer;
 import com.kisslang.source.parser.Parser;
-import com.kisslang.source.parser.Token;
+import com.kisslang.source.parser.tokenization.Token;
 import com.kisslang.source.parser.ast.statements.Statement;
 
 import java.util.List;

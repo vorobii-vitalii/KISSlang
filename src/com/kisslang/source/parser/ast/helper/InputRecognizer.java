@@ -1,9 +1,9 @@
 package com.kisslang.source.parser.ast.helper;
 
-import com.kisslang.source.library.value.LogicalValue;
-import com.kisslang.source.library.value.NumberValue;
-import com.kisslang.source.library.value.StringValue;
-import com.kisslang.source.library.value.Value;
+import com.kisslang.source.library.value.built_in.bool.LogicalValue;
+import com.kisslang.source.library.value.built_in.number.NumberValue;
+import com.kisslang.source.library.value.built_in.string.StringValue;
+import com.kisslang.source.library.value.built_in.Value;
 
 public class InputRecognizer {
 

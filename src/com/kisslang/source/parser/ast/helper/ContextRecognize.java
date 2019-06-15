@@ -2,7 +2,7 @@ package com.kisslang.source.parser.ast.helper;
 
 public final class ContextRecognize {
 
-    private final static boolean isSeparator(char c) {
+    private final static boolean isNumberSeperator(char c) {
 
         if (c=='.'){
             return true;
@@ -23,7 +23,7 @@ public final class ContextRecognize {
 
             if (!Character.isDigit(term.charAt(i))) {
 
-                if (!isSeparator(term.charAt(i))) {
+                if (!isNumberSeperator(term.charAt(i))) {
                     return false;
                 }
             }
