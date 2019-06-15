@@ -22,6 +22,17 @@ public class LogicalValue implements Value {
         return value;
     }
 
+    public static boolean toBoolean(final String term){
+
+        if(term.equals("True")){
+            return true;
+        }
+        else if(term.equals("False")){
+            return false;
+        }
+        throw new RuntimeException("Cannot cast "+term+" to Boolean...");
+    }
+
     public String representBooleanAsString(boolean value){ //Python style
         return Boolean.toString(value).replaceFirst(Character.toString(Boolean.toString(value).charAt(0)),Character.toString(Character.toUpperCase(Boolean.toString(value).charAt(0))));
     }

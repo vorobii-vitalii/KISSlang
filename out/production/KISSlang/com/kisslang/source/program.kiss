@@ -1,48 +1,7 @@
-a=25
+a=2
 
-b=34
+Input a
 
-//If (a+b)==59
-//    Print "Yes"
-//Else
-//    Print "No"
+PrintLine a
 
-//Print a+b
-
-//Print (2^3+5)*4+24
-
-//Print (a && b) &&  0
-
-//Print 1 && 0
-
-If (2>0){
-    Print a+b
-    Print a+b
-}
-Else
-    Print a-b
-
-i=0
-Print i
-i=i+1
-Print i
-
-While i<10{
-    i=i+1
-    If i>5{
-        Break
-    }
-}
-Print i
-
-For(h=0;h<10;h=h+1){
-    If (h>5){
-        Print "Yeah"
-        Continue
-    }
-    Print h
-}
-
-PrintLine 'Hello'
-
-Print 'Hello hello'
+Pi=2.4

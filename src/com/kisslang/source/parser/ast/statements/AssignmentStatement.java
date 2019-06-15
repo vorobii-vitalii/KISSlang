@@ -9,21 +9,34 @@ public final class AssignmentStatement implements Statement {
 
     private final String variableName;
 
-    private final Expression expression;
+    private Expression expression;
+
+    private Value value=null;
+
+    boolean valueIsAlreadyProvided;
 
     public AssignmentStatement(String variableName,Expression expression){
         this.variableName=variableName;
         this.expression=expression;
+        this.valueIsAlreadyProvided=false;
+    }
+
+    public AssignmentStatement(String variableName,Value value){
+        this.variableName=variableName;
+        this.value=value;
+        this.valueIsAlreadyProvided=true;
     }
 
     @Override
     public void execute() {
 
-        Value value=expression.eval();
+        if(valueIsAlreadyProvided){
+            Variables.add(variableName,value);
+            return;
+        }
+        Value value1=expression.eval();
 
-        //System.out.println(expression.eval());
-
-        Variables.add(variableName,value);
+        Variables.add(variableName,value1);
     }
 
     @Override

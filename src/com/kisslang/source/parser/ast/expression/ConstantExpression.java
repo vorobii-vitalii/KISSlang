@@ -13,10 +13,12 @@ public class ConstantExpression implements Expression {
 
     @Override
     public Value eval() {
-        if(Variables.isExists(text)){
+
+        if (Variables.isExists(text)) {
             return Variables.get(text);
         }
-        throw new RuntimeException("There is no such constant!");
+
+        throw new RuntimeException("There is no such constant! -> "+text);
     }
 
     @Override

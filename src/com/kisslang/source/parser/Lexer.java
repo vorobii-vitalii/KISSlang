@@ -121,6 +121,9 @@ public final class Lexer {
         if(buffer.toString().equals("For")){
             addToken(TokenType.FOR);
         }
+        if(buffer.toString().equals("Input")){
+            addToken(TokenType.INPUT);
+        }
         if(buffer.toString().equals("Continue")){
             addToken(TokenType.CONTINUE);
         }

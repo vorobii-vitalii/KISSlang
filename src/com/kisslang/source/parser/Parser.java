@@ -2,6 +2,7 @@ package com.kisslang.source.parser;
 
 import com.kisslang.source.parser.ast.expression.*;
 import com.kisslang.source.parser.ast.statements.*;
+import jdk.internal.util.xml.impl.Input;
 
 import java.util.List;
 
@@ -62,6 +63,9 @@ public final class Parser {
         if (match(TokenType.PRINTLINE)){
             return new PrintLineStatement(expression());
         }
+        if (match(TokenType.INPUT)){
+            return Input();
+        }
         if(match(TokenType.IF)){
             return IfElse();
         }
@@ -79,6 +83,18 @@ public final class Parser {
         }
 
         return assignmentStatement();
+    }
+
+    private Statement Input(){
+        next();
+        if(get(0).getType()==TokenType.WORD){
+            Token current=get(0);
+            next();
+            return new InputStatement(current.getText());
+        }
+
+        throw new RuntimeException("Wrong input statement usage");
+
     }
 
     private Statement Continue() {

@@ -16,6 +16,7 @@ public enum TokenType {
     GREATER_THAN,
     HEX_NUMBER,
     IF,
+    INPUT,
     LOWER_OR_EQUAL_THAN,
     LOWER_THAN,
     LPAREN, // (

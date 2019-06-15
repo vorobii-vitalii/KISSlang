@@ -53,11 +53,12 @@ public class KISSCompiler {
         return compilerSingleton;
     }
 
-    public void execute() {
+    public void execute() throws java.io.IOException {
 
         provideInit();
 
         expressionsKISS.execute();
+
 
     }
 
