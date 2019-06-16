@@ -14,7 +14,7 @@ public class FunctionalCallExpression implements Expression {
 
     private final List<Expression> args;
 
-    FunctionalCallExpression(String funcName,List<Expression> args){
+    public FunctionalCallExpression(String funcName,List<Expression> args){
         this.funcName=funcName;
         this.args=args;
     }
@@ -23,7 +23,7 @@ public class FunctionalCallExpression implements Expression {
         return args.size();
     }
 
-    FunctionalCallExpression(String funcName){
+    public FunctionalCallExpression(String funcName){
         this.funcName=funcName;
         this.args=new ArrayList<>();
     }

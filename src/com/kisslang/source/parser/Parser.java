@@ -113,6 +113,9 @@ public final class Parser {
         if(match(TokenType.CONTINUE)){
             return Continue();
         }
+        if(get(0).getType()==TokenType.CONST_NAME && get(1).getType()==TokenType.LPAREN){
+            return new FunctionStatement(Function());
+        }
 
         return assignmentStatement();
     }
@@ -135,8 +138,14 @@ public final class Parser {
 
         consume(TokenType.LPAREN,"Expected ( !");
 
+        final FunctionalCallExpression function=new FunctionalCallExpression(functionName);
 
+        while(!match(TokenType.RPAREN)){
+            function.addArgument(expression());
+            match(TokenType.DELIMITER_ARGS);
+        }
 
+        return function;
     }
 
 
@@ -339,7 +348,7 @@ public final class Parser {
         if (match(TokenType.HEX_NUMBER)) {
             return new NumberExpression(Long.parseLong(current.getText(), 16));
         }
-        if(get(0).getType()==TokenType.VAR_NAME && get(1).getType()==TokenType.LPAREN){
+        if(get(0).getType()==TokenType.CONST_NAME && get(1).getType()==TokenType.LPAREN){
             return Function();
         }
         if (match(TokenType.VAR_NAME)){

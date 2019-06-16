@@ -1,4 +1,4 @@
-package com.kisslang.source.parser.tokenization;
+package com.kisslang.source.parser.ast.statements;
 
 /*
  * Copyright (C) 2019 The KISSlang Project by Vitalii Vorobii
@@ -17,45 +17,23 @@ package com.kisslang.source.parser.tokenization;
  *
  */
 
-public enum TokenType {
+import com.kisslang.source.parser.ast.expression.Expression;
 
-    AND,
-    AND2,
-    ASSIGN,
-    BREAK,
-    CONST_NAME,
-    CONTINUE,
-    DELIMITER_FOR,
-    ELSE,
-    EOF,
-    EQUAL,
-    FOR,
-    GREATER_OR_EQUAL_THAN,
-    GREATER_THAN,
-    HEX_NUMBER,
-    DELIMITER_ARGS,
-    IF,
-    INPUT,
-    LOWER_OR_EQUAL_THAN,
-    LOWER_THAN,
-    LPAREN, // (
-    LPAREN_FIGURE,
-    MINUS,
-    NOT,
-    NUMBER,
-    OR,
-    OR2,
-    PLUS,
-    POW,
-    PRINT,
-    PRINTLINE,
-    RPAREN, // )
-    RPAREN_FIGURE,
-    SLASH,
-    STAR,
-    STRING_TEXT,
-    VAR_NAME,
-    WHILE
+public class FunctionStatement implements Statement {
 
+    private final Expression expression;
 
+    public FunctionStatement(Expression expression){
+        this.expression=expression;
+    }
+
+    @Override
+    public void execute() {
+        expression.eval();
+    }
+
+    @Override
+    public String toString() {
+        return "Function: "+expression;
+    }
 }

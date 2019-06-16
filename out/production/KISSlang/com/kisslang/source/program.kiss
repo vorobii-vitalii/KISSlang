@@ -1,7 +1,13 @@
+Input $r
+
+Print $r
+
+PrintLine $r
+
+PrintLine Sin(PI)
+
 For($i=0;$i<10;$i=$i+1){
     PrintLine $i
 }
 
-Input $r
-
-Print $r
+Print(25)
