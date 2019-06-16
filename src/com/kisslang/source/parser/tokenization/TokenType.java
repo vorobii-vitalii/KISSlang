@@ -43,6 +43,7 @@ public enum TokenType {
     MINUS,
     NOT,
     NUMBER,
+    FUNCTION_DECLARATION,
     OR,
     OR2,
     PLUS,
