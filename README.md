@@ -45,3 +45,29 @@ For($i=0;$i<10;$i++){
 // Square of circle recognizing
 Input $r
 PrintLine PI*($r^2)
+```
+```
+// Some functions 
+
+Function $func1($name1){
+    PrintLine $name1
+}
+
+$func1("KISSLANG")
+
+Function $func1($name1){
+    PrintLine $name1+" has changed! "
+}
+
+$func1("KISSLANG")
+
+// Functions that assigned with $ are muttable, while 
+// those who assigned without $ are immutable
+
+Function func2($name3){
+    PrintLine $name3
+}
+
+Function func2($name3){ //Error
+    PrintLine $name3+" changed"
+}

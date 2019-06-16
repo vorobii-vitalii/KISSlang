@@ -19,8 +19,14 @@ Function printName(name){
 
 printName("KISSlang")
 
-Function $hello(name1){
-    PrintLine name1
+Function $func1($name1){
+    PrintLine $name1
 }
 
-$hello("KISSLANG")
+$func1("KISSLANG")
+
+Function $func1($name1){
+    PrintLine $name1+" has changed! "
+}
+
+$func1("KISSLANG")
