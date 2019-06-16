@@ -31,11 +31,11 @@ public class Functions {
 
         functions=new HashMap<>();
 
-        functions.put(new FunctionKey("Sin",1), args -> {
+        functions.put(new FunctionKey("Sin",1,true), args -> {
                 return new NumberValue(Math.sin(args[0].asNumber()));
         });
 
-        functions.put(new FunctionKey("Print",1), args -> {
+        functions.put(new FunctionKey("Print",1,true), args -> {
             System.out.println(args[0]+"\n");
             return null;
         });

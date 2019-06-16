@@ -10,4 +10,4 @@ For($i=0;$i<10;$i=$i+1){
     PrintLine $i
 }
 
-Print(25)
+Print(25+" helo")

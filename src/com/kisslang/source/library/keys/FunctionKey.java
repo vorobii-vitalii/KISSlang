@@ -23,23 +23,33 @@ public class FunctionKey {
 
     private int argCount;
 
-    public FunctionKey(String functionName, int argCount){
+    private boolean immutable;
+
+    public FunctionKey(String functionName, int argCount,boolean immutable){
         this.functionName = functionName;
         this.argCount=argCount;
+        this.immutable=immutable;
     }
 
     public FunctionKey(){
         throw new RuntimeException("Expected function name ... ");
     }
 
+    public FunctionKey(String functionName){
+        throw new RuntimeException("Expected number of arguments");
+    }
+
     public String getFunctionName(){
         return functionName;
     }
 
+    public boolean isImmutable(){
+        return immutable;
+    }
 
     @Override
     public int hashCode() {
-        return functionName.hashCode()+ argCount;
+        return functionName.hashCode()+ argCount+ ( immutable ? 1:0 );
     }
 
     @Override

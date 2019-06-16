@@ -1,5 +1,9 @@
 package com.kisslang.source.parser.ast.expression;
 
+import com.kisslang.source.library.keys.VariableKey;
+import com.kisslang.source.library.Variables;
+import com.kisslang.source.library.Value;
+
 /*
  * Copyright (C) 2019 The KISSlang Project by Vitalii Vorobii
  *
@@ -16,10 +20,6 @@ package com.kisslang.source.parser.ast.expression;
  *   limitations under the License.
  *
  */
-
-import com.kisslang.source.library.keys.VariableKey;
-import com.kisslang.source.library.Variables;
-import com.kisslang.source.library.Value;
 
 public class VariableExpression implements Expression {
 
