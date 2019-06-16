@@ -118,7 +118,10 @@ public final class Parser {
             return FunctionDeclaration();
         }
         if(get(0).getType()==TokenType.IMMUTABLE_NAME && get(1).getType()==TokenType.LPAREN){
-            return new FunctionStatement(Function());
+            return new FunctionStatement(ImmutableFunctionCall());
+        }
+        if(get(0).getType()==TokenType.MUTTABLE_NAME && get(1).getType()==TokenType.LPAREN){
+            return new FunctionStatement(MutableFunctionCall());
         }
 
         return assignmentStatement();
@@ -183,13 +186,29 @@ public final class Parser {
 
     }
 
-    private Expression Function(){
+    private Expression ImmutableFunctionCall(){
 
         final String functionName=consume(TokenType.IMMUTABLE_NAME,"Expected function name").getText();
 
         consume(TokenType.LPAREN,"Expected ( !");
 
         final ImmutableFunctionalCallExpression function=new ImmutableFunctionalCallExpression(functionName);
+
+        while(!match(TokenType.RPAREN)){
+            function.addArgument(expression());
+            match(TokenType.DELIMITER_ARGS);
+        }
+
+        return function;
+    }
+
+    private Expression MutableFunctionCall(){
+
+        final String functionName=consume(TokenType.MUTTABLE_NAME,"Expected function name").getText();
+
+        consume(TokenType.LPAREN,"Expected ( !");
+
+        final MutableFunctionalCallExpression function=new MutableFunctionalCallExpression(functionName);
 
         while(!match(TokenType.RPAREN)){
             function.addArgument(expression());
@@ -225,7 +244,7 @@ public final class Parser {
             consume(TokenType.ASSIGN);
             return new AssignementConstantStatement(varName,expression());
         }
-        throw new RuntimeException("Unknown operator!");
+        throw new RuntimeException("Unknown operator!" + current+" Next "+get(1)+" -> "+get(2));
     }
 
     private Statement IfElse() {
@@ -400,7 +419,10 @@ public final class Parser {
             return new NumberExpression(Long.parseLong(current.getText(), 16));
         }
         if(get(0).getType()==TokenType.IMMUTABLE_NAME && get(1).getType()==TokenType.LPAREN){
-            return Function();
+            return ImmutableFunctionCall();
+        }
+        if(get(0).getType()==TokenType.MUTTABLE_NAME && get(1).getType()==TokenType.LPAREN){
+            return MutableFunctionCall();
         }
         if (match(TokenType.MUTTABLE_NAME)){
             return new VariableExpression(current.getText());

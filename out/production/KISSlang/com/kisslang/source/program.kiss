@@ -19,3 +19,8 @@ Function printName(name){
 
 printName("KISSlang")
 
+Function $hello(name1){
+    PrintLine name1
+}
+
+$hello("KISSLANG")
