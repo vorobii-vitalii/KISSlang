@@ -151,11 +151,14 @@ public final class Lexer {
         if(buffer.toString().equals("Break")){
             addToken(TokenType.BREAK);
         }
+        if(buffer.toString().equals("Function")){
+            addToken(TokenType.FUNCTION_DECLARATION);
+        }
         if(buffer.toString().startsWith("$")){
-            addToken(TokenType.VAR_NAME,buffer.toString().substring(1,buffer.toString().length()));
+            addToken(TokenType.MUTTABLE_NAME,buffer.toString().substring(1,buffer.toString().length()));
             return;
         }
-        addToken(TokenType.CONST_NAME,buffer.toString());
+        addToken(TokenType.IMMUTABLE_NAME,buffer.toString());
     }
 
     private void tokenizeNumber() {

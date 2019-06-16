@@ -1,6 +1,6 @@
 package com.kisslang.source;
 
-import com.kisslang.source.compilation.KISSCompiler;
+import com.kisslang.source.compilation.KISSInterpreter;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -11,7 +11,7 @@ public class Main {
 
         String content = new String(Files.readAllBytes(Paths.get("/home/vitalii/eclipse-workspace/KISSlang/src/com/kisslang/source/program.kiss")));
 
-        KISSCompiler compiler=KISSCompiler.getInstance(content);
+        KISSInterpreter compiler= KISSInterpreter.getInstance(content);
 
         System.out.println(compiler.getSourceCode());
 

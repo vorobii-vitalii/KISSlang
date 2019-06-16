@@ -7,7 +7,7 @@ import com.kisslang.source.parser.ast.statements.Statement;
 
 import java.util.List;
 
-public class KISSCompiler {
+public class KISSInterpreter {
 
     private String codeToBeCompiled;
 
@@ -17,14 +17,14 @@ public class KISSCompiler {
 
     private Statement expressionsKISS;
 
-    private volatile static KISSCompiler compilerSingleton;
+    private volatile static KISSInterpreter compilerSingleton;
 
-    private KISSCompiler(String codeToBeCompiled) {
+    private KISSInterpreter(String codeToBeCompiled) {
         this.codeToBeCompiled=codeToBeCompiled;
         expressionsProvided=false;
     }
 
-    private KISSCompiler(){
+    private KISSInterpreter(){
         this.codeToBeCompiled="";
         expressionsProvided=false;
     }
@@ -37,18 +37,18 @@ public class KISSCompiler {
         return codeToBeCompiled;
     }
 
-    public static KISSCompiler getInstance(String code) {
+    public static KISSInterpreter getInstance(String code) {
 
         if (compilerSingleton==null){
-            compilerSingleton=new KISSCompiler(code);
+            compilerSingleton=new KISSInterpreter(code);
         }
         return compilerSingleton;
     }
 
-    public static KISSCompiler getInstance() {
+    public static KISSInterpreter getInstance() {
 
         if (compilerSingleton==null){
-            compilerSingleton=new KISSCompiler();
+            compilerSingleton=new KISSInterpreter();
         }
         return compilerSingleton;
     }

@@ -1,4 +1,4 @@
-package com.kisslang.source.parser.tokenization;
+package com.kisslang.source.parser.ast.statements;
 
 /*
  * Copyright (C) 2019 The KISSlang Project by Vitalii Vorobii
@@ -17,45 +17,32 @@ package com.kisslang.source.parser.tokenization;
  *
  */
 
-public enum TokenType {
+public class Argument {
 
-    AND,
-    AND2,
-    ASSIGN,
-    BREAK,
-    IMMUTABLE_NAME,
-    CONTINUE,
-    DELIMITER_FOR,
-    ELSE,
-    EOF,
-    EQUAL,
-    FOR,
-    GREATER_OR_EQUAL_THAN,
-    GREATER_THAN,
-    HEX_NUMBER,
-    DELIMITER_ARGS,
-    IF,
-    INPUT,
-    LOWER_OR_EQUAL_THAN,
-    LOWER_THAN,
-    LPAREN, // (
-    LPAREN_FIGURE,
-    MINUS,
-    NOT,
-    NUMBER,
-    FUNCTION_DECLARATION,
-    OR,
-    OR2,
-    PLUS,
-    POW,
-    PRINT,
-    PRINTLINE,
-    RPAREN, // )
-    RPAREN_FIGURE,
-    SLASH,
-    STAR,
-    STRING_TEXT,
-    MUTTABLE_NAME,
-    WHILE
+    private String name;
 
+    private boolean immutable;
+
+    public Argument(String name,boolean immutable){
+        this.name=name;
+        this.immutable=immutable;
+    }
+
+    public String getArgumentName() {
+        return name;
+    }
+
+    public boolean isImmutable() {
+        return immutable;
+    }
+
+    @Override
+    public int hashCode() {
+        return name.hashCode()+(immutable ? 1:0 );
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return this.hashCode()==o.hashCode();
+    }
 }

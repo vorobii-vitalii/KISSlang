@@ -57,8 +57,9 @@ public class Functions {
 
     public static void add(FunctionKey key,Function value){
 
-        if(isExists(key)){
-            throw new RuntimeException("Cannot declare function with the same name && arguments count ! ");
+        if( isExists(key) && key.isImmutable() ){
+
+            throw new RuntimeException("Cannot declare constant function with the same name && arguments count ! ");
         }
 
         functions.put(key, value);

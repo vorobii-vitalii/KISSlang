@@ -1,11 +1,10 @@
 package com.kisslang.source.parser.ast.expression;
 
-import com.kisslang.source.library.Functions;
-import com.kisslang.source.library.Value;
+import com.kisslang.source.library.*;
 import com.kisslang.source.library.keys.FunctionKey;
+import com.kisslang.source.library.keys.VariableKey;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 /*
@@ -25,13 +24,13 @@ import java.util.List;
  *
  */
 
-public class FunctionalCallExpression implements Expression {
+public class MutableFunctionalCallExpression implements Expression {
 
     private final String funcName;
 
     private final List<Expression> args;
 
-    public FunctionalCallExpression(String funcName,List<Expression> args){
+    public MutableFunctionalCallExpression(String funcName, List<Expression> args){
         this.funcName=funcName;
         this.args=args;
     }
@@ -40,7 +39,7 @@ public class FunctionalCallExpression implements Expression {
         return args.size();
     }
 
-    public FunctionalCallExpression(String funcName){
+    public MutableFunctionalCallExpression(String funcName){
         this.funcName=funcName;
         this.args=new ArrayList<>();
     }
@@ -59,7 +58,23 @@ public class FunctionalCallExpression implements Expression {
             values[i]=args.get(i).eval();
         }
 
-        return Functions.get(new FunctionKey(funcName,length,true)).execute(values);
+        Function func=Functions.get(new FunctionKey(funcName,length,false));
+
+        if ( func instanceof UserDefinedFunction){
+
+            UserDefinedFunction userFunc=(UserDefinedFunction) func;
+
+            if(length!=userFunc.getArgumentsCount()){
+                throw new RuntimeException("Arguments don`t match. ");
+            }
+
+            for (int i=0;i<userFunc.getArgumentsCount();i++){
+                Variables.add(new VariableKey(userFunc.getArgName(i).getArgumentName(),userFunc.getArgName(i).isImmutable()),values[i]);
+            }
+
+        }
+
+        return func.execute(values);
     }
 
 

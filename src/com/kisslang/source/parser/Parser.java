@@ -19,6 +19,7 @@ import com.kisslang.source.parser.ast.statements.standart_lib.PrintStatement;
 import com.kisslang.source.parser.tokenization.Token;
 import com.kisslang.source.parser.tokenization.TokenType;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /*
@@ -113,7 +114,10 @@ public final class Parser {
         if(match(TokenType.CONTINUE)){
             return Continue();
         }
-        if(get(0).getType()==TokenType.CONST_NAME && get(1).getType()==TokenType.LPAREN){
+        if(match(TokenType.FUNCTION_DECLARATION)){
+            return FunctionDeclaration();
+        }
+        if(get(0).getType()==TokenType.IMMUTABLE_NAME && get(1).getType()==TokenType.LPAREN){
             return new FunctionStatement(Function());
         }
 
@@ -122,7 +126,7 @@ public final class Parser {
 
     private Statement Input(){
         next();
-        if(get(0).getType()==TokenType.VAR_NAME){
+        if(get(0).getType()==TokenType.MUTTABLE_NAME){
             Token current=get(0);
             next();
             return new InputStatement(current.getText());
@@ -132,13 +136,60 @@ public final class Parser {
 
     }
 
-    private Expression Function(){
+    private Statement FunctionDeclaration(){
 
-        final String functionName=consume(TokenType.CONST_NAME,"Expected function name").getText();
+        next();
+
+        final String functionName=get(0).getText();
+
+        final TokenType functionNameType=get(0).getType();
+
+        if(get(0).getType()!=TokenType.IMMUTABLE_NAME && get(0).getType()!=TokenType.MUTTABLE_NAME){
+            throw new RuntimeException("Expected function name");
+        }
+        next();
+
+        System.out.println(functionName+" with type of "+functionNameType);
 
         consume(TokenType.LPAREN,"Expected ( !");
 
-        final FunctionalCallExpression function=new FunctionalCallExpression(functionName);
+        final List<Argument> argNames=new ArrayList<>();
+
+        while(!match(TokenType.RPAREN)){
+            Token current=get(0);
+            if(get(0).getType()!=TokenType.IMMUTABLE_NAME && get(0).getType()!=TokenType.MUTTABLE_NAME){
+                throw new RuntimeException("Expected argument");
+            }
+            Argument arg=null;
+            if(get(0).getType()==TokenType.IMMUTABLE_NAME){
+                arg=new Argument(current.getText(),true);
+            }
+            else{
+                arg=new Argument(current.getText(),false);
+            }
+            argNames.add(arg);
+            next();
+            match(TokenType.DELIMITER_ARGS);
+        }
+
+        final Statement functionBody=blockOrSingle();
+
+        if(functionNameType==TokenType.IMMUTABLE_NAME){
+
+            return new ImmutableFunctionAssignStatement(functionName,argNames,functionBody);
+        }
+
+        return new MutableFunctionAssignStatement(functionName,argNames,functionBody);
+
+    }
+
+    private Expression Function(){
+
+        final String functionName=consume(TokenType.IMMUTABLE_NAME,"Expected function name").getText();
+
+        consume(TokenType.LPAREN,"Expected ( !");
+
+        final ImmutableFunctionalCallExpression function=new ImmutableFunctionalCallExpression(functionName);
 
         while(!match(TokenType.RPAREN)){
             function.addArgument(expression());
@@ -162,14 +213,14 @@ public final class Parser {
 
     private Statement assignmentStatement() {
         final Token current=get(0);
-        if (current.getType()==TokenType.VAR_NAME && get(1).getType()==TokenType.ASSIGN){
-            consume(TokenType.VAR_NAME);
+        if (current.getType()==TokenType.MUTTABLE_NAME && get(1).getType()==TokenType.ASSIGN){
+            consume(TokenType.MUTTABLE_NAME);
             final String varName=current.getText();
             consume(TokenType.ASSIGN);
             return new AssignmentVariableStatement(varName,expression());
         }
-        if (current.getType()==TokenType.CONST_NAME && get(1).getType()==TokenType.ASSIGN){
-            consume(TokenType.CONST_NAME);
+        if (current.getType()==TokenType.IMMUTABLE_NAME && get(1).getType()==TokenType.ASSIGN){
+            consume(TokenType.IMMUTABLE_NAME);
             final String varName=current.getText();
             consume(TokenType.ASSIGN);
             return new AssignementConstantStatement(varName,expression());
@@ -348,13 +399,13 @@ public final class Parser {
         if (match(TokenType.HEX_NUMBER)) {
             return new NumberExpression(Long.parseLong(current.getText(), 16));
         }
-        if(get(0).getType()==TokenType.CONST_NAME && get(1).getType()==TokenType.LPAREN){
+        if(get(0).getType()==TokenType.IMMUTABLE_NAME && get(1).getType()==TokenType.LPAREN){
             return Function();
         }
-        if (match(TokenType.VAR_NAME)){
+        if (match(TokenType.MUTTABLE_NAME)){
             return new VariableExpression(current.getText());
         }
-        if (match(TokenType.CONST_NAME)){
+        if (match(TokenType.IMMUTABLE_NAME)){
             return new ConstantExpression(current.getText());
         }
         if(match(TokenType.STRING_TEXT)){

@@ -1,15 +1,21 @@
-Input $r
-
-Print $r
-
-PrintLine $r
-
 PrintLine Sin(PI)
 
 For($i=0;$i<10;$i=$i+1){
     PrintLine $i
 }
 
-Print(25+" helo")
+PrintLine(25+" helo")
 
-PI=2
+$PI=2.4
+
+PrintLine "Variable PI "+$PI
+
+PrintLine "Constant PI "+PI
+
+
+Function printName(name){
+    PrintLine name
+}
+
+printName("KISSlang")
+
