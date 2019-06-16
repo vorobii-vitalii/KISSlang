@@ -1,7 +1,7 @@
 package com.kisslang.source.library;
 
+import com.kisslang.source.library.keys.VariableKey;
 import com.kisslang.source.library.value.built_in.number.NumberValue;
-import com.kisslang.source.library.value.built_in.Value;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,7 +1,7 @@
 package com.kisslang.source.parser.ast.expression;
 
 import com.kisslang.source.library.value.built_in.string.StringValue;
-import com.kisslang.source.library.value.built_in.Value;
+import com.kisslang.source.library.Value;
 
 public class StringExpression implements Expression {
 

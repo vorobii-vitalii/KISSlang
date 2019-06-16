@@ -1,7 +1,10 @@
 package com.kisslang.source.parser.ast.expression;
 
-import com.kisslang.source.library.value.built_in.Value;
+import com.kisslang.source.library.Functions;
+import com.kisslang.source.library.Value;
+import com.kisslang.source.library.keys.FunctionKey;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -16,9 +19,13 @@ public class FunctionalCallExpression implements Expression {
         this.args=args;
     }
 
+    private int getArgumentsCount(){
+        return args.size();
+    }
+
     FunctionalCallExpression(String funcName){
         this.funcName=funcName;
-        this.args=new LinkedList<>();
+        this.args=new ArrayList<>();
     }
 
     public void addArgument(Expression arg){
@@ -27,8 +34,18 @@ public class FunctionalCallExpression implements Expression {
 
     @Override
     public Value eval() {
-        return null;
+        int length=getArgumentsCount();
+
+        Value [] values=new Value[length];
+
+        for (int i=0;i<length;i++){
+            values[i]=args.get(i).eval();
+        }
+
+        return Functions.get(new FunctionKey(funcName,length)).execute(values);
     }
+
+
 
     @Override
     public String toString() {

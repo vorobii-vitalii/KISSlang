@@ -1,6 +1,6 @@
-# KISSlang
+## KISSlang
 
-Sample JVM JIT compiler for a sample language created for educational purposes.
+#####Sample JVM JIT compiler for a sample language created for educational purposes.
 
 ## A few examples:
 ```
@@ -31,6 +31,7 @@ Else
 $i=10
 While ($i>0){
     PrintLine $i
+    $i=$i-1
 }
 PrintLine $i
 ```

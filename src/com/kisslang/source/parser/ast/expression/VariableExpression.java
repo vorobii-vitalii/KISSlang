@@ -17,9 +17,9 @@ package com.kisslang.source.parser.ast.expression;
  *
  */
 
-import com.kisslang.source.library.VariableKey;
+import com.kisslang.source.library.keys.VariableKey;
 import com.kisslang.source.library.Variables;
-import com.kisslang.source.library.value.built_in.Value;
+import com.kisslang.source.library.Value;
 
 public class VariableExpression implements Expression {
 

@@ -2,7 +2,7 @@ package com.kisslang.source.parser.ast.expression.binary;
 
 import com.kisslang.source.library.value.built_in.number.NumberValue;
 import com.kisslang.source.library.value.built_in.string.StringValue;
-import com.kisslang.source.library.value.built_in.Value;
+import com.kisslang.source.library.Value;
 import com.kisslang.source.parser.ast.expression.Expression;
 
 /*

@@ -1,8 +1,8 @@
 package com.kisslang.source.parser.ast.statements.assignement;
 
-import com.kisslang.source.library.VariableKey;
+import com.kisslang.source.library.keys.VariableKey;
 import com.kisslang.source.library.Variables;
-import com.kisslang.source.library.value.built_in.Value;
+import com.kisslang.source.library.Value;
 import com.kisslang.source.parser.ast.expression.Expression;
 import com.kisslang.source.parser.ast.statements.Statement;
 

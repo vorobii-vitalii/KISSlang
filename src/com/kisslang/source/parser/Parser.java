@@ -129,6 +129,17 @@ public final class Parser {
 
     }
 
+    private Expression Function(){
+
+        final String functionName=consume(TokenType.CONST_NAME,"Expected function name").getText();
+
+        consume(TokenType.LPAREN,"Expected ( !");
+
+
+
+    }
+
+
     private Statement Continue() {
         next();
         return new ContinueLoopStatement();
@@ -327,6 +338,9 @@ public final class Parser {
         }
         if (match(TokenType.HEX_NUMBER)) {
             return new NumberExpression(Long.parseLong(current.getText(), 16));
+        }
+        if(get(0).getType()==TokenType.VAR_NAME && get(1).getType()==TokenType.LPAREN){
+            return Function();
         }
         if (match(TokenType.VAR_NAME)){
             return new VariableExpression(current.getText());

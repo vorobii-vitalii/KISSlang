@@ -1,4 +1,4 @@
-package com.kisslang.source.library;
+package com.kisslang.source.library.keys;
 
 /*
  * Copyright (C) 2019 The KISSlang Project by Vitalii Vorobii
@@ -17,37 +17,29 @@ package com.kisslang.source.library;
  *
  */
 
-public final class VariableKey {
+public class FunctionKey {
 
-    private String varName;
+    private String functionName;
 
-    private boolean immutable;
+    private int argCount;
 
-    public VariableKey(String varName,boolean immutable){
-        this.varName=varName;
-        this.immutable=immutable;
+    public FunctionKey(String functionName, int argCount){
+        this.functionName = functionName;
+        this.argCount=argCount;
     }
 
-    public VariableKey(String varName){
-        this.varName=varName;
-        this.immutable=true;
+    public FunctionKey(){
+        throw new RuntimeException("Expected function name ... ");
     }
 
-    public VariableKey(){
-        throw new RuntimeException("Expected variable name...");
+    public String getFunctionName(){
+        return functionName;
     }
 
-    public String getName(){
-        return varName;
-    }
-
-    public boolean isImmutable(){
-        return immutable;
-    }
 
     @Override
     public int hashCode() {
-        return varName.hashCode()+ ( immutable ? 1:0 );
+        return functionName.hashCode()+ argCount;
     }
 
     @Override

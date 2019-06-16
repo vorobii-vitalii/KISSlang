@@ -1,6 +1,6 @@
 package com.kisslang.source.parser.ast.statements.standart_lib;
 
-import com.kisslang.source.library.VariableKey;
+import com.kisslang.source.library.keys.VariableKey;
 import com.kisslang.source.library.Variables;
 import com.kisslang.source.parser.ast.helper.InputRecognizer;
 import com.kisslang.source.parser.ast.statements.Statement;

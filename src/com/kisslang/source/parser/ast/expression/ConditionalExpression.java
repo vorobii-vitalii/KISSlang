@@ -1,7 +1,7 @@
 package com.kisslang.source.parser.ast.expression;
 
 import com.kisslang.source.library.value.built_in.bool.LogicalValue;
-import com.kisslang.source.library.value.built_in.Value;
+import com.kisslang.source.library.Value;
 
 public class ConditionalExpression implements Expression {
 

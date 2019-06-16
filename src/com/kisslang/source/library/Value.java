@@ -1,4 +1,4 @@
-package com.kisslang.source.library.value.built_in;
+package com.kisslang.source.library;
 
 /*
  * Copyright (C) 2019 The KISSlang Project by Vitalii Vorobii

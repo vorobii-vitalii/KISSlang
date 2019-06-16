@@ -1,6 +1,6 @@
 package com.kisslang.source.library.value.built_in.string;
 
-import com.kisslang.source.library.value.built_in.Value;
+import com.kisslang.source.library.Value;
 
 /*
  * Copyright (C) 2019 The KISSlang Project by Vitalii Vorobii
