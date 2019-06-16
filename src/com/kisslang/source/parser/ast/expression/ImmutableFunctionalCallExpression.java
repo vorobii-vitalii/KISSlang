@@ -68,9 +68,17 @@ public class ImmutableFunctionalCallExpression implements Expression {
                 throw new RuntimeException("Arguments don`t match. ");
             }
 
+            Variables.push();
+
             for (int i=0;i<userFunc.getArgumentsCount();i++){
                 Variables.add(new VariableKey(userFunc.getArgName(i).getArgumentName(),userFunc.getArgName(i).isImmutable()),values[i]);
             }
+
+            final Value result=userFunc.execute(values);
+
+            Variables.pop();
+
+            return result;
 
         }
 

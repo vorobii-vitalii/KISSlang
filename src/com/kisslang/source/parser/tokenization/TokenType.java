@@ -55,6 +55,7 @@ public enum TokenType {
     SLASH,
     STAR,
     STRING_TEXT,
+    RETURN_FROM_METHOD,
     MUTTABLE_NAME,
     WHILE
 

@@ -30,3 +30,9 @@ Function $func1($name1){
 }
 
 $func1("KISSLANG")
+
+Function sum(a,b){
+    Return a+b
+}
+
+PrintLine sum(2,4)

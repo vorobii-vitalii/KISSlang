@@ -105,6 +105,9 @@ public final class Parser {
         if(match(TokenType.WHILE)){
             return While();
         }
+        if(match(TokenType.RETURN_FROM_METHOD)){
+            return Return();
+        }
         if(match(TokenType.FOR)){
             return For();
         }
@@ -227,6 +230,11 @@ public final class Parser {
     private Statement Break() {
         next();
         return new BreakLoopStatement();
+    }
+
+    private Statement Return(){
+        next();
+        return new ReturnStatement(expression());
     }
 
 

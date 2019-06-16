@@ -19,6 +19,7 @@ package com.kisslang.source.library;
 
 import com.kisslang.source.library.value.built_in.bool.LogicalValue;
 import com.kisslang.source.parser.ast.statements.Argument;
+import com.kisslang.source.parser.ast.statements.ReturnStatement;
 import com.kisslang.source.parser.ast.statements.Statement;
 
 import java.util.List;
@@ -50,7 +51,12 @@ public class UserDefinedFunction implements Function {
 
     @Override
     public Value execute(Value[] args) {
-        functionBody.execute();
+        try {
+            functionBody.execute();
+        }
+        catch (ReturnStatement r){
+            return r.getResult();
+        }
         return new LogicalValue(false);
     }
 }

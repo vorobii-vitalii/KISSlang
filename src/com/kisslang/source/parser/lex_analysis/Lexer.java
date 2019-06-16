@@ -145,6 +145,9 @@ public final class Lexer {
         if(buffer.toString().equals("Input")){
             addToken(TokenType.INPUT);
         }
+        if(buffer.toString().equals("Return")){
+            addToken(TokenType.RETURN_FROM_METHOD);
+        }
         if(buffer.toString().equals("Continue")){
             addToken(TokenType.CONTINUE);
         }
