@@ -36,3 +36,9 @@ Function sum(a,b){
 }
 
 PrintLine sum(2,4)
+
+Function sum(a,b,c){
+    Return a+b+c
+}
+
+PrintLine sum(2,1,3)

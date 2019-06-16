@@ -71,3 +71,19 @@ Function func2($name3){
 Function func2($name3){ //Error
     PrintLine $name3+" changed"
 }
+
+// Auto function recognizing
+
+Function sum(a,b){
+    PrintLine "Calling sum with 2 arguments"
+    Return a+b
+}
+
+PrintLine sum(2,4)
+
+Function sum(a,b,c){
+    PrintLine "Calling sum with 3 arguments"
+    Return a+b+c
+}
+
+PrintLine sum(2,1,3)
