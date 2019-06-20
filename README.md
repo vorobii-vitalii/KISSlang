@@ -87,3 +87,9 @@ Function sum(a,b,c){
 }
 
 PrintLine sum(2,1,3)
+
+// Some arrays
+
+arr1=Array(sum(2,4),1,3,5,6)
+
+PrintLine arr1
