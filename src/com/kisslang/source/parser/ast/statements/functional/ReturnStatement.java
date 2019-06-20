@@ -1,4 +1,8 @@
-package com.kisslang.source.parser.ast.statements;
+package com.kisslang.source.parser.ast.statements.functional;
+
+import com.kisslang.source.library.Value;
+import com.kisslang.source.parser.ast.expression.Expression;
+import com.kisslang.source.parser.ast.statements.Statement;
 
 /*
  * Copyright (C) 2019 The KISSlang Project by Vitalii Vorobii
@@ -16,10 +20,6 @@ package com.kisslang.source.parser.ast.statements;
  *   limitations under the License.
  *
  */
-
-
-import com.kisslang.source.library.Value;
-import com.kisslang.source.parser.ast.expression.Expression;
 
 public class ReturnStatement extends RuntimeException implements Statement {
 

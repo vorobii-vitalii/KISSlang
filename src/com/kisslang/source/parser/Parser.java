@@ -9,6 +9,7 @@ import com.kisslang.source.parser.ast.statements.*;
 import com.kisslang.source.parser.ast.statements.assignement.AssignementConstantStatement;
 import com.kisslang.source.parser.ast.statements.assignement.AssignmentVariableStatement;
 import com.kisslang.source.parser.ast.statements.condition.IfConditionalStatement;
+import com.kisslang.source.parser.ast.statements.functional.*;
 import com.kisslang.source.parser.ast.statements.loop.BreakLoopStatement;
 import com.kisslang.source.parser.ast.statements.loop.ContinueLoopStatement;
 import com.kisslang.source.parser.ast.statements.loop.ForLoopStatement;
@@ -373,9 +374,11 @@ public final class Parser {
                 result = new LogicalBinaryExpression("||", result, logicalOAnd());
                 continue;
             }
+
             if(match(TokenType.OR)){
                 result=new LogicalBinaryExpression("|",result,logicalOAnd());
             }
+
             break;
         }
 

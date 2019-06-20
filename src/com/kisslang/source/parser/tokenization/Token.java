@@ -24,7 +24,7 @@ public final class Token {
     private TokenType type;
 
     public Token(){
-
+        throw new RuntimeException("TokenType expected...") ;
     }
 
     public Token(TokenType type,String text){

@@ -58,6 +58,8 @@ public class ImmutableFunctionalCallExpression implements Expression {
             values[i]=args.get(i).eval();
         }
 
+        System.out.println("Arguments count "+length);
+
         Function func=Functions.get(new FunctionKey(funcName,length,true));
 
         if ( func instanceof UserDefinedFunction){
@@ -79,6 +81,13 @@ public class ImmutableFunctionalCallExpression implements Expression {
             Variables.pop();
 
             return result;
+
+        }
+        else{
+
+            if(func==null){
+                func=Functions.get(new FunctionKey(funcName,true));
+            }
 
         }
 

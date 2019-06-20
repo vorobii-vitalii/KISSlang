@@ -1,4 +1,7 @@
-package com.kisslang.source.parser.ast.statements;
+package com.kisslang.source.parser.ast.statements.functional;
+
+import com.kisslang.source.parser.ast.expression.Expression;
+import com.kisslang.source.parser.ast.statements.Statement;
 
 /*
  * Copyright (C) 2019 The KISSlang Project by Vitalii Vorobii
@@ -17,32 +20,21 @@ package com.kisslang.source.parser.ast.statements;
  *
  */
 
-public class Argument {
+public class FunctionStatement implements Statement {
 
-    private String name;
+    private final Expression expression;
 
-    private boolean immutable;
-
-    public Argument(String name,boolean immutable){
-        this.name=name;
-        this.immutable=immutable;
-    }
-
-    public String getArgumentName() {
-        return name;
-    }
-
-    public boolean isImmutable() {
-        return immutable;
+    public FunctionStatement(Expression expression){
+        this.expression=expression;
     }
 
     @Override
-    public int hashCode() {
-        return name.hashCode()+(immutable ? 1:0 );
+    public void execute() {
+        expression.eval();
     }
 
     @Override
-    public boolean equals(Object o) {
-        return this.hashCode()==o.hashCode();
+    public String toString() {
+        return "Function: "+expression;
     }
 }

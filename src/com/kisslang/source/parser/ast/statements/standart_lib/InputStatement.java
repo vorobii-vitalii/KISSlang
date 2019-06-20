@@ -38,7 +38,9 @@ public class InputStatement implements Statement {
 
 
         synchronized (Variables.class){
+
             Scanner scanner = new Scanner(System.in);
+
             String line="";
             while (true) {
                 line = scanner.nextLine();

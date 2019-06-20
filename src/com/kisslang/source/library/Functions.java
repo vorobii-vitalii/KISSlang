@@ -40,6 +40,15 @@ public class Functions {
             return null;
         });
 
+        functions.put(new FunctionKey("Print",1,true), args -> {
+            System.out.println(args[0]+"\n");
+            return null;
+        });
+
+        functions.put(new FunctionKey("Array",true), args -> {
+            return new ArrayValue(args);
+        });
+
     }
 
     public static boolean isExists(FunctionKey key){

@@ -1,4 +1,11 @@
-package com.kisslang.source.parser.ast.statements;
+package com.kisslang.source.parser.ast.statements.functional;
+
+import com.kisslang.source.library.Functions;
+import com.kisslang.source.library.UserDefinedFunction;
+import com.kisslang.source.library.keys.FunctionKey;
+import com.kisslang.source.parser.ast.statements.Statement;
+
+import java.util.List;
 
 /*
  * Copyright (C) 2019 The KISSlang Project by Vitalii Vorobii
@@ -16,12 +23,6 @@ package com.kisslang.source.parser.ast.statements;
  *   limitations under the License.
  *
  */
-
-import com.kisslang.source.library.Functions;
-import com.kisslang.source.library.UserDefinedFunction;
-import com.kisslang.source.library.keys.FunctionKey;
-
-import java.util.List;
 
 public class ImmutableFunctionAssignStatement implements Statement {
 

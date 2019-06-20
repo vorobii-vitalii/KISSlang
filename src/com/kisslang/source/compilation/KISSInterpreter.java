@@ -42,6 +42,7 @@ public class KISSInterpreter {
         if (compilerSingleton==null){
             compilerSingleton=new KISSInterpreter(code);
         }
+
         return compilerSingleton;
     }
 
@@ -53,7 +54,7 @@ public class KISSInterpreter {
         return compilerSingleton;
     }
 
-    public void execute() throws java.io.IOException {
+    public void execute() {
 
         provideInit();
 

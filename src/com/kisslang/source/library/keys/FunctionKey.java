@@ -25,9 +25,18 @@ public class FunctionKey {
 
     private boolean immutable;
 
+    private boolean asManyAsNeeded;
+
     public FunctionKey(String functionName, int argCount,boolean immutable){
         this.functionName = functionName;
         this.argCount=argCount;
+        this.immutable=immutable;
+        asManyAsNeeded=false;
+    }
+
+    public FunctionKey(String functionName, boolean immutable){
+        this.functionName = functionName;
+        this.asManyAsNeeded=true;
         this.immutable=immutable;
     }
 
@@ -49,7 +58,7 @@ public class FunctionKey {
 
     @Override
     public int hashCode() {
-        return functionName.hashCode()+ argCount+ ( immutable ? 1:0 );
+        return functionName.hashCode()+ (asManyAsNeeded?0:argCount)+ ( immutable ? 1:0 );
     }
 
     @Override

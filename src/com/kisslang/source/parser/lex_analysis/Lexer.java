@@ -56,7 +56,7 @@ public final class Lexer {
         OPERATORS.put("||",TokenType.OR2);
         OPERATORS.put(";",TokenType.DELIMITER_FOR);
         OPERATORS.put(",",TokenType.DELIMITER_ARGS);
-}
+    }
 
     private final String input;
     private final int length;
