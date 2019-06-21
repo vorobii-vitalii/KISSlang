@@ -190,6 +190,18 @@ public final class Parser {
 
     }
 
+
+    private Expression ArrayIndexGetter() {
+        Token current=get(0);
+        consume(TokenType.IMMUTABLE_NAME);
+        final String varName=current.getText();
+        consume(TokenType.LPAREN_SQUARE,"Square bracked expected during array index getting");
+        Expression index=expression();
+        consume(TokenType.RPAREN_SQUARE,"Square bracked expected during array index getting");
+        return new ArrayAccessGettingExpression(varName,index);
+
+    }
+
     private Expression ImmutableFunctionCall(){
 
         final String functionName=consume(TokenType.IMMUTABLE_NAME,"Expected function name").getText();
@@ -303,6 +315,7 @@ public final class Parser {
         return new ForLoopStatement(init,term,incr,statements);
 
     }
+
 
     private Expression expression() {
         return additive();
@@ -438,6 +451,18 @@ public final class Parser {
         return primary();
     }
 
+    private Expression ArrayDeclaration() {
+
+        List<Expression> listOfExpressions=new ArrayList<>();
+
+        while(!match(TokenType.RPAREN_SQUARE)){
+            listOfExpressions.add(expression());
+            match(TokenType.DELIMITER_ARGS);
+        }
+
+        return new ArrayCreateExpression(listOfExpressions);
+    }
+
     private Expression primary() {
         final Token current = get(0);
         if (match(TokenType.NUMBER)) {
@@ -449,8 +474,14 @@ public final class Parser {
         if(get(0).getType()==TokenType.IMMUTABLE_NAME && get(1).getType()==TokenType.LPAREN){
             return ImmutableFunctionCall();
         }
+        if(get(0).getType()==TokenType.IMMUTABLE_NAME && get(1).getType()==TokenType.LPAREN_SQUARE){
+            return ArrayIndexGetter();
+        }
         if(get(0).getType()==TokenType.MUTTABLE_NAME && get(1).getType()==TokenType.LPAREN){
             return MutableFunctionCall();
+        }
+        if(match(TokenType.LPAREN_SQUARE)){
+            return ArrayDeclaration();
         }
         if (match(TokenType.MUTTABLE_NAME)){
             return new VariableExpression(current.getText());
@@ -469,6 +500,9 @@ public final class Parser {
 
         throw new RuntimeException("Unknown expression "+current+" !");
     }
+
+
+
 
     private Token consume(TokenType type){
         final Token current=get(0);
