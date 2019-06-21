@@ -26,11 +26,11 @@ public class ArrayAccessGettingExpression implements Expression {
 
     private String varName;
 
-    private Expression index;
+    private Value [] indexes;
 
-    public ArrayAccessGettingExpression(String varName,Expression index){
+    public ArrayAccessGettingExpression(String varName,Value [] indexes){
         this.varName=varName;
-        this.index=index;
+        this.indexes = indexes;
     }
 
     @Override
@@ -40,6 +40,10 @@ public class ArrayAccessGettingExpression implements Expression {
 
         ArrayValue arrValue=(ArrayValue) value;
 
-        return arrValue.getElement((int)index.eval().asNumber());
+        for (int i = 0; i < indexes.length-1; i++) {
+            arrValue=(ArrayValue) arrValue.getElement((int)indexes[i].asNumber());
+        }
+
+        return arrValue.getElement((int) indexes[indexes.length-1].asNumber());
     }
 }

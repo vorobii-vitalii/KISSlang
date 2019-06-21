@@ -1,5 +1,6 @@
 package com.kisslang.source.parser;
 
+import com.kisslang.source.library.Value;
 import com.kisslang.source.parser.ast.expression.*;
 import com.kisslang.source.parser.ast.expression.binary.ArithmeticBinaryExpression;
 import com.kisslang.source.parser.ast.expression.binary.LogicalBinaryExpression;
@@ -195,10 +196,27 @@ public final class Parser {
         Token current=get(0);
         consume(TokenType.IMMUTABLE_NAME);
         final String varName=current.getText();
-        consume(TokenType.LPAREN_SQUARE,"Square bracked expected during array index getting");
-        Expression index=expression();
-        consume(TokenType.RPAREN_SQUARE,"Square bracked expected during array index getting");
-        return new ArrayAccessGettingExpression(varName,index);
+        List<Expression> indexes=new ArrayList<>();
+
+        while(get(0).getType()==TokenType.LPAREN_SQUARE){
+            consume(TokenType.LPAREN_SQUARE,"Square bracked expected during array index getting");
+            Expression index=expression();
+            indexes.add(index);
+            consume(TokenType.RPAREN_SQUARE,"Square bracked expected during array index getting");
+        }
+
+        for (Expression e:
+             indexes) {
+            System.out.print(e.eval()+"  ");
+        }
+
+        Value [] indexValues=new Value[indexes.size()];
+
+        for (int i = 0; i <indexValues.length ; i++) {
+            indexValues[i]=indexes.get(i).eval();
+        }
+
+        return new ArrayAccessGettingExpression(varName,indexValues);
 
     }
 
