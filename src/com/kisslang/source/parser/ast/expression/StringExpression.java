@@ -1,7 +1,8 @@
 package com.kisslang.source.parser.ast.expression;
 
-import com.kisslang.source.library.value.built_in.string.StringValue;
+import com.kisslang.source.library.ObjectValue;
 import com.kisslang.source.library.Value;
+import com.kisslang.source.library.value.built_in.string.StringValue;
 
 /*
  * Copyright (C) 2019 The KISSlang Project by Vitalii Vorobii

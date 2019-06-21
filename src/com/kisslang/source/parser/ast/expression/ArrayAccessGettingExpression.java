@@ -18,6 +18,7 @@ package com.kisslang.source.parser.ast.expression;
  */
 
 import com.kisslang.source.library.ArrayValue;
+import com.kisslang.source.library.ObjectValue;
 import com.kisslang.source.library.Value;
 import com.kisslang.source.library.Variables;
 import com.kisslang.source.library.keys.VariableKey;

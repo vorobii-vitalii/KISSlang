@@ -1,7 +1,8 @@
 package com.kisslang.source.parser.ast.expression.unary;
 
-import com.kisslang.source.library.value.built_in.bool.LogicalValue;
+import com.kisslang.source.library.ObjectValue;
 import com.kisslang.source.library.Value;
+import com.kisslang.source.library.value.built_in.bool.LogicalValue;
 import com.kisslang.source.parser.ast.expression.Expression;
 
 /*

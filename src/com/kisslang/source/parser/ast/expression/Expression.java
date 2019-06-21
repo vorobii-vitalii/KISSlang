@@ -1,5 +1,6 @@
 package com.kisslang.source.parser.ast.expression;
 
+import com.kisslang.source.library.ObjectValue;
 import com.kisslang.source.library.Value;
 
 /*

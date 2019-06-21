@@ -1,10 +1,5 @@
 package com.kisslang.source.parser.ast.expression;
 
-import com.kisslang.source.library.ObjectValue;
-import com.kisslang.source.library.Value;
-import com.kisslang.source.library.keys.VariableKey;
-import com.kisslang.source.library.Variables;
-
 /*
  * Copyright (C) 2019 The KISSlang Project by Vitalii Vorobii
  *
@@ -22,28 +17,23 @@ import com.kisslang.source.library.Variables;
  *
  */
 
-public class VariableExpression implements Expression {
+import com.kisslang.source.library.ObjectValue;
+import com.kisslang.source.library.Value;
+import com.kisslang.source.library.keys.VariableKey;
 
-    private final String text;
+import java.util.HashMap;
+import java.util.Map;
 
-    public VariableExpression(String text){
-        this.text=text;
+public class ObjectCreateExpression implements Expression {
+
+    private Map<VariableKey,Value> table;
+
+    public ObjectCreateExpression(Map<VariableKey,Value> table){
+        this.table=table;
     }
 
     @Override
-    public Value eval() {
-
-        VariableKey key=new VariableKey(text,false);
-
-        if (Variables.isExists(key)) {
-            return Variables.get(key);
-        }
-
-        throw new RuntimeException("There is no such variable! -> "+text);
-    }
-
-    @Override
-    public String toString() {
-        return text+" "+eval();
+    public ObjectValue eval() {
+        return new ObjectValue(table);
     }
 }

@@ -109,3 +109,10 @@ PrintLine arr2
 arr=[2,1,3,[0,49,5]]
 PrintLine arr[3][2]
 ````
+##### Key->Value pairs (Objects)
+````
+$a={$key->"value",another_key->"another key"}
+
+PrintLine $a
+````
+

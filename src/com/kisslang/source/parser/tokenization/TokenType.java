@@ -21,6 +21,7 @@ public enum TokenType {
 
     AND,
     AND2,
+    ARROW,
     ASSIGN,
     BREAK,
     CONTINUE,

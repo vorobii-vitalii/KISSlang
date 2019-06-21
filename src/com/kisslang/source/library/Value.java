@@ -25,7 +25,9 @@ public interface Value {
 
     boolean canBeRepresentedAsNumber();
 
-    boolean isString();
+    default boolean isString() {
+        return false;
+    }
 
     boolean asBoolean();
 

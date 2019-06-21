@@ -1,6 +1,7 @@
 package com.kisslang.source.parser;
 
 import com.kisslang.source.library.Value;
+import com.kisslang.source.library.keys.VariableKey;
 import com.kisslang.source.parser.ast.expression.*;
 import com.kisslang.source.parser.ast.expression.binary.ArithmeticBinaryExpression;
 import com.kisslang.source.parser.ast.expression.binary.LogicalBinaryExpression;
@@ -22,6 +23,7 @@ import com.kisslang.source.parser.tokenization.Token;
 import com.kisslang.source.parser.tokenization.TokenType;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /*
@@ -293,11 +295,27 @@ public final class Parser {
         if (current.getType()==TokenType.IMMUTABLE_NAME && get(1).getType()==TokenType.LPAREN_SQUARE){
             consume(TokenType.IMMUTABLE_NAME);
             final String varName=current.getText();
-            consume(TokenType.LPAREN_SQUARE,"Square bracked expected during array index assignment");
-            Expression index=expression();
-            consume(TokenType.RPAREN_SQUARE,"Square bracked expected during array index assignment");
+            List<Expression> indexes=new ArrayList<>();
+
+            while(get(0).getType()==TokenType.LPAREN_SQUARE){
+                consume(TokenType.LPAREN_SQUARE,"Square bracked expected during array index getting");
+                Expression index=expression();
+                indexes.add(index);
+                consume(TokenType.RPAREN_SQUARE,"Square bracked expected during array index getting");
+            }
+
+            for (Expression e:
+                    indexes) {
+                System.out.print(e.eval()+"  ");
+            }
+
+            Value [] indexValues=new Value[indexes.size()];
+
+            for (int i = 0; i <indexValues.length ; i++) {
+                indexValues[i]=indexes.get(i).eval();
+            }
             consume(TokenType.ASSIGN);
-            return new ArrayAssignementStatement(varName,index,expression());
+            return new ArrayAssignementStatement(varName,indexValues,expression());
         }
 
         throw new RuntimeException("Unknown operator!" + current+" Next "+get(1)+" -> "+get(2));
@@ -481,6 +499,40 @@ public final class Parser {
         return new ArrayCreateExpression(listOfExpressions);
     }
 
+    private Expression ObjectDeclaration() {
+
+        HashMap<VariableKey,Value> table= new HashMap<>();
+
+        while(!match(TokenType.RPAREN_FIGURE)){
+
+            VariableKey key;
+
+            if(get(0).getType()==TokenType.IMMUTABLE_NAME){
+                key=new VariableKey(get(0).getText(),true);
+            }
+            else if(get(0).getType()==TokenType.MUTTABLE_NAME){
+                key=new VariableKey(get(0).getText(),false);
+            }
+            else{
+                throw new RuntimeException("Expected key...");
+            }
+
+            next();
+
+            consume(TokenType.ARROW,"Got key , expected value!");
+
+            table.put(key,expression().eval());
+
+            match(TokenType.DELIMITER_ARGS);
+
+        }
+
+        System.out.println(get(0));
+
+        return new ObjectCreateExpression(table);
+
+    }
+
     private Expression primary() {
         final Token current = get(0);
         if (match(TokenType.NUMBER)) {
@@ -497,6 +549,9 @@ public final class Parser {
         }
         if(get(0).getType()==TokenType.MUTTABLE_NAME && get(1).getType()==TokenType.LPAREN){
             return MutableFunctionCall();
+        }
+        if(match(TokenType.LPAREN_FIGURE)){
+            return ObjectDeclaration();
         }
         if(match(TokenType.LPAREN_SQUARE)){
             return ArrayDeclaration();

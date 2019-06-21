@@ -28,7 +28,7 @@ import java.util.Map;
 
 public final class Lexer {
 
-    private static final String OPERATOR_CHARS = "+-*/()=^<>&|!{};,[]";
+    private static final String OPERATOR_CHARS = "+-*/()=^<>&|!{};,[]->";
     
     private static Map <String, TokenType> OPERATORS;
 
@@ -58,6 +58,7 @@ public final class Lexer {
         OPERATORS.put("||",TokenType.OR2);
         OPERATORS.put(";",TokenType.DELIMITER_FOR);
         OPERATORS.put(",",TokenType.DELIMITER_ARGS);
+        OPERATORS.put("->",TokenType.ARROW);
     }
 
     private final String input;

@@ -23,17 +23,19 @@ import com.kisslang.source.library.Variables;
 import com.kisslang.source.library.keys.VariableKey;
 import com.kisslang.source.parser.ast.expression.Expression;
 
+import java.util.List;
+
 public class ArrayAssignementStatement implements Statement {
 
     private String variableName;
 
-    private Expression index;
+    private Value []  indexes;
 
     private Expression toAssign;
 
 
-    public ArrayAssignementStatement(String variableName, Expression index, Expression toAssign){
-        this.index=index;
+    public ArrayAssignementStatement(String variableName, Value [] indexes, Expression toAssign){
+        this.indexes=indexes;
         this.variableName=variableName;
         this.toAssign=toAssign;
     }
@@ -41,10 +43,14 @@ public class ArrayAssignementStatement implements Statement {
     @Override
     public void execute() {
 
-        final Value variable= Variables.get(new VariableKey(variableName,true));
+        Value value= Variables.get(new VariableKey(variableName,true));
 
-        ArrayValue arrValue=(ArrayValue) variable;
-        arrValue.setElement((int)index.eval().asNumber(),toAssign.eval());
+        ArrayValue arrValue=(ArrayValue) value;
+
+        for (int i = 0; i < indexes.length-1; i++) {
+            arrValue=(ArrayValue) arrValue.getElement((int)indexes[i].asNumber());
+        }
+        arrValue.setElement((int)indexes[indexes.length-1].asNumber(),toAssign.eval());
     }
 
 
