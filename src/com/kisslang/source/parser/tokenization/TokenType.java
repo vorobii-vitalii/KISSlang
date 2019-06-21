@@ -41,6 +41,7 @@ public enum TokenType {
     LOWER_THAN,
     LPAREN, // (
     LPAREN_FIGURE,
+    LPAREN_SQUARE,
     MINUS,
     MUTTABLE_NAME,
     NOT,
@@ -54,9 +55,11 @@ public enum TokenType {
     RETURN_FROM_METHOD,
     RPAREN, // )
     RPAREN_FIGURE,
+    RPAREN_SQUARE,
     SLASH,
     STAR,
     STRING_TEXT,
     WHILE
+
 
 }

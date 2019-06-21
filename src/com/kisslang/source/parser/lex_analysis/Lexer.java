@@ -28,7 +28,7 @@ import java.util.Map;
 
 public final class Lexer {
 
-    private static final String OPERATOR_CHARS = "+-*/()=^<>&|!{};,";
+    private static final String OPERATOR_CHARS = "+-*/()=^<>&|!{};,[]";
     
     private static Map <String, TokenType> OPERATORS;
 
@@ -40,6 +40,8 @@ public final class Lexer {
         OPERATORS.put("/",TokenType.SLASH);
         OPERATORS.put("(",TokenType.LPAREN);
         OPERATORS.put("{",TokenType.LPAREN_FIGURE);
+        OPERATORS.put("[",TokenType.LPAREN_SQUARE);
+        OPERATORS.put("]",TokenType.RPAREN_SQUARE);
         OPERATORS.put(")",TokenType.RPAREN);
         OPERATORS.put("}",TokenType.RPAREN_FIGURE);
         OPERATORS.put("^",TokenType.POW);

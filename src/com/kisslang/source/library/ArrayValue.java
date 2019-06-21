@@ -68,7 +68,7 @@ public class ArrayValue implements Value {
 
     @Override
     public String toString() {
-        return asString();
+        return size+"->"+asString();
     }
 
     @Override

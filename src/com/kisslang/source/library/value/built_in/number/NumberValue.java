@@ -2,6 +2,8 @@ package com.kisslang.source.library.value.built_in.number;
 
 import com.kisslang.source.library.Value;
 
+import java.math.BigDecimal;
+
 /*
  * Copyright (C) 2019 The KISSlang Project by Vitalii Vorobii
  *
@@ -42,6 +44,12 @@ public class NumberValue implements Value {
 
     @Override
     public String asString() {
+        double doubleNumber = value;
+        BigDecimal bigDecimal = new BigDecimal(String.valueOf(doubleNumber));
+        int intValue = bigDecimal.intValue();
+        if(bigDecimal.subtract(new BigDecimal(intValue)).toPlainString().equals("0.0")){
+            return Integer.toString( intValue);
+        }
         return Double.toString(value);
     }
 

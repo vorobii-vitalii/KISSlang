@@ -50,13 +50,17 @@ public class AssignementConstantStatement implements Statement {
     @Override
     public void execute() {
 
+//        System.out.print(variableName+" is about to be assigned with ");
+
         if(valueIsAlreadyProvided){
             VariableKey varToBeAdded=new VariableKey(variableName,immutable);
+//            System.out.println(value+"  !!!1");
             Variables.add(varToBeAdded,value);
             return;
         }
         Value value1=expression.eval();
         VariableKey varToBeAdded=new VariableKey(variableName,immutable);
+//        System.out.println(value1+"  !!!1");
         Variables.add(varToBeAdded,value1);
     }
 

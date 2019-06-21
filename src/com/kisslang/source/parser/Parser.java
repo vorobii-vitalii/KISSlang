@@ -128,7 +128,7 @@ public final class Parser {
             return new FunctionStatement(MutableFunctionCall());
         }
 
-        return assignmentStatement();
+        return AssignementStatement();
     }
 
     private Statement Input(){
@@ -239,20 +239,37 @@ public final class Parser {
     }
 
 
-    private Statement assignmentStatement() {
+    private Statement AssignementStatement() {
         final Token current=get(0);
-        if (current.getType()==TokenType.MUTTABLE_NAME && get(1).getType()==TokenType.ASSIGN){
-            consume(TokenType.MUTTABLE_NAME);
-            final String varName=current.getText();
-            consume(TokenType.ASSIGN);
-            return new AssignmentVariableStatement(varName,expression());
+
+        if ( (current.getType()==TokenType.MUTTABLE_NAME || current.getType()==TokenType.IMMUTABLE_NAME ) && get(1).getType()==TokenType.ASSIGN) {
+
+            if (current.getType()==TokenType.MUTTABLE_NAME && get(1).getType()==TokenType.ASSIGN){
+                consume(TokenType.MUTTABLE_NAME);
+                final String varName=current.getText();
+                consume(TokenType.ASSIGN);
+                return new AssignmentVariableStatement(varName,expression());
+            }
+
+            if (current.getType()==TokenType.IMMUTABLE_NAME && get(1).getType()==TokenType.ASSIGN){
+                consume(TokenType.IMMUTABLE_NAME);
+                final String varName=current.getText();
+                consume(TokenType.ASSIGN);
+                return new AssignementConstantStatement(varName,expression());
+            }
+
         }
-        if (current.getType()==TokenType.IMMUTABLE_NAME && get(1).getType()==TokenType.ASSIGN){
+
+        if (current.getType()==TokenType.IMMUTABLE_NAME && get(1).getType()==TokenType.LPAREN_SQUARE){
             consume(TokenType.IMMUTABLE_NAME);
             final String varName=current.getText();
+            consume(TokenType.LPAREN_SQUARE,"Square bracked expected during array index assignment");
+            Expression index=expression();
+            consume(TokenType.RPAREN_SQUARE,"Square bracked expected during array index assignment");
             consume(TokenType.ASSIGN);
-            return new AssignementConstantStatement(varName,expression());
+            return new ArrayAssignementStatement(varName,index,expression());
         }
+
         throw new RuntimeException("Unknown operator!" + current+" Next "+get(1)+" -> "+get(2));
     }
 
@@ -275,11 +292,11 @@ public final class Parser {
     private Statement For(){
         next();
         consume(TokenType.LPAREN,"No expected (");
-        final Statement init=assignmentStatement();
+        final Statement init= AssignementStatement();
         consume(TokenType.DELIMITER_FOR,"No expected delimiter after initializing");
         final Expression term=expression();
         consume(TokenType.DELIMITER_FOR,"No expected delimiter after expression");
-        final Statement incr=assignmentStatement();
+        final Statement incr= AssignementStatement();
         consume(TokenType.RPAREN,"No expected )");
         final Statement statements=blockOrSingle();
 

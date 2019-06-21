@@ -58,7 +58,7 @@ public class ImmutableFunctionalCallExpression implements Expression {
             values[i]=args.get(i).eval();
         }
 
-        System.out.println("Arguments count "+length);
+//        System.out.println("Arguments count "+length);
 
         Function func=Functions.get(new FunctionKey(funcName,length,true));
 
