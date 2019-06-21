@@ -1,5 +1,6 @@
 package com.kisslang.source.parser.ast.expression.binary;
 
+import com.kisslang.source.library.ArrayValue;
 import com.kisslang.source.library.value.built_in.number.NumberValue;
 import com.kisslang.source.library.value.built_in.string.StringValue;
 import com.kisslang.source.library.Value;
@@ -48,7 +49,7 @@ public final class ArithmeticBinaryExpression implements Expression {
             case '^': return new NumberValue( getPow(expr1.eval().asNumber(),expr2.eval().asNumber()));
             case '+':
             default:
-                if( expr1.eval().isString() || expr2.eval().isString()){
+                if( expr1.eval().isString() || expr2.eval().isString() || expr1.eval() instanceof ArrayValue || expr2.eval() instanceof ArrayValue){
                     return new StringValue(expr1.eval().asString() + expr2.eval().asString());
                 }
                 return new NumberValue(expr1.eval().asNumber() + expr2.eval().asNumber());
