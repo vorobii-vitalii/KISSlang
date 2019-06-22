@@ -30,37 +30,6 @@ public final class Lexer {
 
     private static final String OPERATOR_CHARS = "+-*/()=^<>&|!{};,[]->";
 
-    private static Map<String, TokenType> OPERATORS;
-
-    static {
-        OPERATORS = new HashMap<> ( );
-        OPERATORS.put ( "+" , TokenType.PLUS );
-        OPERATORS.put ( "-" , TokenType.MINUS );
-        OPERATORS.put ( "*" , TokenType.STAR );
-        OPERATORS.put ( "/" , TokenType.SLASH );
-        OPERATORS.put ( "(" , TokenType.LPAREN );
-        OPERATORS.put ( "{" , TokenType.LPAREN_FIGURE );
-        OPERATORS.put ( "[" , TokenType.LPAREN_SQUARE );
-        OPERATORS.put ( "]" , TokenType.RPAREN_SQUARE );
-        OPERATORS.put ( ")" , TokenType.RPAREN );
-        OPERATORS.put ( "}" , TokenType.RPAREN_FIGURE );
-        OPERATORS.put ( "^" , TokenType.POW );
-        OPERATORS.put ( "<" , TokenType.LOWER_THAN );
-        OPERATORS.put ( "<=" , TokenType.LOWER_OR_EQUAL_THAN );
-        OPERATORS.put ( ">" , TokenType.GREATER_THAN );
-        OPERATORS.put ( ">=" , TokenType.GREATER_OR_EQUAL_THAN );
-        OPERATORS.put ( "==" , TokenType.EQUAL );
-        OPERATORS.put ( "=" , TokenType.ASSIGN );
-        OPERATORS.put ( "!" , TokenType.NOT );
-        OPERATORS.put ( "&" , TokenType.AND );
-        OPERATORS.put ( "&&" , TokenType.AND2 );
-        OPERATORS.put ( "|" , TokenType.OR );
-        OPERATORS.put ( "||" , TokenType.OR2 );
-        OPERATORS.put ( ";" , TokenType.DELIMITER_FOR );
-        OPERATORS.put ( "," , TokenType.DELIMITER_ARGS );
-        OPERATORS.put ( "->" , TokenType.ARROW );
-    }
-
     private final String input;
     private final int length;
 
@@ -223,8 +192,8 @@ public final class Lexer {
         StringBuffer buffer = new StringBuffer ( );
         while (true) {
             String curStr = buffer.toString ( );
-            if ( !OPERATORS.containsKey ( curStr + current ) && !curStr.isEmpty ( ) ) {
-                addToken ( OPERATORS.get ( curStr ) );
+            if ( !OperatorsTable.hasKey ( curStr + current ) && !curStr.isEmpty ( ) ) {
+                addToken ( OperatorsTable.get ( curStr ) );
                 return;
             }
             buffer.append ( current );
