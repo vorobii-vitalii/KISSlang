@@ -22,12 +22,12 @@ import com.kisslang.source.parser.ast.statements.Statement;
 public class ContinueLoopStatement extends RuntimeException implements Statement {
 
     @Override
-    public void execute() {
+    public void execute () {
         throw this;
     }
 
     @Override
-    public String toString() {
+    public String toString () {
         return "Continue";
     }
 }

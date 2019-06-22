@@ -1,8 +1,8 @@
-package com.kisslang.source.parser.ast.expression;
+package com.kisslang.source.parser.ast.expression.binary;
 
-import com.kisslang.source.library.ObjectValue;
 import com.kisslang.source.library.value.built_in.bool.LogicalValue;
 import com.kisslang.source.library.Value;
+import com.kisslang.source.parser.ast.expression.Expression;
 
 /*
  * Copyright (C) 2019 The KISSlang Project by Vitalii Vorobii
@@ -27,39 +27,39 @@ public class ConditionalExpression implements Expression {
     private Expression expr2;
     private String operation;
 
-    public ConditionalExpression(String operation,Expression expr1,Expression expr2){
-        this.operation=operation;
-        this.expr1=expr1;
-        this.expr2=expr2;
+    public ConditionalExpression ( String operation , Expression expr1 , Expression expr2 ) {
+        this.operation = operation;
+        this.expr1 = expr1;
+        this.expr2 = expr2;
     }
 
     @Override
-    public Value eval() {
+    public Value eval () {
 
         Value result;
 
-        switch (operation){
+        switch (operation) {
 
             case ">":
-                result = new LogicalValue(expr1.eval().asNumber()>expr2.eval().asNumber());
+                result = new LogicalValue ( expr1.eval ( ).asNumber ( ) > expr2.eval ( ).asNumber ( ) );
                 break;
             case ">=":
-                result = new LogicalValue(expr1.eval().asNumber()>=expr2.eval().asNumber());
+                result = new LogicalValue ( expr1.eval ( ).asNumber ( ) >= expr2.eval ( ).asNumber ( ) );
                 break;
             case "<":
-                result = new LogicalValue(expr1.eval().asNumber()<expr2.eval().asNumber());
+                result = new LogicalValue ( expr1.eval ( ).asNumber ( ) < expr2.eval ( ).asNumber ( ) );
                 break;
             case "<=":
-                result = new LogicalValue(expr1.eval().asNumber()<=expr2.eval().asNumber());
+                result = new LogicalValue ( expr1.eval ( ).asNumber ( ) <= expr2.eval ( ).asNumber ( ) );
                 break;
             case "==":
-                result = new LogicalValue(expr1.eval().asNumber()==expr2.eval().asNumber());
+                result = new LogicalValue ( expr1.eval ( ).asNumber ( ) == expr2.eval ( ).asNumber ( ) );
                 break;
             case "!=":
-                result = new LogicalValue(expr1.eval().asNumber()!=expr2.eval().asNumber());
+                result = new LogicalValue ( expr1.eval ( ).asNumber ( ) != expr2.eval ( ).asNumber ( ) );
                 break;
             default:
-                result=new LogicalValue(false);
+                result = new LogicalValue ( false );
                 break;
         }
 

@@ -18,6 +18,7 @@ package com.kisslang.source.library;
  */
 
 import com.kisslang.source.library.keys.FunctionKey;
+import com.kisslang.source.library.value.built_in.array.ArrayValue;
 import com.kisslang.source.library.value.built_in.number.NumberValue;
 
 import java.util.HashMap;
@@ -29,49 +30,49 @@ public class Functions {
 
     static {
 
-        functions=new HashMap<>();
+        functions = new HashMap<> ( );
 
-        functions.put(new FunctionKey("Sin",1,true), args -> {
-                return new NumberValue(Math.sin(args[0].asNumber()));
-        });
+        functions.put ( new FunctionKey ( "Sin" , 1 , true ) , args -> {
+            return new NumberValue ( Math.sin ( args[0].asNumber ( ) ) );
+        } );
 
-        functions.put(new FunctionKey("Print",1,true), args -> {
-            System.out.println(args[0]+"\n");
+        functions.put ( new FunctionKey ( "Print" , 1 , true ) , args -> {
+            System.out.println ( args[0] + "\n" );
             return null;
-        });
+        } );
 
-        functions.put(new FunctionKey("Print",1,true), args -> {
-            System.out.println(args[0]+"\n");
+        functions.put ( new FunctionKey ( "Print" , 1 , true ) , args -> {
+            System.out.println ( args[0] + "\n" );
             return null;
-        });
+        } );
 
-        functions.put(new FunctionKey("Array",true), args -> {
-            return new ArrayValue(args);
-        });
+        functions.put ( new FunctionKey ( "Array" , true ) , args -> {
+            return new ArrayValue ( args );
+        } );
 
     }
 
-    public static boolean isExists(FunctionKey key){
-        return functions.containsKey(key);
+    public static boolean isExists ( FunctionKey key ) {
+        return functions.containsKey ( key );
     }
 
-    public static Function  get(FunctionKey key){
+    public static Function get ( FunctionKey key ) {
 
-        if (!isExists(key)) {
+        if ( !isExists ( key ) ) {
             return null;
         }
 
-        return functions.get(key);
+        return functions.get ( key );
     }
 
-    public static void add(FunctionKey key,Function value){
+    public static void add ( FunctionKey key , Function value ) {
 
-        if( isExists(key) && key.isImmutable() ){
+        if ( isExists ( key ) && key.isImmutable ( ) ) {
 
-            throw new RuntimeException("Cannot declare constant function with the same name && arguments count ! ");
+            throw new RuntimeException ( "Cannot declare constant function with the same name && arguments count ! " );
         }
 
-        functions.put(key, value);
+        functions.put ( key , value );
     }
 
 

@@ -26,20 +26,18 @@ public class InputRecognizer {
 
     private final String context;
 
-    public InputRecognizer(String context){
-        this.context=context;
+    public InputRecognizer ( String context ) {
+        this.context = context;
     }
 
-    public Value recognize(){
+    public Value recognize () {
 
-        if ( ContextRecognize.isNumberLike(context) ) {
-            return new NumberValue(Double.parseDouble(context));
-        }
-        else if(ContextRecognize.isBooleanLike(context)) {
-            return new LogicalValue(LogicalValue.toBoolean(context));
-        }
-        else {
-            return new StringValue(context);
+        if ( ContextRecognize.isNumberLike ( context ) ) {
+            return new NumberValue ( Double.parseDouble ( context ) );
+        } else if ( ContextRecognize.isBooleanLike ( context ) ) {
+            return new LogicalValue ( LogicalValue.toBoolean ( context ) );
+        } else {
+            return new StringValue ( context );
         }
 
     }

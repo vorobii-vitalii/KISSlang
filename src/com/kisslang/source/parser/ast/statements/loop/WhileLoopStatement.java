@@ -26,22 +26,20 @@ public class WhileLoopStatement implements Statement {
 
     private final Statement blockOfStatements;
 
-    public WhileLoopStatement(Expression expression, Statement blockOfStatements){
-        this.expression=expression;
-        this.blockOfStatements=blockOfStatements;
+    public WhileLoopStatement ( Expression expression , Statement blockOfStatements ) {
+        this.expression = expression;
+        this.blockOfStatements = blockOfStatements;
     }
 
     @Override
-    public void execute() {
+    public void execute () {
 
-        while(expression.eval().asBoolean()==true){
+        while (expression.eval ( ).asBoolean ( ) == true) {
             try {
-                blockOfStatements.execute();
-            }
-            catch (BreakLoopStatement e){
+                blockOfStatements.execute ( );
+            } catch (BreakLoopStatement e) {
                 break;
-            }
-            catch (ContinueLoopStatement e){
+            } catch (ContinueLoopStatement e) {
                 continue;
             }
         }
@@ -49,7 +47,7 @@ public class WhileLoopStatement implements Statement {
     }
 
     @Override
-    public String toString() {
-        return expression+" "+blockOfStatements;
+    public String toString () {
+        return expression + " " + blockOfStatements;
     }
 }

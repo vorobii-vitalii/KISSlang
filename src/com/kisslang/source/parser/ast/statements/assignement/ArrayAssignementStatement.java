@@ -1,6 +1,9 @@
 package com.kisslang.source.parser.ast.statements.assignement;
 
+import com.kisslang.source.library.value.built_in.array.ArrayValue;
 import com.kisslang.source.library.Value;
+import com.kisslang.source.library.Variables;
+import com.kisslang.source.library.keys.VariableKey;
 import com.kisslang.source.parser.ast.expression.Expression;
 import com.kisslang.source.parser.ast.statements.Statement;
 
@@ -21,22 +24,33 @@ import com.kisslang.source.parser.ast.statements.Statement;
  *
  */
 
-public abstract class AssignementStatement implements Statement {
+public class ArrayAssignementStatement implements Statement {
 
     private String variableName;
 
-    private Expression expression = null;
+    private Value[] indexes;
 
-    private Value value = null;
+    private Expression toAssign;
 
-    private boolean immutable = false;
 
-    boolean valueIsAlreadyProvided;
-
+    public ArrayAssignementStatement ( String variableName , Value[] indexes , Expression toAssign ) {
+        this.indexes = indexes;
+        this.variableName = variableName;
+        this.toAssign = toAssign;
+    }
 
     @Override
-    public String toString () {
-        return variableName + " = " + expression.eval ( );
+    public void execute () {
+
+        Value value = Variables.get ( new VariableKey ( variableName , true ) );
+
+        ArrayValue arrValue = (ArrayValue) value;
+
+        for (int i = 0; i < indexes.length - 1; i++) {
+            arrValue = (ArrayValue) arrValue.getElement ( (int) indexes[i].asNumber ( ) );
+        }
+        arrValue.setElement ( (int) indexes[indexes.length - 1].asNumber ( ) , toAssign.eval ( ) );
     }
+
 
 }

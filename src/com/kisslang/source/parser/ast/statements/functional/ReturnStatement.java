@@ -27,26 +27,26 @@ public class ReturnStatement extends RuntimeException implements Statement {
 
     Value result;
 
-    public ReturnStatement(Expression expression){
-        this.expression=expression;
+    public ReturnStatement ( Expression expression ) {
+        this.expression = expression;
     }
 
-    public ReturnStatement(){
-        throw new RuntimeException("Expression expected ! ");
+    public ReturnStatement () {
+        throw new RuntimeException ( "Expression expected ! " );
     }
 
-    public Value getResult() {
+    public Value getResult () {
         return result;
     }
 
     @Override
-    public void execute() {
-        result=expression.eval();
+    public void execute () {
+        result = expression.eval ( );
         throw this;
     }
 
     @Override
-    public String toString() {
+    public String toString () {
         return "Return";
     }
 

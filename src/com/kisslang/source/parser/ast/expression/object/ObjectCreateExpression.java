@@ -1,8 +1,11 @@
-package com.kisslang.source.parser.ast.expression;
+package com.kisslang.source.parser.ast.expression.object;
 
-import com.kisslang.source.library.ObjectValue;
+import com.kisslang.source.library.value.built_in.object.ObjectValue;
 import com.kisslang.source.library.Value;
-import com.kisslang.source.library.value.built_in.number.NumberValue;
+import com.kisslang.source.library.keys.VariableKey;
+import com.kisslang.source.parser.ast.expression.Expression;
+
+import java.util.Map;
 
 /*
  * Copyright (C) 2019 The KISSlang Project by Vitalii Vorobii
@@ -21,21 +24,16 @@ import com.kisslang.source.library.value.built_in.number.NumberValue;
  *
  */
 
-public final class NumberExpression implements Expression {
+public class ObjectCreateExpression implements Expression {
 
-    private final double value;
+    private Map<VariableKey, Value> table;
 
-    public NumberExpression(double value) {
-        this.value = value;
+    public ObjectCreateExpression ( Map<VariableKey, Value> table ) {
+        this.table = table;
     }
 
     @Override
-    public Value eval() {
-        return new NumberValue(value);
-    }
-
-    @Override
-    public String toString() {
-        return Double.toString(value);
+    public ObjectValue eval () {
+        return new ObjectValue ( table );
     }
 }

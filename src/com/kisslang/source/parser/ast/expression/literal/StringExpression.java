@@ -1,9 +1,7 @@
-package com.kisslang.source.parser.ast.statements;
+package com.kisslang.source.parser.ast.expression.literal;
 
-import com.kisslang.source.library.ObjectValue;
 import com.kisslang.source.library.Value;
-import com.kisslang.source.library.Variables;
-import com.kisslang.source.library.keys.VariableKey;
+import com.kisslang.source.library.value.built_in.string.StringValue;
 import com.kisslang.source.parser.ast.expression.Expression;
 
 /*
@@ -23,27 +21,22 @@ import com.kisslang.source.parser.ast.expression.Expression;
  *
  */
 
-public class MutableObjectAssignmentStatement implements Statement {
+public class StringExpression implements Expression {
 
-    private final String objectName;
+    private final String value;
 
-    private final VariableKey key;
-
-    private final Expression expression;
-
-    public MutableObjectAssignmentStatement(String objectName, VariableKey key, Expression expression){
-        this.objectName=objectName;
-        this.key=key;
-        this.expression=expression;
+    public StringExpression ( String value ) {
+        this.value = value;
     }
 
     @Override
-    public void execute() {
-        Value value= Variables.get(new VariableKey(objectName,false));
+    public Value eval () {
+        return new StringValue ( value );
+    }
 
-        ObjectValue objValue=(ObjectValue) value;
-
-        objValue.add(key,expression.eval());
+    @Override
+    public String toString () {
+        return value;
     }
 
 }

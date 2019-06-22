@@ -32,24 +32,24 @@ public class MutableFunctionAssignStatement implements Statement {
 
     private final Statement functionBody;
 
-    public MutableFunctionAssignStatement(String functionName, List<Argument> argNames, Statement functionBody){
-        this.functionBody=functionBody;
-        this.functionName=functionName;
-        this.argNames=argNames;
+    public MutableFunctionAssignStatement ( String functionName , List<Argument> argNames , Statement functionBody ) {
+        this.functionBody = functionBody;
+        this.functionName = functionName;
+        this.argNames = argNames;
     }
 
-    private int getArgumentsCount(){
-        return argNames.size();
-    }
-
-    @Override
-    public void execute() {
-        FunctionKey key=new FunctionKey(functionName,getArgumentsCount(),false);
-        Functions.add(key,new UserDefinedFunction(argNames,functionBody));
+    private int getArgumentsCount () {
+        return argNames.size ( );
     }
 
     @Override
-    public String toString() {
-        return super.toString();
+    public void execute () {
+        FunctionKey key = new FunctionKey ( functionName , getArgumentsCount ( ) , false );
+        Functions.add ( key , new UserDefinedFunction ( argNames , functionBody ) );
+    }
+
+    @Override
+    public String toString () {
+        return super.toString ( );
     }
 }

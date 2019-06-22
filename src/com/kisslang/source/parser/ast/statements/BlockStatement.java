@@ -24,35 +24,35 @@ public class BlockStatement implements Statement {
 
     private List<Statement> statements;
 
-    public BlockStatement(List<Statement> statements){
-        this.statements=statements;
+    public BlockStatement ( List<Statement> statements ) {
+        this.statements = statements;
     }
 
-    public BlockStatement(){
-        this.statements=new LinkedList<>();
+    public BlockStatement () {
+        this.statements = new LinkedList<> ( );
     }
 
-    public void addStatement(Statement statement){
-        statements.add(statement);
+    public void addStatement ( Statement statement ) {
+        statements.add ( statement );
     }
 
     @Override
-    public void execute() {
+    public void execute () {
 
-        for (Statement s: statements) {
+        for (Statement s : statements) {
 
-            s.execute();
+            s.execute ( );
 
         }
 
     }
 
     @Override
-    public String toString() {
-        StringBuilder strBuild=new StringBuilder();
-        for (Statement s: statements){
-            strBuild.append(s);
+    public String toString () {
+        StringBuilder strBuild = new StringBuilder ( );
+        for (Statement s : statements) {
+            strBuild.append ( s );
         }
-        return strBuild.toString();
+        return strBuild.toString ( );
     }
 }

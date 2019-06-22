@@ -1,6 +1,5 @@
 package com.kisslang.source.parser.ast.expression.binary;
 
-import com.kisslang.source.library.ObjectValue;
 import com.kisslang.source.library.value.built_in.bool.LogicalValue;
 import com.kisslang.source.library.Value;
 import com.kisslang.source.parser.ast.expression.Expression;
@@ -27,39 +26,43 @@ public class LogicalBinaryExpression implements Expression {
     private final Expression expr1, expr2;
     private final String operation;
 
-    public LogicalBinaryExpression(String operation, Expression expr1, Expression expr2) {
+    public LogicalBinaryExpression ( String operation , Expression expr1 , Expression expr2 ) {
         this.operation = operation;
         this.expr1 = expr1;
         this.expr2 = expr2;
     }
 
-    private boolean doubleAsBoolean(Value val){
-        return val.asNumber()==new LogicalValue(true).asNumber();
+    private boolean doubleAsBoolean ( Value val ) {
+        return val.asNumber ( ) == new LogicalValue ( true ).asNumber ( );
     }
 
     @Override
-    public Value eval() {
+    public Value eval () {
 
-        boolean left=expr1.eval().asBoolean();
-        boolean right=expr2.eval().asBoolean();
+        boolean left = expr1.eval ( ).asBoolean ( );
+        boolean right = expr2.eval ( ).asBoolean ( );
 
         switch (operation) {
 
-            case "&&": return new LogicalValue(left && right);
+            case "&&":
+                return new LogicalValue ( left && right );
 
-            case "&": return new LogicalValue(left & right);
+            case "&":
+                return new LogicalValue ( left & right );
 
-            case "|": return new LogicalValue(left | right);
+            case "|":
+                return new LogicalValue ( left | right );
 
-            case "||": return new LogicalValue( left || right);
+            case "||":
+                return new LogicalValue ( left || right );
 
             default:
-                return new LogicalValue(left && right);
+                return new LogicalValue ( left && right );
         }
     }
 
     @Override
-    public String toString() {
-        return String.format("[%s %c %s]", expr1, operation, expr2);
+    public String toString () {
+        return String.format ( "[%s %c %s]" , expr1 , operation , expr2 );
     }
 }

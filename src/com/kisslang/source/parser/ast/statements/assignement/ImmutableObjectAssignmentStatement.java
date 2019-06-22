@@ -1,4 +1,11 @@
-package com.kisslang.source.parser.ast.statements;
+package com.kisslang.source.parser.ast.statements.assignement;
+
+import com.kisslang.source.library.value.built_in.object.ObjectValue;
+import com.kisslang.source.library.Value;
+import com.kisslang.source.library.Variables;
+import com.kisslang.source.library.keys.VariableKey;
+import com.kisslang.source.parser.ast.expression.Expression;
+import com.kisslang.source.parser.ast.statements.Statement;
 
 /*
  * Copyright (C) 2019 The KISSlang Project by Vitalii Vorobii
@@ -17,12 +24,6 @@ package com.kisslang.source.parser.ast.statements;
  *
  */
 
-import com.kisslang.source.library.ObjectValue;
-import com.kisslang.source.library.Value;
-import com.kisslang.source.library.Variables;
-import com.kisslang.source.library.keys.VariableKey;
-import com.kisslang.source.parser.ast.expression.Expression;
-
 public class ImmutableObjectAssignmentStatement implements Statement {
 
     private final String objectName;
@@ -31,19 +32,19 @@ public class ImmutableObjectAssignmentStatement implements Statement {
 
     private final Expression expression;
 
-    public ImmutableObjectAssignmentStatement(String objectName, VariableKey key, Expression expression){
-        this.objectName=objectName;
-        this.key=key;
-        this.expression=expression;
+    public ImmutableObjectAssignmentStatement ( String objectName , VariableKey key , Expression expression ) {
+        this.objectName = objectName;
+        this.key = key;
+        this.expression = expression;
     }
 
     @Override
-    public void execute() {
-        Value value= Variables.get(new VariableKey(objectName,true));
+    public void execute () {
+        Value value = Variables.get ( new VariableKey ( objectName , true ) );
 
-        ObjectValue objValue=(ObjectValue) value;
+        ObjectValue objValue = (ObjectValue) value;
 
-        objValue.add(key,expression.eval());
+        objValue.add ( key , expression.eval ( ) );
     }
 
 }

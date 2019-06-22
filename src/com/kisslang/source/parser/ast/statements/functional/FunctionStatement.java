@@ -24,17 +24,17 @@ public class FunctionStatement implements Statement {
 
     private final Expression expression;
 
-    public FunctionStatement(Expression expression){
-        this.expression=expression;
+    public FunctionStatement ( Expression expression ) {
+        this.expression = expression;
     }
 
     @Override
-    public void execute() {
-        expression.eval();
+    public void execute () {
+        expression.eval ( );
     }
 
     @Override
-    public String toString() {
-        return "Function: "+expression;
+    public String toString () {
+        return "Function: " + expression;
     }
 }

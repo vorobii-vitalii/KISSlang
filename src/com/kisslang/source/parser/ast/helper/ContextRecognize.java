@@ -19,47 +19,35 @@ package com.kisslang.source.parser.ast.helper;
 
 public final class ContextRecognize {
 
-    private final static boolean isNumberSeperator(char c) {
+    private final static boolean isNumberSeperator ( char c ) {
 
-        if (c=='.'){
-            return true;
-        }
-
-        return false ;
+        return c == '.';
     }
 
-    public final static boolean isNumberLike(final String term) {
+    public final static boolean isNumberLike ( final String term ) {
 
-        final int lastIndex = term.length() - 1;
+        final int lastIndex = term.length ( ) - 1;
 
-        if (!Character.isDigit(term.charAt(0))) {
+        if ( !Character.isDigit ( term.charAt ( 0 ) ) ) {
             return false;
         }
 
         for (int i = 1; i < lastIndex; i++) {
 
-            if (!Character.isDigit(term.charAt(i))) {
+            if ( !Character.isDigit ( term.charAt ( i ) ) ) {
 
-                if (!isNumberSeperator(term.charAt(i))) {
+                if ( !isNumberSeperator ( term.charAt ( i ) ) ) {
                     return false;
                 }
             }
         }
 
-        if (!Character.isDigit(term.charAt(lastIndex))) {
-            return false;
-        }
-
-        return true;
+        return Character.isDigit ( term.charAt ( lastIndex ) );
     }
 
-    public final static boolean isBooleanLike(final String term){
+    public final static boolean isBooleanLike ( final String term ) {
 
-        if(term.equals("True") || term.equals("False")) {
-            return true;
-        }
-
-        return false;
+        return term.equals ( "True" ) || term.equals ( "False" );
 
     }
 

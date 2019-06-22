@@ -1,9 +1,10 @@
-package com.kisslang.source.parser.ast.expression;
+package com.kisslang.source.parser.ast.expression.object;
 
-import com.kisslang.source.library.ObjectValue;
+import com.kisslang.source.library.value.built_in.object.ObjectValue;
 import com.kisslang.source.library.Value;
 import com.kisslang.source.library.Variables;
 import com.kisslang.source.library.keys.VariableKey;
+import com.kisslang.source.parser.ast.expression.Expression;
 
 /*
  * Copyright (C) 2019 The KISSlang Project by Vitalii Vorobii
@@ -28,19 +29,19 @@ public class MutableObjectAccessGettingExpression implements Expression {
 
     private final VariableKey field;
 
-    public MutableObjectAccessGettingExpression(String objectName, VariableKey field){
-        this.objectName=objectName;
-        this.field=field;
+    public MutableObjectAccessGettingExpression ( String objectName , VariableKey field ) {
+        this.objectName = objectName;
+        this.field = field;
     }
 
     @Override
-    public Value eval() {
+    public Value eval () {
 
-        Value value= Variables.get(new VariableKey(objectName,false));
+        Value value = Variables.get ( new VariableKey ( objectName , false ) );
 
-        ObjectValue objectValue=(ObjectValue) value;
+        ObjectValue objectValue = (ObjectValue) value;
 
-        return objectValue.get(field);
+        return objectValue.get ( field );
 
     }
 

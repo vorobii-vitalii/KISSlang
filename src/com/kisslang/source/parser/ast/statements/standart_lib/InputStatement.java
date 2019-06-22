@@ -29,23 +29,23 @@ public class InputStatement implements Statement {
 
     private final String variableName;
 
-    public InputStatement(String variableName){
-        this.variableName=variableName;
+    public InputStatement ( String variableName ) {
+        this.variableName = variableName;
     }
 
     @Override
-    public void execute()  {
+    public void execute () {
 
 
-        synchronized (Variables.class){
+        synchronized (Variables.class) {
 
-            Scanner scanner = new Scanner(System.in);
+            Scanner scanner = new Scanner ( System.in );
 
-            String line="";
+            String line = "";
             while (true) {
-                line = scanner.nextLine();
-                if (!line.isEmpty()){
-                    Variables.add(new VariableKey(variableName,false),new InputRecognizer(line).recognize());
+                line = scanner.nextLine ( );
+                if ( !line.isEmpty ( ) ) {
+                    Variables.add ( new VariableKey ( variableName , false ) , new InputRecognizer ( line ).recognize ( ) );
                     break;
                 }
             }

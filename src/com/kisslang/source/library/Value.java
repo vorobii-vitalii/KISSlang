@@ -19,16 +19,16 @@ package com.kisslang.source.library;
 
 public interface Value {
 
-    double asNumber();
+    double asNumber ();
 
-    String asString();
+    String asString ();
 
-    boolean canBeRepresentedAsNumber();
+    boolean canBeRepresentedAsNumber ();
 
-    default boolean isString() {
+    default boolean isString () {
         return false;
     }
 
-    boolean asBoolean();
+    boolean asBoolean ();
 
 }

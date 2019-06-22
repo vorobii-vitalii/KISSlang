@@ -1,6 +1,5 @@
 package com.kisslang.source.parser.ast.expression.unary;
 
-import com.kisslang.source.library.ObjectValue;
 import com.kisslang.source.library.Value;
 import com.kisslang.source.library.value.built_in.number.NumberValue;
 import com.kisslang.source.parser.ast.expression.Expression;
@@ -28,23 +27,24 @@ public final class UnaryExpression implements Expression {
 
     private final char operation;
 
-    public UnaryExpression(char operation, Expression expr1) {
+    public UnaryExpression ( char operation , Expression expr1 ) {
         this.operation = operation;
         this.expr1 = expr1;
     }
 
     @Override
-    public Value eval() {
+    public Value eval () {
         switch (operation) {
-            case '-': return new NumberValue( -expr1.eval().asNumber());
+            case '-':
+                return new NumberValue ( -expr1.eval ( ).asNumber ( ) );
             case '+':
             default:
-                return new NumberValue(expr1.eval().asNumber());
+                return new NumberValue ( expr1.eval ( ).asNumber ( ) );
         }
     }
 
     @Override
-    public String toString() {
-        return String.format("%c %s", operation, expr1);
+    public String toString () {
+        return String.format ( "%c %s" , operation , expr1 );
     }
 }

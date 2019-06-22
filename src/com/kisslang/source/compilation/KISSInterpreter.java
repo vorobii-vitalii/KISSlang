@@ -19,91 +19,91 @@ public class KISSInterpreter {
 
     private volatile static KISSInterpreter compilerSingleton;
 
-    private KISSInterpreter(String codeToBeCompiled) {
-        this.codeToBeCompiled=codeToBeCompiled;
-        expressionsProvided=false;
+    private KISSInterpreter ( String codeToBeCompiled ) {
+        this.codeToBeCompiled = codeToBeCompiled;
+        expressionsProvided = false;
     }
 
-    private KISSInterpreter(){
-        this.codeToBeCompiled="";
-        expressionsProvided=false;
+    private KISSInterpreter () {
+        this.codeToBeCompiled = "";
+        expressionsProvided = false;
     }
 
-    boolean isReady() {
+    boolean isReady () {
         return expressionsProvided;
     }
 
-    public String getSourceCode(){
+    public String getSourceCode () {
         return codeToBeCompiled;
     }
 
-    public static KISSInterpreter getInstance(String code) {
+    public static KISSInterpreter getInstance ( String code ) {
 
-        if (compilerSingleton==null){
-            compilerSingleton=new KISSInterpreter(code);
+        if ( compilerSingleton == null ) {
+            compilerSingleton = new KISSInterpreter ( code );
         }
 
         return compilerSingleton;
     }
 
-    public static KISSInterpreter getInstance() {
+    public static KISSInterpreter getInstance () {
 
-        if (compilerSingleton==null){
-            compilerSingleton=new KISSInterpreter();
+        if ( compilerSingleton == null ) {
+            compilerSingleton = new KISSInterpreter ( );
         }
         return compilerSingleton;
     }
 
-    public void execute() {
+    public void execute () {
 
-        provideInit();
+        provideInit ( );
 
-        expressionsKISS.execute();
+        expressionsKISS.execute ( );
 
 
     }
 
-    public void provideInit() {
+    public void provideInit () {
 
-        if(!isReady()) {
-            init();
+        if ( !isReady ( ) ) {
+            init ( );
         }
 
     }
 
-    public void printStatements() {
+    public void printStatements () {
 
-        provideInit();
+        provideInit ( );
 
-        System.out.println(expressionsKISS);
+        System.out.println ( expressionsKISS );
 
     }
 
-    public void printTokens() {
+    public void printTokens () {
 
-        provideInit();
+        provideInit ( );
 
-        for (Token e: lexerTokens) {
-            System.out.println(e);
+        for (Token e : lexerTokens) {
+            System.out.println ( e );
         }
 
     }
 
-    public void setSourceCode(String codeToBeCompiled) {
+    public void setSourceCode ( String codeToBeCompiled ) {
 
         this.codeToBeCompiled = codeToBeCompiled;
 
-        expressionsProvided=false;
+        expressionsProvided = false;
 
     }
 
-    public void init() {
+    public void init () {
 
-        lexerTokens=new Lexer(codeToBeCompiled).tokenize();
+        lexerTokens = new Lexer ( codeToBeCompiled ).tokenize ( );
 
-        expressionsKISS=new Parser(lexerTokens).parse();
+        expressionsKISS = new Parser ( lexerTokens ).parse ( );
 
-        expressionsProvided=true;
+        expressionsProvided = true;
     }
 
 

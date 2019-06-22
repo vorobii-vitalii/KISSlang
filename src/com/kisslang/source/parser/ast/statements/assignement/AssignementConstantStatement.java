@@ -29,44 +29,44 @@ public class AssignementConstantStatement implements Statement {
 
     private Expression expression;
 
-    private Value value=null;
+    private Value value = null;
 
-    private boolean immutable=true;
+    private boolean immutable = true;
 
     private boolean valueIsAlreadyProvided;
 
-    public AssignementConstantStatement(String variableName, Expression expression){
-        this.variableName=variableName;
-        this.expression=expression;
-        this.valueIsAlreadyProvided=false;
+    public AssignementConstantStatement ( String variableName , Expression expression ) {
+        this.variableName = variableName;
+        this.expression = expression;
+        this.valueIsAlreadyProvided = false;
     }
 
-    public AssignementConstantStatement(String variableName, Value value){
-        this.variableName=variableName;
-        this.value=value;
-        this.valueIsAlreadyProvided=true;
+    public AssignementConstantStatement ( String variableName , Value value ) {
+        this.variableName = variableName;
+        this.value = value;
+        this.valueIsAlreadyProvided = true;
     }
 
     @Override
-    public void execute() {
+    public void execute () {
 
 //        System.out.print(variableName+" is about to be assigned with ");
 
-        if(valueIsAlreadyProvided){
-            VariableKey varToBeAdded=new VariableKey(variableName,immutable);
+        if ( valueIsAlreadyProvided ) {
+            VariableKey varToBeAdded = new VariableKey ( variableName , immutable );
 //            System.out.println(value+"  !!!1");
-            Variables.add(varToBeAdded,value);
+            Variables.add ( varToBeAdded , value );
             return;
         }
-        Value value1=expression.eval();
-        VariableKey varToBeAdded=new VariableKey(variableName,immutable);
+        Value value1 = expression.eval ( );
+        VariableKey varToBeAdded = new VariableKey ( variableName , immutable );
 //        System.out.println(value1+"  !!!1");
-        Variables.add(varToBeAdded,value1);
+        Variables.add ( varToBeAdded , value1 );
     }
 
     @Override
-    public String toString() {
-        return variableName+" = "+expression.eval();
+    public String toString () {
+        return variableName + " = " + expression.eval ( );
     }
 
 

@@ -1,8 +1,9 @@
-package com.kisslang.source.parser.ast.expression;
+package com.kisslang.source.parser.ast.expression.binary;
 
-import com.kisslang.source.library.ObjectValue;
+import com.kisslang.source.library.value.built_in.object.ObjectValue;
 import com.kisslang.source.library.Value;
-import com.kisslang.source.library.value.built_in.string.StringValue;
+import com.kisslang.source.library.keys.VariableKey;
+import com.kisslang.source.parser.ast.expression.Expression;
 
 /*
  * Copyright (C) 2019 The KISSlang Project by Vitalii Vorobii
@@ -21,22 +22,25 @@ import com.kisslang.source.library.value.built_in.string.StringValue;
  *
  */
 
-public class StringExpression implements Expression {
+public class ArrowBinaryExpression implements Expression {
 
-    private final String value;
+    private final Expression expr1;
 
-    public StringExpression(String value){
-        this.value=value;
+    private final VariableKey key;
+
+    public ArrowBinaryExpression ( Expression expr1 , VariableKey key ) {
+        this.expr1 = expr1;
+        this.key = key;
     }
 
     @Override
-    public Value eval() {
-        return new StringValue(value);
-    }
+    public Value eval () {
 
-    @Override
-    public String toString() {
-        return value;
+        ObjectValue objectValue = (ObjectValue) expr1.eval ( );
+
+        System.out.println ( "RESULT " + objectValue.get ( key ) + " of " + objectValue );
+        return objectValue.get ( key );
+
     }
 
 }

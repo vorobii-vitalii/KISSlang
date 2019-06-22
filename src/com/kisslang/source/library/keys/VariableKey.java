@@ -23,35 +23,35 @@ public final class VariableKey {
 
     private boolean immutable;
 
-    public VariableKey(String varName,boolean immutable){
-        this.varName=varName;
-        this.immutable=immutable;
+    public VariableKey ( String varName , boolean immutable ) {
+        this.varName = varName;
+        this.immutable = immutable;
     }
 
-    public VariableKey(String varName){
-        this.varName=varName;
-        this.immutable=true;
+    public VariableKey ( String varName ) {
+        this.varName = varName;
+        this.immutable = true;
     }
 
-    public VariableKey(){
-        throw new RuntimeException("Expected variable name...");
+    public VariableKey () {
+        throw new RuntimeException ( "Expected variable name..." );
     }
 
-    public String getVariableName(){
+    public String getVariableName () {
         return varName;
     }
 
-    public boolean isImmutable(){
+    public boolean isImmutable () {
         return immutable;
     }
 
     @Override
-    public int hashCode() {
-        return varName.hashCode()+ ( immutable ? 1:0 );
+    public int hashCode () {
+        return varName.hashCode ( ) + (immutable ? 1 : 0);
     }
 
     @Override
-    public boolean equals(Object o) {
-        return o.hashCode()==this.hashCode();
+    public boolean equals ( Object o ) {
+        return o.hashCode ( ) == this.hashCode ( );
     }
 }

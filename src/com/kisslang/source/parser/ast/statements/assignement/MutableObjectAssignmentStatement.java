@@ -1,5 +1,9 @@
-package com.kisslang.source.parser.ast.statements.condition;
+package com.kisslang.source.parser.ast.statements.assignement;
 
+import com.kisslang.source.library.value.built_in.object.ObjectValue;
+import com.kisslang.source.library.Value;
+import com.kisslang.source.library.Variables;
+import com.kisslang.source.library.keys.VariableKey;
 import com.kisslang.source.parser.ast.expression.Expression;
 import com.kisslang.source.parser.ast.statements.Statement;
 
@@ -20,36 +24,27 @@ import com.kisslang.source.parser.ast.statements.Statement;
  *
  */
 
-public class IfConditionalStatement implements Statement {
+public class MutableObjectAssignmentStatement implements Statement {
+
+    private final String objectName;
+
+    private final VariableKey key;
 
     private final Expression expression;
-    private final Statement ifStatement;
-    private final Statement elseStatement;
 
-    public IfConditionalStatement ( Expression expression , Statement ifStatement , Statement elseStatement ) {
+    public MutableObjectAssignmentStatement ( String objectName , VariableKey key , Expression expression ) {
+        this.objectName = objectName;
+        this.key = key;
         this.expression = expression;
-        this.ifStatement = ifStatement;
-        this.elseStatement = elseStatement;
     }
-
 
     @Override
     public void execute () {
+        Value value = Variables.get ( new VariableKey ( objectName , false ) );
 
-        final boolean result = expression.eval ( ).asBoolean ( );
+        ObjectValue objValue = (ObjectValue) value;
 
-        if ( result == true ) {
-            ifStatement.execute ( );
-        } else {
-            if ( elseStatement != null ) {
-                elseStatement.execute ( );
-            }
-        }
-
+        objValue.add ( key , expression.eval ( ) );
     }
 
-    @Override
-    public String toString () {
-        return "If : " + ifStatement.toString ( );
-    }
 }

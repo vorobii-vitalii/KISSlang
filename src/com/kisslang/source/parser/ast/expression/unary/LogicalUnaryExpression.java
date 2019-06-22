@@ -1,6 +1,5 @@
 package com.kisslang.source.parser.ast.expression.unary;
 
-import com.kisslang.source.library.ObjectValue;
 import com.kisslang.source.library.Value;
 import com.kisslang.source.library.value.built_in.bool.LogicalValue;
 import com.kisslang.source.parser.ast.expression.Expression;
@@ -27,22 +26,23 @@ public class LogicalUnaryExpression implements Expression {
 
     private final char operation;
 
-    public LogicalUnaryExpression(char operation, Expression expr1) {
+    public LogicalUnaryExpression ( char operation , Expression expr1 ) {
         this.operation = operation;
         this.expr1 = expr1;
     }
 
     @Override
-    public Value eval() {
+    public Value eval () {
         switch (operation) {
-            case '!': return new LogicalValue(!expr1.eval().asBoolean() );
+            case '!':
+                return new LogicalValue ( !expr1.eval ( ).asBoolean ( ) );
             default:
-                return new LogicalValue(expr1.eval().asBoolean());
+                return new LogicalValue ( expr1.eval ( ).asBoolean ( ) );
         }
     }
 
     @Override
-    public String toString() {
-        return String.format("%c %s", operation, expr1);
+    public String toString () {
+        return String.format ( "%c %s" , operation , expr1 );
     }
 }

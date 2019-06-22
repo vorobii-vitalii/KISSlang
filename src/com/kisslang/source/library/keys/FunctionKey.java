@@ -27,42 +27,42 @@ public class FunctionKey {
 
     private boolean asManyAsNeeded;
 
-    public FunctionKey(String functionName, int argCount,boolean immutable){
+    public FunctionKey ( String functionName , int argCount , boolean immutable ) {
         this.functionName = functionName;
-        this.argCount=argCount;
-        this.immutable=immutable;
-        asManyAsNeeded=false;
+        this.argCount = argCount;
+        this.immutable = immutable;
+        asManyAsNeeded = false;
     }
 
-    public FunctionKey(String functionName, boolean immutable){
+    public FunctionKey ( String functionName , boolean immutable ) {
         this.functionName = functionName;
-        this.asManyAsNeeded=true;
-        this.immutable=immutable;
+        this.asManyAsNeeded = true;
+        this.immutable = immutable;
     }
 
-    public FunctionKey(){
-        throw new RuntimeException("Expected function name ... ");
+    public FunctionKey () {
+        throw new RuntimeException ( "Expected function name ... " );
     }
 
-    public FunctionKey(String functionName){
-        throw new RuntimeException("Expected number of arguments");
+    public FunctionKey ( String functionName ) {
+        throw new RuntimeException ( "Expected number of arguments" );
     }
 
-    public String getFunctionName(){
+    public String getFunctionName () {
         return functionName;
     }
 
-    public boolean isImmutable(){
+    public boolean isImmutable () {
         return immutable;
     }
 
     @Override
-    public int hashCode() {
-        return functionName.hashCode()+ (asManyAsNeeded?0:argCount)+ ( immutable ? 1:0 );
+    public int hashCode () {
+        return functionName.hashCode ( ) + (asManyAsNeeded ? 0 : argCount) + (immutable ? 1 : 0);
     }
 
     @Override
-    public boolean equals(Object o) {
-        return o.hashCode()==this.hashCode();
+    public boolean equals ( Object o ) {
+        return o.hashCode ( ) == this.hashCode ( );
     }
 }

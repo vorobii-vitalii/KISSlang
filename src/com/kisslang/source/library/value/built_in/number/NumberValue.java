@@ -25,46 +25,43 @@ public class NumberValue implements Value {
 
     private final double value;
 
-    public NumberValue(double value){
-        this.value=value;
+    public NumberValue ( double value ) {
+        this.value = value;
     }
 
     @Override
-    public double asNumber() {
+    public double asNumber () {
         return value;
     }
 
     @Override
-    public boolean asBoolean() {
-        if(value!=0){
-            return true;
-        }
-        return false;
+    public boolean asBoolean () {
+        return value != 0;
     }
 
     @Override
-    public String asString() {
+    public String asString () {
         double doubleNumber = value;
-        BigDecimal bigDecimal = new BigDecimal(String.valueOf(doubleNumber));
-        int intValue = bigDecimal.intValue();
-        if(bigDecimal.subtract(new BigDecimal(intValue)).toPlainString().equals("0.0")){
-            return Integer.toString( intValue);
+        BigDecimal bigDecimal = new BigDecimal ( String.valueOf ( doubleNumber ) );
+        int intValue = bigDecimal.intValue ( );
+        if ( bigDecimal.subtract ( new BigDecimal ( intValue ) ).toPlainString ( ).equals ( "0.0" ) ) {
+            return Integer.toString ( intValue );
         }
-        return Double.toString(value);
+        return Double.toString ( value );
     }
 
     @Override
-    public boolean canBeRepresentedAsNumber() {
+    public boolean canBeRepresentedAsNumber () {
         return true;
     }
 
     @Override
-    public String toString() {
-        return asString();
+    public String toString () {
+        return asString ( );
     }
 
     @Override
-    public boolean isString() {
+    public boolean isString () {
         return false;
     }
 }

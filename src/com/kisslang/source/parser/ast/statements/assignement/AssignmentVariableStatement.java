@@ -30,40 +30,40 @@ public final class AssignmentVariableStatement implements Statement {
 
     private Expression expression;
 
-    private Value value=null;
+    private Value value = null;
 
-    private boolean immutable=false;
+    private boolean immutable = false;
 
     boolean valueIsAlreadyProvided;
 
-    public AssignmentVariableStatement(String variableName, Expression expression){
-        this.variableName=variableName;
-        this.expression=expression;
-        this.valueIsAlreadyProvided=false;
+    public AssignmentVariableStatement ( String variableName , Expression expression ) {
+        this.variableName = variableName;
+        this.expression = expression;
+        this.valueIsAlreadyProvided = false;
     }
 
     @Override
-    public void execute() {
+    public void execute () {
 
-        if(valueIsAlreadyProvided){
-            VariableKey varToBeAdded=new VariableKey(variableName,immutable);
-            Variables.add(varToBeAdded,value);
+        if ( valueIsAlreadyProvided ) {
+            VariableKey varToBeAdded = new VariableKey ( variableName , immutable );
+            Variables.add ( varToBeAdded , value );
             return;
         }
-        Value value1=expression.eval();
-        VariableKey varToBeAdded=new VariableKey(variableName,immutable);
-        Variables.add(varToBeAdded,value1);
+        Value value1 = expression.eval ( );
+        VariableKey varToBeAdded = new VariableKey ( variableName , immutable );
+        Variables.add ( varToBeAdded , value1 );
     }
 
     @Override
-    public String toString() {
-        return variableName+" = "+expression.eval();
+    public String toString () {
+        return variableName + " = " + expression.eval ( );
     }
 
-    public AssignmentVariableStatement(String variableName, Value value){
-        this.variableName=variableName;
-        this.value=value;
-        this.valueIsAlreadyProvided=true;
+    public AssignmentVariableStatement ( String variableName , Value value ) {
+        this.variableName = variableName;
+        this.value = value;
+        this.valueIsAlreadyProvided = true;
     }
 
 }

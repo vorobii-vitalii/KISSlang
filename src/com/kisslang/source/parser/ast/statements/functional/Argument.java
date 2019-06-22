@@ -23,26 +23,26 @@ public class Argument {
 
     private boolean immutable;
 
-    public Argument(String name,boolean immutable){
-        this.name=name;
-        this.immutable=immutable;
+    public Argument ( String name , boolean immutable ) {
+        this.name = name;
+        this.immutable = immutable;
     }
 
-    public String getArgumentName() {
+    public String getArgumentName () {
         return name;
     }
 
-    public boolean isImmutable() {
+    public boolean isImmutable () {
         return immutable;
     }
 
     @Override
-    public int hashCode() {
-        return name.hashCode()+(immutable ? 1:0 );
+    public int hashCode () {
+        return name.hashCode ( ) + (immutable ? 1 : 0);
     }
 
     @Override
-    public boolean equals(Object o) {
-        return this.hashCode()==o.hashCode();
+    public boolean equals ( Object o ) {
+        return this.hashCode ( ) == o.hashCode ( );
     }
 }

@@ -1,7 +1,6 @@
 package com.kisslang.source.parser.ast.expression.binary;
 
-import com.kisslang.source.library.ArrayValue;
-import com.kisslang.source.library.ObjectValue;
+import com.kisslang.source.library.value.built_in.array.ArrayValue;
 import com.kisslang.source.library.Value;
 import com.kisslang.source.library.value.built_in.number.NumberValue;
 import com.kisslang.source.library.value.built_in.string.StringValue;
@@ -29,36 +28,40 @@ public final class ArithmeticBinaryExpression implements Expression {
     private final Expression expr1, expr2;
     private final char operation;
 
-    public ArithmeticBinaryExpression(char operation, Expression expr1, Expression expr2) {
+    public ArithmeticBinaryExpression ( char operation , Expression expr1 , Expression expr2 ) {
         this.operation = operation;
         this.expr1 = expr1;
         this.expr2 = expr2;
     }
 
-    private static double getPow(double k,double n){
-        double result=Math.pow(k,n);
+    private static double getPow ( double k , double n ) {
+        double result = Math.pow ( k , n );
         return result;
     }
 
     @Override
-    public Value eval() {
+    public Value eval () {
 
         switch (operation) {
-            case '-': return new NumberValue(expr1.eval().asNumber() - expr2.eval().asNumber());
-            case '*': return new NumberValue( expr1.eval().asNumber() * expr2.eval().asNumber());
-            case '/': return new NumberValue( expr1.eval().asNumber() / expr2.eval().asNumber());
-            case '^': return new NumberValue( getPow(expr1.eval().asNumber(),expr2.eval().asNumber()));
+            case '-':
+                return new NumberValue ( expr1.eval ( ).asNumber ( ) - expr2.eval ( ).asNumber ( ) );
+            case '*':
+                return new NumberValue ( expr1.eval ( ).asNumber ( ) * expr2.eval ( ).asNumber ( ) );
+            case '/':
+                return new NumberValue ( expr1.eval ( ).asNumber ( ) / expr2.eval ( ).asNumber ( ) );
+            case '^':
+                return new NumberValue ( getPow ( expr1.eval ( ).asNumber ( ) , expr2.eval ( ).asNumber ( ) ) );
             case '+':
             default:
-                if( expr1.eval().isString() || expr2.eval().isString() || expr1.eval() instanceof ArrayValue || expr2.eval() instanceof ArrayValue){
-                    return new StringValue(expr1.eval().asString() + expr2.eval().asString());
+                if ( expr1.eval ( ).isString ( ) || expr2.eval ( ).isString ( ) || expr1.eval ( ) instanceof ArrayValue || expr2.eval ( ) instanceof ArrayValue ) {
+                    return new StringValue ( expr1.eval ( ).asString ( ) + expr2.eval ( ).asString ( ) );
                 }
-                return new NumberValue(expr1.eval().asNumber() + expr2.eval().asNumber());
+                return new NumberValue ( expr1.eval ( ).asNumber ( ) + expr2.eval ( ).asNumber ( ) );
         }
     }
 
     @Override
-    public String toString() {
-        return String.format("[%s %c %s]", expr1, operation, expr2);
+    public String toString () {
+        return String.format ( "[%s %c %s]" , expr1 , operation , expr2 );
     }
 }

@@ -11,47 +11,47 @@ public final class Variables {
 
     private static Map<VariableKey, Value> variables;
 
-    private static Stack<Map<VariableKey,Value>> stack;
+    private static Stack<Map<VariableKey, Value>> stack;
 
-    private static final Value NUMBER_VALUE_NOT_FOUND=new NumberValue(0);
+    private static final Value NUMBER_VALUE_NOT_FOUND = new NumberValue ( 0 );
 
     static {
-        stack=new Stack<>();
+        stack = new Stack<> ( );
 
-        variables=new HashMap<>();
-        variables.put(new VariableKey("PI",true),new NumberValue(Math.PI));
-        variables.put(new VariableKey("E",true),new NumberValue(Math.E));
-        variables.put(new VariableKey("GOLDEN_RATION",true),new NumberValue(1.618));
+        variables = new HashMap<> ( );
+        variables.put ( new VariableKey ( "PI" , true ) , new NumberValue ( Math.PI ) );
+        variables.put ( new VariableKey ( "E" , true ) , new NumberValue ( Math.E ) );
+        variables.put ( new VariableKey ( "GOLDEN_RATION" , true ) , new NumberValue ( 1.618 ) );
     }
 
-    public static boolean isExists(VariableKey key){
-            return variables.containsKey(key);
+    public static boolean isExists ( VariableKey key ) {
+        return variables.containsKey ( key );
     }
 
-    public static void push(){
-        stack.push(new HashMap<>(variables));
+    public static void push () {
+        stack.push ( new HashMap<> ( variables ) );
     }
 
-    public static void pop(){
-        variables=stack.pop();
+    public static void pop () {
+        variables = stack.pop ( );
     }
 
-    public static Value  get(VariableKey key){
+    public static Value get ( VariableKey key ) {
 
-            if (!isExists(key)) {
-                return NUMBER_VALUE_NOT_FOUND;
-            }
+        if ( !isExists ( key ) ) {
+            return NUMBER_VALUE_NOT_FOUND;
+        }
 
-            return variables.get(key);
+        return variables.get ( key );
     }
 
-    public static void add(VariableKey key,Value value){
+    public static void add ( VariableKey key , Value value ) {
 
-            if(key.isImmutable()==true && isExists(key)){
-                throw new RuntimeException("Constans are immutable ! ");
-            }
+        if ( key.isImmutable ( ) == true && isExists ( key ) ) {
+            throw new RuntimeException ( "Constans are immutable ! " );
+        }
 
-            variables.put(key, value);
+        variables.put ( key , value );
     }
 
 }

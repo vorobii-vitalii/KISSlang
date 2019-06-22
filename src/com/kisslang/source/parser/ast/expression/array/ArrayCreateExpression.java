@@ -1,4 +1,10 @@
-package com.kisslang.source.parser.ast.expression;
+package com.kisslang.source.parser.ast.expression.array;
+
+import com.kisslang.source.library.value.built_in.array.ArrayValue;
+import com.kisslang.source.library.Value;
+import com.kisslang.source.parser.ast.expression.Expression;
+
+import java.util.List;
 
 /*
  * Copyright (C) 2019 The KISSlang Project by Vitalii Vorobii
@@ -17,37 +23,31 @@ package com.kisslang.source.parser.ast.expression;
  *
  */
 
-import com.kisslang.source.library.ArrayValue;
-import com.kisslang.source.library.ObjectValue;
-import com.kisslang.source.library.Value;
-
-import java.util.List;
-
 public class ArrayCreateExpression implements Expression {
 
     private List<Expression> expressions;
 
-    private boolean isEmpty(){
-        return expressions.isEmpty();
+    private boolean isEmpty () {
+        return expressions.isEmpty ( );
     }
 
-    public ArrayCreateExpression(List<Expression> expressions){
-        this.expressions=expressions;
+    public ArrayCreateExpression ( List<Expression> expressions ) {
+        this.expressions = expressions;
     }
 
-    public ArrayCreateExpression(){
-        throw new RuntimeException("Array cannot be null...");
+    public ArrayCreateExpression () {
+        throw new RuntimeException ( "Array cannot be null..." );
     }
 
     @Override
-    public Value eval() {
-        Value [] arrayOfValues=new Value[expressions.size()];
+    public Value eval () {
+        Value[] arrayOfValues = new Value[expressions.size ( )];
 
-        for (int i = 0; i < arrayOfValues.length ; i++) {
-            arrayOfValues[i]=expressions.get(i).eval();
+        for (int i = 0; i < arrayOfValues.length; i++) {
+            arrayOfValues[i] = expressions.get ( i ).eval ( );
         }
 
-        return new ArrayValue(arrayOfValues);
+        return new ArrayValue ( arrayOfValues );
 
     }
 

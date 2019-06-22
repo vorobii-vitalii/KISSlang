@@ -1,4 +1,10 @@
-package com.kisslang.source.parser.ast.expression;
+package com.kisslang.source.parser.ast.expression.object;
+
+import com.kisslang.source.library.value.built_in.object.ObjectValue;
+import com.kisslang.source.library.Value;
+import com.kisslang.source.library.Variables;
+import com.kisslang.source.library.keys.VariableKey;
+import com.kisslang.source.parser.ast.expression.Expression;
 
 /*
  * Copyright (C) 2019 The KISSlang Project by Vitalii Vorobii
@@ -17,30 +23,25 @@ package com.kisslang.source.parser.ast.expression;
  *
  */
 
-import com.kisslang.source.library.ObjectValue;
-import com.kisslang.source.library.Value;
-import com.kisslang.source.library.Variables;
-import com.kisslang.source.library.keys.VariableKey;
-
 public class ImmutableObjectAccessGettingExpression implements Expression {
 
     private final String objectName;
 
     private final VariableKey field;
 
-    public ImmutableObjectAccessGettingExpression(String objectName,VariableKey field){
-        this.objectName=objectName;
-        this.field=field;
+    public ImmutableObjectAccessGettingExpression ( String objectName , VariableKey field ) {
+        this.objectName = objectName;
+        this.field = field;
     }
 
     @Override
-    public Value eval() {
+    public Value eval () {
 
-        Value value= Variables.get(new VariableKey(objectName,true));
+        Value value = Variables.get ( new VariableKey ( objectName , true ) );
 
-        ObjectValue objectValue=(ObjectValue) value;
+        ObjectValue objectValue = (ObjectValue) value;
 
-        return objectValue.get(field);
+        return objectValue.get ( field );
 
     }
 

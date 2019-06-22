@@ -30,24 +30,22 @@ public class ForLoopStatement implements Statement {
 
     private final Statement blockOfStatements;
 
-    public ForLoopStatement(Statement init,Expression expression,Statement afterExpression,Statement blockOfStatements){
-        this.init=init;
-        this.expression=expression;
-        this.afterExpression=afterExpression;
-        this.blockOfStatements=blockOfStatements;
+    public ForLoopStatement ( Statement init , Expression expression , Statement afterExpression , Statement blockOfStatements ) {
+        this.init = init;
+        this.expression = expression;
+        this.afterExpression = afterExpression;
+        this.blockOfStatements = blockOfStatements;
     }
 
     @Override
-    public void execute() {
+    public void execute () {
 
-        for(init.execute();expression.eval().asBoolean()!=false;afterExpression.execute()){
+        for (init.execute ( ); expression.eval ( ).asBoolean ( ) != false; afterExpression.execute ( )) {
             try {
-                blockOfStatements.execute();
-            }
-            catch (BreakLoopStatement e){
+                blockOfStatements.execute ( );
+            } catch (BreakLoopStatement e) {
                 break;
-            }
-            catch (ContinueLoopStatement e){
+            } catch (ContinueLoopStatement e) {
                 continue;
             }
         }

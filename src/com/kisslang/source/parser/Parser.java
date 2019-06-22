@@ -3,13 +3,23 @@ package com.kisslang.source.parser;
 import com.kisslang.source.library.Value;
 import com.kisslang.source.library.keys.VariableKey;
 import com.kisslang.source.parser.ast.expression.*;
+import com.kisslang.source.parser.ast.expression.array.ArrayAccessGettingExpression;
+import com.kisslang.source.parser.ast.expression.array.ArrayCreateExpression;
 import com.kisslang.source.parser.ast.expression.binary.ArithmeticBinaryExpression;
+import com.kisslang.source.parser.ast.expression.binary.ArrowBinaryExpression;
+import com.kisslang.source.parser.ast.expression.binary.ConditionalExpression;
 import com.kisslang.source.parser.ast.expression.binary.LogicalBinaryExpression;
+import com.kisslang.source.parser.ast.expression.functional.ImmutableFunctionalCallExpression;
+import com.kisslang.source.parser.ast.expression.functional.MutableFunctionalCallExpression;
+import com.kisslang.source.parser.ast.expression.literal.NumberExpression;
+import com.kisslang.source.parser.ast.expression.literal.StringExpression;
+import com.kisslang.source.parser.ast.expression.object.ImmutableObjectAccessGettingExpression;
+import com.kisslang.source.parser.ast.expression.object.MutableObjectAccessGettingExpression;
+import com.kisslang.source.parser.ast.expression.object.ObjectCreateExpression;
 import com.kisslang.source.parser.ast.expression.unary.LogicalUnaryExpression;
 import com.kisslang.source.parser.ast.expression.unary.UnaryExpression;
 import com.kisslang.source.parser.ast.statements.*;
-import com.kisslang.source.parser.ast.statements.assignement.AssignementConstantStatement;
-import com.kisslang.source.parser.ast.statements.assignement.AssignmentVariableStatement;
+import com.kisslang.source.parser.ast.statements.assignement.*;
 import com.kisslang.source.parser.ast.statements.condition.IfConditionalStatement;
 import com.kisslang.source.parser.ast.statements.functional.*;
 import com.kisslang.source.parser.ast.statements.loop.BreakLoopStatement;
@@ -22,7 +32,6 @@ import com.kisslang.source.parser.ast.statements.standart_lib.PrintStatement;
 import com.kisslang.source.parser.tokenization.Token;
 import com.kisslang.source.parser.tokenization.TokenType;
 
-import javax.xml.xpath.XPathExpressionException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -46,263 +55,262 @@ import java.util.List;
 
 public final class Parser {
 
-    private static final Token EOF = new Token(TokenType.EOF, "");
+    private static final Token EOF = new Token ( TokenType.EOF , "" );
 
     private final List<Token> tokens;
     private final int size;
 
     private int pos;
 
-    public Parser(List<Token> tokens) {
+    public Parser ( List<Token> tokens ) {
         this.tokens = tokens;
-        size = tokens.size();
+        size = tokens.size ( );
     }
 
-    public Statement parse() {
+    public Statement parse () {
 
-        final BlockStatement result = new BlockStatement();
+        final BlockStatement result = new BlockStatement ( );
 
-        while (!match(TokenType.EOF)) {
-            result.addStatement(statement());
+        while (!match ( TokenType.EOF )) {
+            result.addStatement ( statement ( ) );
         }
 
         return result;
     }
 
-    private BlockStatement block(){
+    private BlockStatement block () {
 
-        final BlockStatement blockOfStatements=new BlockStatement();
+        final BlockStatement blockOfStatements = new BlockStatement ( );
 
-        consume(TokenType.LPAREN_FIGURE);
+        consume ( TokenType.LPAREN_FIGURE );
 
-        while (!match(TokenType.RPAREN_FIGURE)){
-            if(match(TokenType.EOF)){
-                throw new RuntimeException("Expected } , but found end of file");
+        while (!match ( TokenType.RPAREN_FIGURE )) {
+            if ( match ( TokenType.EOF ) ) {
+                throw new RuntimeException ( "Expected } , but found end of file" );
             }
-            blockOfStatements.addStatement(statement());
+            blockOfStatements.addStatement ( statement ( ) );
         }
 
         return blockOfStatements;
     }
 
-    private Statement blockOrSingle(){
+    private Statement blockOrSingle () {
 
-        if(get(0).getType()==TokenType.LPAREN_FIGURE){
-            return block();
+        if ( get ( 0 ).getType ( ) == TokenType.LPAREN_FIGURE ) {
+            return block ( );
         }
-        return statement();
+        return statement ( );
     }
 
-    private Statement statement(){
+    private Statement statement () {
 
-        if (match(TokenType.PRINT)){
-            return new PrintStatement(expression());
+        if ( match ( TokenType.PRINT ) ) {
+            return new PrintStatement ( expression ( ) );
         }
-        if (match(TokenType.PRINTLINE)){
-            return new PrintLineStatement(expression());
+        if ( match ( TokenType.PRINTLINE ) ) {
+            return new PrintLineStatement ( expression ( ) );
         }
-        if (match(TokenType.INPUT)){
-            return Input();
+        if ( match ( TokenType.INPUT ) ) {
+            return Input ( );
         }
-        if(match(TokenType.IF)){
-            return IfElse();
+        if ( match ( TokenType.IF ) ) {
+            return IfElse ( );
         }
-        if(match(TokenType.WHILE)){
-            return While();
+        if ( match ( TokenType.WHILE ) ) {
+            return While ( );
         }
-        if(match(TokenType.RETURN_FROM_METHOD)){
-            return Return();
+        if ( match ( TokenType.RETURN_FROM_METHOD ) ) {
+            return Return ( );
         }
-        if(match(TokenType.FOR)){
-            return For();
+        if ( match ( TokenType.FOR ) ) {
+            return For ( );
         }
-        if(match(TokenType.BREAK)){
-            return Break();
+        if ( match ( TokenType.BREAK ) ) {
+            return Break ( );
         }
-        if(match(TokenType.CONTINUE)){
-            return Continue();
+        if ( match ( TokenType.CONTINUE ) ) {
+            return Continue ( );
         }
-        if(match(TokenType.FUNCTION_DECLARATION)){
-            return FunctionDeclaration();
+        if ( match ( TokenType.FUNCTION_DECLARATION ) ) {
+            return FunctionDeclaration ( );
         }
-        if(get(0).getType()==TokenType.IMMUTABLE_NAME && get(1).getType()==TokenType.LPAREN){
-            return new FunctionStatement(ImmutableFunctionCall());
+        if ( get ( 0 ).getType ( ) == TokenType.IMMUTABLE_NAME && get ( 1 ).getType ( ) == TokenType.LPAREN ) {
+            return new FunctionStatement ( ImmutableFunctionCall ( ) );
         }
-        if(get(0).getType()==TokenType.MUTTABLE_NAME && get(1).getType()==TokenType.LPAREN){
-            return new FunctionStatement(MutableFunctionCall());
+        if ( get ( 0 ).getType ( ) == TokenType.MUTTABLE_NAME && get ( 1 ).getType ( ) == TokenType.LPAREN ) {
+            return new FunctionStatement ( MutableFunctionCall ( ) );
         }
 
-        return AssignementStatement();
+        return AssignementStatement ( );
     }
 
-    private Statement Input(){
-        next();
-        if(get(0).getType()==TokenType.MUTTABLE_NAME){
-            Token current=get(0);
-            next();
-            return new InputStatement(current.getText());
+    private Statement Input () {
+        next ( );
+        if ( get ( 0 ).getType ( ) == TokenType.MUTTABLE_NAME ) {
+            Token current = get ( 0 );
+            next ( );
+            return new InputStatement ( current.getText ( ) );
         }
 
-        throw new RuntimeException("Wrong input statement usage");
+        throw new RuntimeException ( "Wrong input statement usage" );
 
     }
 
-    private Statement FunctionDeclaration(){
+    private Statement FunctionDeclaration () {
 
-        next();
+        next ( );
 
-        final String functionName=get(0).getText();
+        final String functionName = get ( 0 ).getText ( );
 
-        final TokenType functionNameType=get(0).getType();
+        final TokenType functionNameType = get ( 0 ).getType ( );
 
-        if(get(0).getType()!=TokenType.IMMUTABLE_NAME && get(0).getType()!=TokenType.MUTTABLE_NAME){
-            throw new RuntimeException("Expected function name");
+        if ( get ( 0 ).getType ( ) != TokenType.IMMUTABLE_NAME && get ( 0 ).getType ( ) != TokenType.MUTTABLE_NAME ) {
+            throw new RuntimeException ( "Expected function name" );
         }
-        next();
+        next ( );
 
-        System.out.println(functionName+" with type of "+functionNameType);
+        System.out.println ( functionName + " with type of " + functionNameType );
 
-        consume(TokenType.LPAREN,"Expected ( !");
+        consume ( TokenType.LPAREN , "Expected ( !" );
 
-        final List<Argument> argNames=new ArrayList<>();
+        final List<Argument> argNames = new ArrayList<> ( );
 
-        while(!match(TokenType.RPAREN)){
-            Token current=get(0);
-            if(get(0).getType()!=TokenType.IMMUTABLE_NAME && get(0).getType()!=TokenType.MUTTABLE_NAME){
-                throw new RuntimeException("Expected argument");
+        while (!match ( TokenType.RPAREN )) {
+            Token current = get ( 0 );
+            if ( get ( 0 ).getType ( ) != TokenType.IMMUTABLE_NAME && get ( 0 ).getType ( ) != TokenType.MUTTABLE_NAME ) {
+                throw new RuntimeException ( "Expected argument" );
             }
-            Argument arg=null;
-            if(get(0).getType()==TokenType.IMMUTABLE_NAME){
-                arg=new Argument(current.getText(),true);
+            Argument arg = null;
+            if ( get ( 0 ).getType ( ) == TokenType.IMMUTABLE_NAME ) {
+                arg = new Argument ( current.getText ( ) , true );
+            } else {
+                arg = new Argument ( current.getText ( ) , false );
             }
-            else{
-                arg=new Argument(current.getText(),false);
-            }
-            argNames.add(arg);
-            next();
-            match(TokenType.DELIMITER_ARGS);
+            argNames.add ( arg );
+            next ( );
+            match ( TokenType.DELIMITER_ARGS );
         }
 
-        final Statement functionBody=blockOrSingle();
+        final Statement functionBody = blockOrSingle ( );
 
-        if(functionNameType==TokenType.IMMUTABLE_NAME){
+        if ( functionNameType == TokenType.IMMUTABLE_NAME ) {
 
-            return new ImmutableFunctionAssignStatement(functionName,argNames,functionBody);
+            return new ImmutableFunctionAssignStatement ( functionName , argNames , functionBody );
         }
 
-        return new MutableFunctionAssignStatement(functionName,argNames,functionBody);
+        return new MutableFunctionAssignStatement ( functionName , argNames , functionBody );
 
     }
 
 
-    private Expression ArrayIndexGetter() {
-        Token current=get(0);
-        consume(TokenType.IMMUTABLE_NAME);
-        final String varName=current.getText();
-        List<Expression> indexes=new ArrayList<>();
+    private Expression ArrayIndexGetter () {
+        Token current = get ( 0 );
+        consume ( TokenType.IMMUTABLE_NAME );
+        final String varName = current.getText ( );
+        List<Expression> indexes = new ArrayList<> ( );
 
-        while(get(0).getType()==TokenType.LPAREN_SQUARE){
-            consume(TokenType.LPAREN_SQUARE,"Square bracked expected during array index getting");
-            Expression index=expression();
-            indexes.add(index);
-            consume(TokenType.RPAREN_SQUARE,"Square bracked expected during array index getting");
+        while (get ( 0 ).getType ( ) == TokenType.LPAREN_SQUARE) {
+            consume ( TokenType.LPAREN_SQUARE , "Square bracked expected during array index getting" );
+            Expression index = expression ( );
+            indexes.add ( index );
+            consume ( TokenType.RPAREN_SQUARE , "Square bracked expected during array index getting" );
         }
 
-        for (Expression e:
-             indexes) {
-            System.out.print(e.eval()+"  ");
+        for (Expression e :
+                indexes) {
+            System.out.print ( e.eval ( ) + "  " );
         }
 
-        Value [] indexValues=new Value[indexes.size()];
+        Value[] indexValues = new Value[indexes.size ( )];
 
-        for (int i = 0; i <indexValues.length ; i++) {
-            indexValues[i]=indexes.get(i).eval();
+        for (int i = 0; i < indexValues.length; i++) {
+            indexValues[i] = indexes.get ( i ).eval ( );
         }
 
-        return new ArrayAccessGettingExpression(varName,indexValues);
+        return new ArrayAccessGettingExpression ( varName , indexValues );
 
     }
 
-    private Expression ImmutableFunctionCall(){
+    private Expression ImmutableFunctionCall () {
 
-        final String functionName=consume(TokenType.IMMUTABLE_NAME,"Expected function name").getText();
+        final String functionName = consume ( TokenType.IMMUTABLE_NAME , "Expected function name" ).getText ( );
 
-        consume(TokenType.LPAREN,"Expected ( !");
+        consume ( TokenType.LPAREN , "Expected ( !" );
 
-        final ImmutableFunctionalCallExpression function=new ImmutableFunctionalCallExpression(functionName);
+        final ImmutableFunctionalCallExpression function = new ImmutableFunctionalCallExpression ( functionName );
 
-        while(!match(TokenType.RPAREN)){
-            function.addArgument(expression());
-            match(TokenType.DELIMITER_ARGS);
+        while (!match ( TokenType.RPAREN )) {
+            function.addArgument ( expression ( ) );
+            match ( TokenType.DELIMITER_ARGS );
         }
 
         return function;
     }
 
-    private Expression MutableFunctionCall(){
+    private Expression MutableFunctionCall () {
 
-        final String functionName=consume(TokenType.MUTTABLE_NAME,"Expected function name").getText();
+        final String functionName = consume ( TokenType.MUTTABLE_NAME , "Expected function name" ).getText ( );
 
-        consume(TokenType.LPAREN,"Expected ( !");
+        consume ( TokenType.LPAREN , "Expected ( !" );
 
-        final MutableFunctionalCallExpression function=new MutableFunctionalCallExpression(functionName);
+        final MutableFunctionalCallExpression function = new MutableFunctionalCallExpression ( functionName );
 
-        while(!match(TokenType.RPAREN)){
-            function.addArgument(expression());
-            match(TokenType.DELIMITER_ARGS);
+        while (!match ( TokenType.RPAREN )) {
+            function.addArgument ( expression ( ) );
+            match ( TokenType.DELIMITER_ARGS );
         }
 
         return function;
     }
 
 
-    private Statement Continue() {
-        next();
-        return new ContinueLoopStatement();
+    private Statement Continue () {
+        next ( );
+        return new ContinueLoopStatement ( );
     }
 
-    private Statement Break() {
-        next();
-        return new BreakLoopStatement();
+    private Statement Break () {
+        next ( );
+        return new BreakLoopStatement ( );
     }
 
-    private Statement Return(){
-        next();
-        return new ReturnStatement(expression());
+    private Statement Return () {
+        next ( );
+        return new ReturnStatement ( expression ( ) );
     }
 
 
-    private Statement AssignementStatement() {
-        final Token current=get(0);
+    private Statement AssignementStatement () {
+        final Token current = get ( 0 );
 
-        if ( (current.getType()==TokenType.MUTTABLE_NAME || current.getType()==TokenType.IMMUTABLE_NAME ) && get(1).getType()==TokenType.ASSIGN) {
+        if ( (current.getType ( ) == TokenType.MUTTABLE_NAME || current.getType ( ) == TokenType.IMMUTABLE_NAME) && get ( 1 ).getType ( ) == TokenType.ASSIGN ) {
 
-            if (current.getType()==TokenType.MUTTABLE_NAME && get(1).getType()==TokenType.ASSIGN){
-                consume(TokenType.MUTTABLE_NAME);
-                final String varName=current.getText();
-                consume(TokenType.ASSIGN);
-                return new AssignmentVariableStatement(varName,expression());
+            if ( current.getType ( ) == TokenType.MUTTABLE_NAME && get ( 1 ).getType ( ) == TokenType.ASSIGN ) {
+                consume ( TokenType.MUTTABLE_NAME );
+                final String varName = current.getText ( );
+                consume ( TokenType.ASSIGN );
+                return new AssignmentVariableStatement ( varName , expression ( ) );
             }
 
-            if (current.getType()==TokenType.IMMUTABLE_NAME && get(1).getType()==TokenType.ASSIGN){
-                consume(TokenType.IMMUTABLE_NAME);
-                final String varName=current.getText();
-                consume(TokenType.ASSIGN);
-                return new AssignementConstantStatement(varName,expression());
+            if ( current.getType ( ) == TokenType.IMMUTABLE_NAME && get ( 1 ).getType ( ) == TokenType.ASSIGN ) {
+                consume ( TokenType.IMMUTABLE_NAME );
+                final String varName = current.getText ( );
+                consume ( TokenType.ASSIGN );
+                return new AssignementConstantStatement ( varName , expression ( ) );
             }
 
         }
 
-        if (current.getType()==TokenType.IMMUTABLE_NAME && get(1).getType()==TokenType.LPAREN_SQUARE){
-            consume(TokenType.IMMUTABLE_NAME);
-            final String varName=current.getText();
-            List<Expression> indexes=new ArrayList<>();
+        if ( current.getType ( ) == TokenType.IMMUTABLE_NAME && get ( 1 ).getType ( ) == TokenType.LPAREN_SQUARE ) {
+            consume ( TokenType.IMMUTABLE_NAME );
+            final String varName = current.getText ( );
+            List<Expression> indexes = new ArrayList<> ( );
 
-            while(get(0).getType()==TokenType.LPAREN_SQUARE){
-                consume(TokenType.LPAREN_SQUARE,"Square bracked expected during array index getting");
-                Expression index=expression();
-                indexes.add(index);
-                consume(TokenType.RPAREN_SQUARE,"Square bracked expected during array index getting");
+            while (get ( 0 ).getType ( ) == TokenType.LPAREN_SQUARE) {
+                consume ( TokenType.LPAREN_SQUARE , "Square bracked expected during array index getting" );
+                Expression index = expression ( );
+                indexes.add ( index );
+                consume ( TokenType.RPAREN_SQUARE , "Square bracked expected during array index getting" );
             }
 
             /*
@@ -313,115 +321,114 @@ public final class Parser {
                       }
             */
 
-            Value [] indexValues=new Value[indexes.size()];
+            Value[] indexValues = new Value[indexes.size ( )];
 
-            for (int i = 0; i <indexValues.length ; i++) {
-                indexValues[i]=indexes.get(i).eval();
+            for (int i = 0; i < indexValues.length; i++) {
+                indexValues[i] = indexes.get ( i ).eval ( );
             }
-            consume(TokenType.ASSIGN);
-            return new ArrayAssignementStatement(varName,indexValues,expression());
+            consume ( TokenType.ASSIGN );
+            return new ArrayAssignementStatement ( varName , indexValues , expression ( ) );
         }
 
-        if(current.getType()==TokenType.IMMUTABLE_NAME && get(1).getType()==TokenType.ARROW){
-            consume(TokenType.IMMUTABLE_NAME);
-            final String objectName=current.getText();
-            consume(TokenType.ARROW,"Expected arrow operator -> ");
-            boolean immutable=false;
-            if(get(0).getType()==TokenType.IMMUTABLE_NAME){
-                immutable=true;
-            }
-            else if(get(0).getType()==TokenType.MUTTABLE_NAME){}
-            else{
-                throw new RuntimeException("Expected field name");
-            }
-
-            String fieldName=get(0).getText();
-
-            next();
-            consume(TokenType.ASSIGN);
-
-            return new ImmutableObjectAssignmentStatement(objectName,new VariableKey(fieldName,immutable),expression());
-
-        }
-
-        if ( current.getType ( ) == TokenType.MUTTABLE_NAME && get (1).getType ( ) == TokenType.ARROW ) {
-            consume (TokenType.MUTTABLE_NAME);
+        if ( current.getType ( ) == TokenType.IMMUTABLE_NAME && get ( 1 ).getType ( ) == TokenType.ARROW ) {
+            consume ( TokenType.IMMUTABLE_NAME );
             final String objectName = current.getText ( );
-            consume (TokenType.ARROW , "Expected arrow operator -> ");
+            consume ( TokenType.ARROW , "Expected arrow operator -> " );
             boolean immutable = false;
-            if ( get (0).getType ( ) == TokenType.IMMUTABLE_NAME ) {
+            if ( get ( 0 ).getType ( ) == TokenType.IMMUTABLE_NAME ) {
                 immutable = true;
-            } else if ( get (0).getType ( ) == TokenType.MUTTABLE_NAME ) {
+            } else if ( get ( 0 ).getType ( ) == TokenType.MUTTABLE_NAME ) {
             } else {
-                throw new RuntimeException ("Expected field name");
+                throw new RuntimeException ( "Expected field name" );
             }
 
-            String fieldName = get (0).getText ( );
+            String fieldName = get ( 0 ).getText ( );
 
             next ( );
-            consume(TokenType.ASSIGN);
+            consume ( TokenType.ASSIGN );
 
-            return new MutableObjectAssignmentStatement (objectName , new VariableKey (fieldName , immutable) , expression ( ));
+            return new ImmutableObjectAssignmentStatement ( objectName , new VariableKey ( fieldName , immutable ) , expression ( ) );
 
         }
 
-        throw new RuntimeException("Unknown operator!" + current+" Next "+get(1)+" -> "+get(2));
-    }
+        if ( current.getType ( ) == TokenType.MUTTABLE_NAME && get ( 1 ).getType ( ) == TokenType.ARROW ) {
+            consume ( TokenType.MUTTABLE_NAME );
+            final String objectName = current.getText ( );
+            consume ( TokenType.ARROW , "Expected arrow operator -> " );
+            boolean immutable = false;
+            if ( get ( 0 ).getType ( ) == TokenType.IMMUTABLE_NAME ) {
+                immutable = true;
+            } else if ( get ( 0 ).getType ( ) == TokenType.MUTTABLE_NAME ) {
+            } else {
+                throw new RuntimeException ( "Expected field name" );
+            }
 
-    private Statement IfElse() {
-        final Expression condition=expression();
-        final Statement ifStatement=blockOrSingle();
-        Statement elseStatement=null;
-        if(match(TokenType.ELSE)) {
-            elseStatement = blockOrSingle();
+            String fieldName = get ( 0 ).getText ( );
+
+            next ( );
+            consume ( TokenType.ASSIGN );
+
+            return new MutableObjectAssignmentStatement ( objectName , new VariableKey ( fieldName , immutable ) , expression ( ) );
+
         }
-        return new IfConditionalStatement(condition,ifStatement,elseStatement);
+
+        throw new RuntimeException ( "Unknown operator!" + current + " Next " + get ( 1 ) + " -> " + get ( 2 ) );
     }
 
-    private Statement While() {
-        final Expression condition=expression();
-        final Statement statementIfTrue=blockOrSingle();
-        return new WhileLoopStatement(condition,statementIfTrue);
+    private Statement IfElse () {
+        final Expression condition = expression ( );
+        final Statement ifStatement = blockOrSingle ( );
+        Statement elseStatement = null;
+        if ( match ( TokenType.ELSE ) ) {
+            elseStatement = blockOrSingle ( );
+        }
+        return new IfConditionalStatement ( condition , ifStatement , elseStatement );
     }
 
-    private Statement For(){
-        next();
-        consume(TokenType.LPAREN,"No expected (");
-        final Statement init= AssignementStatement();
-        consume(TokenType.DELIMITER_FOR,"No expected delimiter after initializing");
-        final Expression term=expression();
-        consume(TokenType.DELIMITER_FOR,"No expected delimiter after expression");
-        final Statement incr= AssignementStatement();
-        consume(TokenType.RPAREN,"No expected )");
-        final Statement statements=blockOrSingle();
+    private Statement While () {
+        final Expression condition = expression ( );
+        final Statement statementIfTrue = blockOrSingle ( );
+        return new WhileLoopStatement ( condition , statementIfTrue );
+    }
 
-        return new ForLoopStatement(init,term,incr,statements);
+    private Statement For () {
+        next ( );
+        consume ( TokenType.LPAREN , "No expected (" );
+        final Statement init = AssignementStatement ( );
+        consume ( TokenType.DELIMITER_FOR , "No expected delimiter after initializing" );
+        final Expression term = expression ( );
+        consume ( TokenType.DELIMITER_FOR , "No expected delimiter after expression" );
+        final Statement incr = AssignementStatement ( );
+        consume ( TokenType.RPAREN , "No expected )" );
+        final Statement statements = blockOrSingle ( );
+
+        return new ForLoopStatement ( init , term , incr , statements );
 
     }
 
 
-    private Expression expression() {
-        return arrow();
+    private Expression expression () {
+        return arrow ( );
     }
 
-    private Expression arrow(){
+    private Expression arrow () {
 
-        Expression result=additive ();
+        Expression result = additive ( );
 
-        while (true){
-            if(match (TokenType.ARROW)){
-                Token current=get (0);
+        while (true) {
+            if ( match ( TokenType.ARROW ) ) {
+                Token current = get ( 0 );
                 VariableKey key;
-                if(current.getType ()==TokenType.MUTTABLE_NAME){
-                    key=new VariableKey (current.getText (),false);
+                if ( current.getType ( ) == TokenType.MUTTABLE_NAME ) {
+                    key = new VariableKey ( current.getText ( ) , false );
+                } else if ( current.getType ( ) == TokenType.IMMUTABLE_NAME ) {
+                    key = new VariableKey ( current.getText ( ) , true );
+                } else {
+                    throw new RuntimeException ( "Expected field" );
                 }
-                else if(current.getType ()==TokenType.IMMUTABLE_NAME){
-                    key=new VariableKey (current.getText (),true);
-                }
-                else{ throw new RuntimeException ("Expected field"); }
-                System.out.println ("TEXT : " + current.getText ( ) + key.isImmutable ( ) + " ");
-                next ();
-                result=new ArrowBinaryExpression(result,key);
+                System.out.println ( "TEXT : " + current.getText ( ) + key.isImmutable ( ) + " " );
+                next ( );
+                result = new ArrowBinaryExpression ( result , key );
                 continue;
             }
             break;
@@ -430,16 +437,16 @@ public final class Parser {
         return result;
     }
 
-    private Expression additive() {
-        Expression result = conditional();
+    private Expression additive () {
+        Expression result = conditional ( );
 
         while (true) {
-            if (match(TokenType.PLUS)) {
-                result = new ArithmeticBinaryExpression('+', result, multiplicative());
+            if ( match ( TokenType.PLUS ) ) {
+                result = new ArithmeticBinaryExpression ( '+' , result , multiplicative ( ) );
                 continue;
             }
-            if (match(TokenType.MINUS)) {
-                result = new ArithmeticBinaryExpression('-', result, multiplicative());
+            if ( match ( TokenType.MINUS ) ) {
+                result = new ArithmeticBinaryExpression ( '-' , result , multiplicative ( ) );
                 continue;
             }
             break;
@@ -448,28 +455,28 @@ public final class Parser {
         return result;
     }
 
-    private Expression conditional(){
-        Expression result = multiplicative();
+    private Expression conditional () {
+        Expression result = multiplicative ( );
 
         while (true) {
-            if (match(TokenType.EQUAL)) {
-                    result = new ConditionalExpression("==", result, multiplicative());
-                    continue;
-            }
-            if (match(TokenType.LOWER_THAN)) {
-                    result = new ConditionalExpression("<", result, multiplicative());
-                    continue;
-            }
-            if (match(TokenType.GREATER_THAN)) {
-                    result = new ConditionalExpression(">", result, multiplicative());
-                    continue;
-            }
-            if (match(TokenType.GREATER_OR_EQUAL_THAN)) {
-                result = new ConditionalExpression(">=", result, multiplicative());
+            if ( match ( TokenType.EQUAL ) ) {
+                result = new ConditionalExpression ( "==" , result , multiplicative ( ) );
                 continue;
             }
-            if (match(TokenType.LOWER_OR_EQUAL_THAN)) {
-                result = new ConditionalExpression("<=", result, multiplicative());
+            if ( match ( TokenType.LOWER_THAN ) ) {
+                result = new ConditionalExpression ( "<" , result , multiplicative ( ) );
+                continue;
+            }
+            if ( match ( TokenType.GREATER_THAN ) ) {
+                result = new ConditionalExpression ( ">" , result , multiplicative ( ) );
+                continue;
+            }
+            if ( match ( TokenType.GREATER_OR_EQUAL_THAN ) ) {
+                result = new ConditionalExpression ( ">=" , result , multiplicative ( ) );
+                continue;
+            }
+            if ( match ( TokenType.LOWER_OR_EQUAL_THAN ) ) {
+                result = new ConditionalExpression ( "<=" , result , multiplicative ( ) );
                 continue;
             }
             break;
@@ -479,21 +486,21 @@ public final class Parser {
 
     }
 
-    private Expression multiplicative() {
-        Expression result = logicalOr();
+    private Expression multiplicative () {
+        Expression result = logicalOr ( );
 
         while (true) {
             // 2 * 6 / 3
-            if (match(TokenType.STAR)) {
-                result = new ArithmeticBinaryExpression('*', result, logicalOr());
+            if ( match ( TokenType.STAR ) ) {
+                result = new ArithmeticBinaryExpression ( '*' , result , logicalOr ( ) );
                 continue;
             }
-            if (match(TokenType.POW)) {
-                result = new ArithmeticBinaryExpression('^', result, logicalOr());
+            if ( match ( TokenType.POW ) ) {
+                result = new ArithmeticBinaryExpression ( '^' , result , logicalOr ( ) );
                 continue;
             }
-            if (match(TokenType.SLASH)) {
-                result = new ArithmeticBinaryExpression('/', result, logicalOr());
+            if ( match ( TokenType.SLASH ) ) {
+                result = new ArithmeticBinaryExpression ( '/' , result , logicalOr ( ) );
                 continue;
             }
             break;
@@ -503,19 +510,19 @@ public final class Parser {
     }
 
 
-    private Expression logicalOr(){
+    private Expression logicalOr () {
 
-        Expression result = logicalOAnd();
+        Expression result = logicalOAnd ( );
 
         while (true) {
 
-            if (match(TokenType.OR2)) {
-                result = new LogicalBinaryExpression("||", result, logicalOAnd());
+            if ( match ( TokenType.OR2 ) ) {
+                result = new LogicalBinaryExpression ( "||" , result , logicalOAnd ( ) );
                 continue;
             }
 
-            if(match(TokenType.OR)){
-                result=new LogicalBinaryExpression("|",result,logicalOAnd());
+            if ( match ( TokenType.OR ) ) {
+                result = new LogicalBinaryExpression ( "|" , result , logicalOAnd ( ) );
                 continue;
             }
 
@@ -526,18 +533,18 @@ public final class Parser {
 
     }
 
-    private Expression logicalOAnd(){
+    private Expression logicalOAnd () {
 
-        Expression result = unary();
+        Expression result = unary ( );
 
         while (true) {
 
-            if (match(TokenType.AND2)) {
-                result = new LogicalBinaryExpression("&&", result, unary());
+            if ( match ( TokenType.AND2 ) ) {
+                result = new LogicalBinaryExpression ( "&&" , result , unary ( ) );
                 continue;
             }
-            if(match(TokenType.AND)){
-                result=new LogicalBinaryExpression("&",result,unary());
+            if ( match ( TokenType.AND ) ) {
+                result = new LogicalBinaryExpression ( "&" , result , unary ( ) );
                 continue;
             }
             break;
@@ -547,130 +554,122 @@ public final class Parser {
 
     }
 
-    private Expression unary() {
+    private Expression unary () {
 
-        if (match(TokenType.MINUS)) {
-            return new UnaryExpression('-', primary());
+        if ( match ( TokenType.MINUS ) ) {
+            return new UnaryExpression ( '-' , primary ( ) );
         }
-        if (match(TokenType.PLUS)) {
-            return primary();
+        if ( match ( TokenType.PLUS ) ) {
+            return primary ( );
         }
-        if (match(TokenType.NOT)) {
-            return new LogicalUnaryExpression('!', primary());
+        if ( match ( TokenType.NOT ) ) {
+            return new LogicalUnaryExpression ( '!' , primary ( ) );
         }
 
-        return primary();
+        return primary ( );
     }
 
-    private Expression ArrayDeclaration() {
+    private Expression ArrayDeclaration () {
 
-        List<Expression> listOfExpressions=new ArrayList<>();
+        List<Expression> listOfExpressions = new ArrayList<> ( );
 
-        while(!match(TokenType.RPAREN_SQUARE)){
-            listOfExpressions.add(expression());
-            match(TokenType.DELIMITER_ARGS);
+        while (!match ( TokenType.RPAREN_SQUARE )) {
+            listOfExpressions.add ( expression ( ) );
+            match ( TokenType.DELIMITER_ARGS );
         }
 
-        return new ArrayCreateExpression(listOfExpressions);
+        return new ArrayCreateExpression ( listOfExpressions );
     }
 
-    private Expression ImmutableObjectGetter() {
+    private Expression ImmutableObjectGetter () {
 
-        final String objectName=get(0).getText();
+        final String objectName = get ( 0 ).getText ( );
 
-        next();
+        next ( );
 
-        consume(TokenType.ARROW,"Expected -> operator ...");
+        consume ( TokenType.ARROW , "Expected -> operator ..." );
 
-        boolean immutable=false;
+        boolean immutable = false;
 
-        if (get(0).getType()==TokenType.IMMUTABLE_NAME){
-            immutable=true;
+        if ( get ( 0 ).getType ( ) == TokenType.IMMUTABLE_NAME ) {
+            immutable = true;
+        } else if ( get ( 0 ).getType ( ) == TokenType.MUTTABLE_NAME ) {
+        } else {
+            throw new RuntimeException ( "Expected field ..." );
         }
 
-        else if (get(0).getType()==TokenType.MUTTABLE_NAME){ }
+        final String fieldName = get ( 0 ).getText ( );
 
-        else {
-            throw new RuntimeException("Expected field ...");
-        }
+        next ( );
 
-        final String fieldName=get(0).getText();
-
-        next();
-
-        return new ImmutableObjectAccessGettingExpression(objectName,new VariableKey(fieldName,immutable));
+        return new ImmutableObjectAccessGettingExpression ( objectName , new VariableKey ( fieldName , immutable ) );
 
     }
 
-    private Expression MutableObjectGetter() {
+    private Expression MutableObjectGetter () {
 
-        final String objectName=get(0).getText();
+        final String objectName = get ( 0 ).getText ( );
 
-        next();
+        next ( );
 
-        consume(TokenType.ARROW,"Expected -> operator ...");
+        consume ( TokenType.ARROW , "Expected -> operator ..." );
 
-        boolean immutable=false;
+        boolean immutable = false;
 
-        if (get(0).getType()==TokenType.IMMUTABLE_NAME){
-            immutable=true;
+        if ( get ( 0 ).getType ( ) == TokenType.IMMUTABLE_NAME ) {
+            immutable = true;
+        } else if ( get ( 0 ).getType ( ) == TokenType.MUTTABLE_NAME ) {
+        } else {
+            throw new RuntimeException ( "Expected field ..." );
         }
 
-        else if (get(0).getType()==TokenType.MUTTABLE_NAME){ }
+        final String fieldName = get ( 0 ).getText ( );
 
-        else {
-            throw new RuntimeException("Expected field ...");
-        }
+        next ( );
 
-        final String fieldName=get(0).getText();
-
-        next();
-
-        return new MutableObjectAccessGettingExpression(objectName,new VariableKey(fieldName,immutable));
+        return new MutableObjectAccessGettingExpression ( objectName , new VariableKey ( fieldName , immutable ) );
 
     }
 
-    private Expression ObjectDeclaration() {
+    private Expression ObjectDeclaration () {
 
-        HashMap<VariableKey,Value> table= new HashMap<>();
+        HashMap<VariableKey, Value> table = new HashMap<> ( );
 
-        while(!match(TokenType.RPAREN_FIGURE)){
+        while (!match ( TokenType.RPAREN_FIGURE )) {
 
             VariableKey key;
 
-            if(get(0).getType()==TokenType.IMMUTABLE_NAME){
-                key=new VariableKey(get(0).getText(),true);
-            }
-            else if(get(0).getType()==TokenType.MUTTABLE_NAME){
-                key=new VariableKey(get(0).getText(),false);
-            }
-            else{
-                throw new RuntimeException("Expected key...");
+            if ( get ( 0 ).getType ( ) == TokenType.IMMUTABLE_NAME ) {
+                key = new VariableKey ( get ( 0 ).getText ( ) , true );
+            } else if ( get ( 0 ).getType ( ) == TokenType.MUTTABLE_NAME ) {
+                key = new VariableKey ( get ( 0 ).getText ( ) , false );
+            } else {
+                throw new RuntimeException ( "Expected key..." );
             }
 
-            next();
+            next ( );
 
-            consume(TokenType.ARROW,"Got key , expected value!");
+            consume ( TokenType.ARROW , "Got key , expected value!" );
 
-            table.put(key,expression().eval());
+            table.put ( key , expression ( ).eval ( ) );
 
-            match(TokenType.DELIMITER_ARGS);
+            match ( TokenType.DELIMITER_ARGS );
 
         }
 
-        System.out.println(get(0));
+        System.out.println ( get ( 0 ) );
 
-        return new ObjectCreateExpression(table);
+        return new ObjectCreateExpression ( table );
 
     }
 
-    private Expression primary() {
-        final Token current = get(0);
-        if (match(TokenType.NUMBER)) {
-            return new NumberExpression(Double.parseDouble(current.getText()));
+    private Expression primary () {
+        final Token current = get ( 0 );
+        if ( match ( TokenType.NUMBER ) ) {
+            return new NumberExpression ( Double.parseDouble ( current.getText ( ) ) );
         }
-        if (match(TokenType.HEX_NUMBER)) {
-            return new NumberExpression(Long.parseLong(current.getText(), 16));
+        if ( match ( TokenType.HEX_NUMBER ) ) {
+            return new NumberExpression ( Long.parseLong ( current.getText ( ) , 16 ) );
         }
 //        if(get(0).getType()==TokenType.IMMUTABLE_NAME && get(1).getType()==TokenType.ARROW){
 //            return ImmutableObjectGetter();
@@ -678,70 +677,68 @@ public final class Parser {
 //        if(get(0).getType()==TokenType.MUTTABLE_NAME && get(1).getType()==TokenType.ARROW){
 //            return MutableObjectGetter();
 //        }
-        if(get(0).getType()==TokenType.IMMUTABLE_NAME && get(1).getType()==TokenType.LPAREN){
-            return ImmutableFunctionCall();
+        if ( get ( 0 ).getType ( ) == TokenType.IMMUTABLE_NAME && get ( 1 ).getType ( ) == TokenType.LPAREN ) {
+            return ImmutableFunctionCall ( );
         }
-        if(get(0).getType()==TokenType.IMMUTABLE_NAME && get(1).getType()==TokenType.LPAREN_SQUARE){
-            return ArrayIndexGetter();
+        if ( get ( 0 ).getType ( ) == TokenType.IMMUTABLE_NAME && get ( 1 ).getType ( ) == TokenType.LPAREN_SQUARE ) {
+            return ArrayIndexGetter ( );
         }
-        if(get(0).getType()==TokenType.MUTTABLE_NAME && get(1).getType()==TokenType.LPAREN){
-            return MutableFunctionCall();
+        if ( get ( 0 ).getType ( ) == TokenType.MUTTABLE_NAME && get ( 1 ).getType ( ) == TokenType.LPAREN ) {
+            return MutableFunctionCall ( );
         }
-        if(match(TokenType.LPAREN_FIGURE)){
-            return ObjectDeclaration();
+        if ( match ( TokenType.LPAREN_FIGURE ) ) {
+            return ObjectDeclaration ( );
         }
-        if(match(TokenType.LPAREN_SQUARE)){
-            return ArrayDeclaration();
+        if ( match ( TokenType.LPAREN_SQUARE ) ) {
+            return ArrayDeclaration ( );
         }
-        if (match(TokenType.MUTTABLE_NAME)){
-            return new VariableExpression(current.getText());
+        if ( match ( TokenType.MUTTABLE_NAME ) ) {
+            return new VariableExpression ( current.getText ( ) );
         }
-        if (match(TokenType.IMMUTABLE_NAME)){
-            return new ConstantExpression(current.getText());
+        if ( match ( TokenType.IMMUTABLE_NAME ) ) {
+            return new ConstantExpression ( current.getText ( ) );
         }
-        if(match(TokenType.STRING_TEXT)){
-            return new StringExpression(current.getText());
+        if ( match ( TokenType.STRING_TEXT ) ) {
+            return new StringExpression ( current.getText ( ) );
         }
-        if (match(TokenType.LPAREN)) {
-            Expression result = expression();
-            match(TokenType.RPAREN);
+        if ( match ( TokenType.LPAREN ) ) {
+            Expression result = expression ( );
+            match ( TokenType.RPAREN );
             return result;
         }
 
-        throw new RuntimeException("Unknown expression "+current+" !");
+        throw new RuntimeException ( "Unknown expression " + current + " !" );
     }
 
 
-
-
-    private Token consume(TokenType type){
-        final Token current=get(0);
-        if (type != current.getType()) throw new RuntimeException(current+" doesn't match "+type);
+    private Token consume ( TokenType type ) {
+        final Token current = get ( 0 );
+        if ( type != current.getType ( ) ) throw new RuntimeException ( current + " doesn't match " + type );
         pos++;
         return current;
     }
 
-    private Token consume(TokenType type,String message){
-        final Token current=get(0);
-        if (type != current.getType()) throw new RuntimeException(message);
+    private Token consume ( TokenType type , String message ) {
+        final Token current = get ( 0 );
+        if ( type != current.getType ( ) ) throw new RuntimeException ( message );
         pos++;
         return current;
     }
 
-    private boolean match(TokenType type) {
-        final Token current = get(0);
-        if (type != current.getType()) return false;
+    private boolean match ( TokenType type ) {
+        final Token current = get ( 0 );
+        if ( type != current.getType ( ) ) return false;
         pos++;
         return true;
     }
 
-    private void next(){
+    private void next () {
         pos++;
     }
 
-    private Token get(int relativePosition) {
+    private Token get ( int relativePosition ) {
         final int position = pos + relativePosition;
-        if (position >= size) return EOF;
-        return tokens.get(position);
+        if ( position >= size ) return EOF;
+        return tokens.get ( position );
     }
 }

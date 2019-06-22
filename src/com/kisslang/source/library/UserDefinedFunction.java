@@ -30,33 +30,32 @@ public class UserDefinedFunction implements Function {
 
     private final Statement functionBody;
 
-    public UserDefinedFunction(List<Argument> argNames, Statement functionBody){
-        this.argNames=argNames;
-        this.functionBody=functionBody;
+    public UserDefinedFunction ( List<Argument> argNames , Statement functionBody ) {
+        this.argNames = argNames;
+        this.functionBody = functionBody;
     }
 
-    public int getArgumentsCount(){
-        return argNames.size();
+    public int getArgumentsCount () {
+        return argNames.size ( );
     }
 
-    public Argument getArgName(int index){
+    public Argument getArgName ( int index ) {
 
-        if(index<0 || index>=getArgumentsCount()){
+        if ( index < 0 || index >= getArgumentsCount ( ) ) {
             return null;
         }
 
-        return argNames.get(index);
+        return argNames.get ( index );
 
     }
 
     @Override
-    public Value execute(Value[] args) {
+    public Value execute ( Value[] args ) {
         try {
-            functionBody.execute();
+            functionBody.execute ( );
+        } catch (ReturnStatement r) {
+            return r.getResult ( );
         }
-        catch (ReturnStatement r){
-            return r.getResult();
-        }
-        return new LogicalValue(false);
+        return new LogicalValue ( false );
     }
 }

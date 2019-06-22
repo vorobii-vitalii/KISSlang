@@ -23,38 +23,38 @@ public final class Token {
 
     private TokenType type;
 
-    public Token(){
-        throw new RuntimeException("TokenType expected...") ;
+    public Token () {
+        throw new RuntimeException ( "TokenType expected..." );
     }
 
-    public Token(TokenType type,String text){
-        this.type=type;
-        this.text=text;
-    }
-
-    public Token(TokenType type){
-        this.type=type;
-        this.text="";
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
+    public Token ( TokenType type , String text ) {
+        this.type = type;
         this.text = text;
     }
 
-    public void setType(TokenType type) {
+    public Token ( TokenType type ) {
+        this.type = type;
+        this.text = "";
+    }
+
+    public String getText () {
+        return text;
+    }
+
+    public void setText ( String text ) {
+        this.text = text;
+    }
+
+    public void setType ( TokenType type ) {
         this.type = type;
     }
 
-    public TokenType getType() {
+    public TokenType getType () {
         return type;
     }
 
     @Override
-    public String toString(){
-        return "Token: "+type+" "+text;
+    public String toString () {
+        return "Token: " + type + " " + text;
     }
 }
