@@ -27,6 +27,7 @@ public enum TokenType {
     CONTINUE,
     DELIMITER_ARGS,
     DELIMITER_FOR,
+    DO_LOOP,
     ELSE,
     EOF,
     EQUAL,

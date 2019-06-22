@@ -57,4 +57,5 @@ public final class Token {
     public String toString () {
         return "Token: " + type + " " + text;
     }
+
 }

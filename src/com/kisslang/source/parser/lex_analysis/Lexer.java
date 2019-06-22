@@ -139,6 +139,10 @@ public final class Lexer {
             addToken ( TokenType.WHILE );
             return;
         }
+        if ( buffer.toString ( ).equals ( "Do" ) ) {
+            addToken ( TokenType.DO_LOOP );
+            return;
+        }
         if ( buffer.toString ( ).equals ( "For" ) ) {
             addToken ( TokenType.FOR );
         }

@@ -22,10 +22,7 @@ import com.kisslang.source.parser.ast.statements.*;
 import com.kisslang.source.parser.ast.statements.assignement.*;
 import com.kisslang.source.parser.ast.statements.condition.IfConditionalStatement;
 import com.kisslang.source.parser.ast.statements.functional.*;
-import com.kisslang.source.parser.ast.statements.loop.BreakLoopStatement;
-import com.kisslang.source.parser.ast.statements.loop.ContinueLoopStatement;
-import com.kisslang.source.parser.ast.statements.loop.ForLoopStatement;
-import com.kisslang.source.parser.ast.statements.loop.WhileLoopStatement;
+import com.kisslang.source.parser.ast.statements.loop.*;
 import com.kisslang.source.parser.ast.statements.standart_lib.InputStatement;
 import com.kisslang.source.parser.ast.statements.standart_lib.PrintLineStatement;
 import com.kisslang.source.parser.ast.statements.standart_lib.PrintStatement;
@@ -119,6 +116,9 @@ public final class Parser {
         if ( match ( TokenType.WHILE ) ) {
             return While ( );
         }
+        if( match ( TokenType.DO_LOOP )) {
+            return DoWhile();
+        }
         if ( match ( TokenType.RETURN_FROM_METHOD ) ) {
             return Return ( );
         }
@@ -143,6 +143,8 @@ public final class Parser {
 
         return AssignementStatement ( );
     }
+
+
 
     private Statement Input () {
         next ( );
@@ -410,6 +412,13 @@ public final class Parser {
         final Expression condition = expression ( );
         final Statement statementIfTrue = blockOrSingle ( );
         return new WhileLoopStatement ( condition , statementIfTrue );
+    }
+
+    private Statement DoWhile () {
+        final Statement statementOrBlock=blockOrSingle ();
+        consume ( TokenType.WHILE,"Expected condition during do-while loop declaration ..." );
+        final Expression condition=expression ();
+        return new DoWhileLoopStatement (statementOrBlock,condition);
     }
 
     private Statement For () {
