@@ -22,6 +22,7 @@ import com.kisslang.source.parser.ast.statements.standart_lib.PrintStatement;
 import com.kisslang.source.parser.tokenization.Token;
 import com.kisslang.source.parser.tokenization.TokenType;
 
+import javax.xml.xpath.XPathExpressionException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -304,10 +305,13 @@ public final class Parser {
                 consume(TokenType.RPAREN_SQUARE,"Square bracked expected during array index getting");
             }
 
-            for (Expression e:
-                    indexes) {
-                System.out.print(e.eval()+"  ");
-            }
+            /*
+
+                      for (Expression e:
+                              indexes) {
+                          System.out.print(e.eval()+"  ");
+                      }
+            */
 
             Value [] indexValues=new Value[indexes.size()];
 
@@ -316,6 +320,49 @@ public final class Parser {
             }
             consume(TokenType.ASSIGN);
             return new ArrayAssignementStatement(varName,indexValues,expression());
+        }
+
+        if(current.getType()==TokenType.IMMUTABLE_NAME && get(1).getType()==TokenType.ARROW){
+            consume(TokenType.IMMUTABLE_NAME);
+            final String objectName=current.getText();
+            consume(TokenType.ARROW,"Expected arrow operator -> ");
+            boolean immutable=false;
+            if(get(0).getType()==TokenType.IMMUTABLE_NAME){
+                immutable=true;
+            }
+            else if(get(0).getType()==TokenType.MUTTABLE_NAME){}
+            else{
+                throw new RuntimeException("Expected field name");
+            }
+
+            String fieldName=get(0).getText();
+
+            next();
+            consume(TokenType.ASSIGN);
+
+            return new ImmutableObjectAssignmentStatement(objectName,new VariableKey(fieldName,immutable),expression());
+
+        }
+
+        if ( current.getType ( ) == TokenType.MUTTABLE_NAME && get (1).getType ( ) == TokenType.ARROW ) {
+            consume (TokenType.MUTTABLE_NAME);
+            final String objectName = current.getText ( );
+            consume (TokenType.ARROW , "Expected arrow operator -> ");
+            boolean immutable = false;
+            if ( get (0).getType ( ) == TokenType.IMMUTABLE_NAME ) {
+                immutable = true;
+            } else if ( get (0).getType ( ) == TokenType.MUTTABLE_NAME ) {
+            } else {
+                throw new RuntimeException ("Expected field name");
+            }
+
+            String fieldName = get (0).getText ( );
+
+            next ( );
+            consume(TokenType.ASSIGN);
+
+            return new MutableObjectAssignmentStatement (objectName , new VariableKey (fieldName , immutable) , expression ( ));
+
         }
 
         throw new RuntimeException("Unknown operator!" + current+" Next "+get(1)+" -> "+get(2));
@@ -354,7 +401,22 @@ public final class Parser {
 
 
     private Expression expression() {
-        return additive();
+        return arrow();
+    }
+
+    private Expression arrow(){
+
+        Expression result=additive ();
+
+        while (true){
+            if(match (TokenType.ARROW)){
+                result=new ArrowBinaryExpression(result,primary ());
+                continue;
+            }
+            break;
+        }
+
+        return result;
     }
 
     private Expression additive() {
