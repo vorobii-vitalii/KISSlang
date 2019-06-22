@@ -92,7 +92,6 @@ PrintLine sum(2,1,3)
 
 #####  Some arrays
 ````
-
 arr1=Array(sum(2,4),1,3,5,6)
 
 PrintLine arr1
@@ -100,13 +99,13 @@ PrintLine arr1
 arr2=[2,1,3,49,"Str",5]
 
 PrintLine arr2
-
 ````
 
 ##### Multidemensional arrays
 
 ````
 arr=[2,1,3,[0,49,5]]
+
 PrintLine arr[3][2]
 ````
 ##### Key->Value pairs (Objects)
@@ -121,3 +120,10 @@ PrintLine $a->$key
 
 ````
 
+##### Inline Key->Value pairs
+
+````
+$obj={ $key->"value1" , another_key -> {$key->"value2"} }
+
+PrintLine $obj->another_key->$key
+````
