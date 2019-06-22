@@ -42,6 +42,17 @@ For($i=0;$i<10;$i++){
     Print $i
 }
 ```
+##### Some do-while loops
+```
+$i=0
+Do{
+    Print $i
+    $i=$i+1
+}
+While ($i<10)
+}
+```
+
 
 ##### Square of circle recognizing
 ```
