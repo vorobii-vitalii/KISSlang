@@ -26,42 +26,20 @@ public class ArrowBinaryExpression implements Expression {
 
     private final Expression expr1;
 
-    private final Expression expr2;
+    private final VariableKey key;
 
-    public ArrowBinaryExpression(Expression expr1,Expression expr2){
+    public ArrowBinaryExpression(Expression expr1,VariableKey key){
         this.expr1=expr1;
-        this.expr2=expr2;
+        this.key=key;
     }
 
     @Override
     public Value eval() {
 
-        VariableKey key;
+        ObjectValue objectValue=(ObjectValue) expr1.eval ();
 
-        if( expr1 instanceof VariableExpression){
-
-            key=new VariableKey (expr1.eval().asString (),false);
-        }
-        else if(expr1 instanceof ConstantExpression){
-            key=new VariableKey (expr1.eval().asString (),true);
-        }
-        else{throw new RuntimeException ("Expected field...");}
-
-        ObjectValue objectValue=(ObjectValue) Variables.get ( key );
-
-        VariableKey key_object;
-
-        if( expr2 instanceof VariableExpression){
-
-            key_object=new VariableKey (expr2.eval().asString (),false);
-        }
-        else if(expr2 instanceof ConstantExpression){
-
-            key_object=new VariableKey (expr2.eval().asString (),true);
-        }
-        else { throw new RuntimeException ("Expected field..."); }
-
-        return objectValue.get (key_object);
+        System.out.println ("RESULT "+objectValue.get (key)+" of "+objectValue);
+        return objectValue.get (key);
 
     }
 

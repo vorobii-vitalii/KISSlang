@@ -410,7 +410,18 @@ public final class Parser {
 
         while (true){
             if(match (TokenType.ARROW)){
-                result=new ArrowBinaryExpression(result,primary ());
+                Token current=get (0);
+                VariableKey key;
+                if(current.getType ()==TokenType.MUTTABLE_NAME){
+                    key=new VariableKey (current.getText (),false);
+                }
+                else if(current.getType ()==TokenType.IMMUTABLE_NAME){
+                    key=new VariableKey (current.getText (),true);
+                }
+                else{ throw new RuntimeException ("Expected field"); }
+                System.out.println ("TEXT : " + current.getText ( ) + key.isImmutable ( ) + " ");
+                next ();
+                result=new ArrowBinaryExpression(result,key);
                 continue;
             }
             break;
@@ -661,12 +672,12 @@ public final class Parser {
         if (match(TokenType.HEX_NUMBER)) {
             return new NumberExpression(Long.parseLong(current.getText(), 16));
         }
-        if(get(0).getType()==TokenType.IMMUTABLE_NAME && get(1).getType()==TokenType.ARROW){
-            return ImmutableObjectGetter();
-        }
-        if(get(0).getType()==TokenType.MUTTABLE_NAME && get(1).getType()==TokenType.ARROW){
-            return MutableObjectGetter();
-        }
+//        if(get(0).getType()==TokenType.IMMUTABLE_NAME && get(1).getType()==TokenType.ARROW){
+//            return ImmutableObjectGetter();
+//        }
+//        if(get(0).getType()==TokenType.MUTTABLE_NAME && get(1).getType()==TokenType.ARROW){
+//            return MutableObjectGetter();
+//        }
         if(get(0).getType()==TokenType.IMMUTABLE_NAME && get(1).getType()==TokenType.LPAREN){
             return ImmutableFunctionCall();
         }

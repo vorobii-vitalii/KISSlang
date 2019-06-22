@@ -70,6 +70,11 @@ public class ObjectValue implements Value {
     }
 
     @Override
+    public String toString() {
+        return asString ();
+    }
+
+    @Override
     public boolean canBeRepresentedAsNumber() {
         return false;
     }

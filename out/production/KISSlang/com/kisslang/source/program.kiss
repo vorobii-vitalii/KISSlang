@@ -1,76 +1,76 @@
-PrintLine Sin(PI)
+// PrintLine Sin(PI)
 
-For($i=0;$i<10;$i=$i+1){
-    PrintLine $i
-}
+// For($i=0;$i<10;$i=$i+1){
+//     PrintLine $i
+// }
 
-PrintLine(25+" helo")
+// PrintLine(25+" helo")
 
-$PI=2.4
+// $PI=2.4
 
-PrintLine "Variable PI "+$PI
+// PrintLine "Variable PI "+$PI
 
-PrintLine "Constant PI "+PI
+// PrintLine "Constant PI "+PI
 
 
-Function printName(name){
-    PrintLine name
-}
+// Function printName(name){
+//     PrintLine name
+// }
 
-printName("KISSlang")
+// printName("KISSlang")
 
-Function $func1($name1){
-    PrintLine $name1
-}
+// Function $func1($name1){
+//     PrintLine $name1
+// }
 
-$func1("KISSLANG")
+// $func1("KISSLANG")
 
-Function $func1($name1){
-    PrintLine $name1+" has changed! "
-}
+// Function $func1($name1){
+//     PrintLine $name1+" has changed! "
+// }
 
-$func1("KISSLANG")
+// $func1("KISSLANG")
 
-Function sum(a,b){
-    Return a+b
-}
+// Function sum(a,b){
+//     Return a+b
+// }
 
-PrintLine sum(2,4)
+// PrintLine sum(2,4)
 
-Function sum(a,b,c){
-    Return a+b+c
-}
+// Function sum(a,b,c){
+//     Return a+b+c
+// }
 
-PrintLine sum(2,1,3)
+// PrintLine sum(2,1,3)
 
-arr1=Array(sum(2,4),1,3,5,6)
+// arr1=Array(sum(2,4),1,3,5,6)
 
-PrintLine arr1
+// PrintLine arr1
 
-arr1[0]=200
+// arr1[0]=200
 
-PrintLine arr1+" -- > "
+// PrintLine arr1+" -- > "
 
-PrintLine 5+arr1[0]
+// PrintLine 5+arr1[0]
 
-arr3=[2,1,3,4,5,[2,1,3]]
+// arr3=[2,1,3,4,5,[2,1,3]]
 
-PrintLine arr3[5][0]+arr3[5][1]
+// PrintLine arr3[5][0]+arr3[5][1]
 
-arr3[5][1]=3
+// arr3[5][1]=3
 
-PrintLine arr3[5][0]+arr3[5][1]
+// PrintLine arr3[5][0]+arr3[5][1]
 
-$a={$key->"value",another_key->"another value"}
+//$a={$key->"value",another_key->"another value"}
 
-PrintLine $a->another_key
+// PrintLine $a->another_key
 
-PrintLine $a->$key
+// PrintLine $a->$key
 
-$a->$key="new key of struct"
+// $a->$key="new key of struct"
 
-PrintLine $a->$key
+// PrintLine $a->$key
 
-b=[2,1,3,{$key->"value"}]
-$vg=b[3]
-PrintLine $vg->$key
+$obj={ $key->"value1" , another_key -> {$key->"value2"} }
+
+PrintLine $obj->another_key->$key
