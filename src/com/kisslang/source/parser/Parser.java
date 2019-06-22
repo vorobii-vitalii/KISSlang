@@ -443,6 +443,7 @@ public final class Parser {
 
             if(match(TokenType.OR)){
                 result=new LogicalBinaryExpression("|",result,logicalOAnd());
+                continue;
             }
 
             break;
@@ -463,7 +464,8 @@ public final class Parser {
                 continue;
             }
             if(match(TokenType.AND)){
-                result=new LogicalBinaryExpression("&",result,logicalOAnd());
+                result=new LogicalBinaryExpression("&",result,unary());
+                continue;
             }
             break;
         }
@@ -497,6 +499,62 @@ public final class Parser {
         }
 
         return new ArrayCreateExpression(listOfExpressions);
+    }
+
+    private Expression ImmutableObjectGetter() {
+
+        final String objectName=get(0).getText();
+
+        next();
+
+        consume(TokenType.ARROW,"Expected -> operator ...");
+
+        boolean immutable=false;
+
+        if (get(0).getType()==TokenType.IMMUTABLE_NAME){
+            immutable=true;
+        }
+
+        else if (get(0).getType()==TokenType.MUTTABLE_NAME){ }
+
+        else {
+            throw new RuntimeException("Expected field ...");
+        }
+
+        final String fieldName=get(0).getText();
+
+        next();
+
+        return new ImmutableObjectAccessGettingExpression(objectName,new VariableKey(fieldName,immutable));
+
+    }
+
+    private Expression MutableObjectGetter() {
+
+        final String objectName=get(0).getText();
+
+        next();
+
+        consume(TokenType.ARROW,"Expected -> operator ...");
+
+        boolean immutable=false;
+
+        if (get(0).getType()==TokenType.IMMUTABLE_NAME){
+            immutable=true;
+        }
+
+        else if (get(0).getType()==TokenType.MUTTABLE_NAME){ }
+
+        else {
+            throw new RuntimeException("Expected field ...");
+        }
+
+        final String fieldName=get(0).getText();
+
+        next();
+
+        return new MutableObjectAccessGettingExpression(objectName,new VariableKey(fieldName,immutable));
+
     }
 
     private Expression ObjectDeclaration() {
@@ -540,6 +598,12 @@ public final class Parser {
         }
         if (match(TokenType.HEX_NUMBER)) {
             return new NumberExpression(Long.parseLong(current.getText(), 16));
+        }
+        if(get(0).getType()==TokenType.IMMUTABLE_NAME && get(1).getType()==TokenType.ARROW){
+            return ImmutableObjectGetter();
+        }
+        if(get(0).getType()==TokenType.MUTTABLE_NAME && get(1).getType()==TokenType.ARROW){
+            return MutableObjectGetter();
         }
         if(get(0).getType()==TokenType.IMMUTABLE_NAME && get(1).getType()==TokenType.LPAREN){
             return ImmutableFunctionCall();

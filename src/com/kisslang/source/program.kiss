@@ -61,6 +61,8 @@ arr3[5][1]=3
 
 PrintLine arr3[5][0]+arr3[5][1]
 
-$a={$key->"value",another_key->"another key"}
+$a={$key->"value",another_key->"another value"}
 
-PrintLine $a
+PrintLine $a->another_key
+
+PrintLine $a->$key
