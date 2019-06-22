@@ -111,8 +111,13 @@ PrintLine arr[3][2]
 ````
 ##### Key->Value pairs (Objects)
 ````
-$a={$key->"value",another_key->"another key"}
+$a={$key->"value",another_key->"another value"}
 
 PrintLine $a
+
+PrintLine $a->another_key
+
+PrintLine $a->$key
+
 ````
 
