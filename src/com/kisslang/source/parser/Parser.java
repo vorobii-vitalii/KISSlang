@@ -279,98 +279,119 @@ public final class Parser {
         return new ReturnStatement ( expression ( ) );
     }
 
+    private Statement AssignVariableOrConstant ( ) {
 
-    private Statement AssignementStatement () {
         final Token current = get ( 0 );
 
-        if ( (current.getType ( ) == TokenType.MUTTABLE_NAME || current.getType ( ) == TokenType.IMMUTABLE_NAME) && get ( 1 ).getType ( ) == TokenType.ASSIGN ) {
-
-            if ( current.getType ( ) == TokenType.MUTTABLE_NAME && get ( 1 ).getType ( ) == TokenType.ASSIGN ) {
-                consume ( TokenType.MUTTABLE_NAME );
-                final String varName = current.getText ( );
-                consume ( TokenType.ASSIGN );
-                return new AssignmentVariableStatement ( varName , expression ( ) );
-            }
-
-            if ( current.getType ( ) == TokenType.IMMUTABLE_NAME && get ( 1 ).getType ( ) == TokenType.ASSIGN ) {
-                consume ( TokenType.IMMUTABLE_NAME );
-                final String varName = current.getText ( );
-                consume ( TokenType.ASSIGN );
-                return new AssignementConstantStatement ( varName , expression ( ) );
-            }
-
+        if ( current.getType ( ) == TokenType.MUTTABLE_NAME && get ( 1 ).getType ( ) == TokenType.ASSIGN ) {
+            consume ( TokenType.MUTTABLE_NAME );
+            final String varName = current.getText ( );
+            consume ( TokenType.ASSIGN );
+            return new AssignmentVariableStatement ( varName , expression ( ) );
         }
 
-        if ( current.getType ( ) == TokenType.IMMUTABLE_NAME && get ( 1 ).getType ( ) == TokenType.LPAREN_SQUARE ) {
+        else if ( current.getType ( ) == TokenType.IMMUTABLE_NAME && get ( 1 ).getType ( ) == TokenType.ASSIGN ) {
             consume ( TokenType.IMMUTABLE_NAME );
             final String varName = current.getText ( );
-            List<Expression> indexes = new ArrayList<> ( );
-
-            while (get ( 0 ).getType ( ) == TokenType.LPAREN_SQUARE) {
-                consume ( TokenType.LPAREN_SQUARE , "Square bracked expected during array index getting" );
-                Expression index = expression ( );
-                indexes.add ( index );
-                consume ( TokenType.RPAREN_SQUARE , "Square bracked expected during array index getting" );
-            }
-
-            /*
-
-                      for (Expression e:
-                              indexes) {
-                          System.out.print(e.eval()+"  ");
-                      }
-            */
-
-            Value[] indexValues = new Value[indexes.size ( )];
-
-            for (int i = 0; i < indexValues.length; i++) {
-                indexValues[i] = indexes.get ( i ).eval ( );
-            }
             consume ( TokenType.ASSIGN );
-            return new ArrayAssignementStatement ( varName , indexValues , expression ( ) );
+            return new AssignementConstantStatement ( varName , expression ( ) );
         }
 
-        if ( current.getType ( ) == TokenType.IMMUTABLE_NAME && get ( 1 ).getType ( ) == TokenType.ARROW ) {
-            consume ( TokenType.IMMUTABLE_NAME );
-            final String objectName = current.getText ( );
-            consume ( TokenType.ARROW , "Expected arrow operator -> " );
-            boolean immutable = false;
-            if ( get ( 0 ).getType ( ) == TokenType.IMMUTABLE_NAME ) {
-                immutable = true;
-            } else if ( get ( 0 ).getType ( ) == TokenType.MUTTABLE_NAME ) {
-            } else {
-                throw new RuntimeException ( "Expected field name" );
-            }
+        throw new RuntimeException ( "Error during variable assignement...." );
 
-            String fieldName = get ( 0 ).getText ( );
+    }
 
-            next ( );
-            consume ( TokenType.ASSIGN );
+    private Statement AssignArray ( ) {
 
-            return new ImmutableObjectAssignmentStatement ( objectName , new VariableKey ( fieldName , immutable ) , expression ( ) );
+        final Token current = get ( 0 );
 
+        consume ( TokenType.IMMUTABLE_NAME );
+        final String varName = current.getText ( );
+        List<Expression> indexes = new ArrayList<> ( );
+
+        while (get ( 0 ).getType ( ) == TokenType.LPAREN_SQUARE) {
+            consume ( TokenType.LPAREN_SQUARE , "Square bracked expected during array index getting" );
+            Expression index = expression ( );
+            indexes.add ( index );
+            consume ( TokenType.RPAREN_SQUARE , "Square bracked expected during array index getting" );
         }
 
-        if ( current.getType ( ) == TokenType.MUTTABLE_NAME && get ( 1 ).getType ( ) == TokenType.ARROW ) {
-            consume ( TokenType.MUTTABLE_NAME );
-            final String objectName = current.getText ( );
-            consume ( TokenType.ARROW , "Expected arrow operator -> " );
-            boolean immutable = false;
-            if ( get ( 0 ).getType ( ) == TokenType.IMMUTABLE_NAME ) {
-                immutable = true;
-            } else if ( get ( 0 ).getType ( ) == TokenType.MUTTABLE_NAME ) {
-            } else {
-                throw new RuntimeException ( "Expected field name" );
-            }
+        Value[] indexValues = new Value[indexes.size ( )];
 
-            String fieldName = get ( 0 ).getText ( );
-
-            next ( );
-            consume ( TokenType.ASSIGN );
-
-            return new MutableObjectAssignmentStatement ( objectName , new VariableKey ( fieldName , immutable ) , expression ( ) );
-
+        for (int i = 0; i < indexValues.length; i++) {
+            indexValues[i] = indexes.get ( i ).eval ( );
         }
+
+        consume ( TokenType.ASSIGN );
+
+        return new ArrayAssignementStatement ( varName , indexValues , expression ( ) );
+
+    }
+
+    private Statement ConstObjectAssignement ( ) {
+
+        final Token current = get ( 0 );
+
+        consume ( TokenType.IMMUTABLE_NAME );
+        final String objectName = current.getText ( );
+        consume ( TokenType.ARROW , "Expected arrow operator -> " );
+        boolean immutable = false;
+        if ( get ( 0 ).getType ( ) == TokenType.IMMUTABLE_NAME ) {
+            immutable = true;
+        } else if ( get ( 0 ).getType ( ) == TokenType.MUTTABLE_NAME ) {
+        } else {
+            throw new RuntimeException ( "Expected field name" );
+        }
+
+        String fieldName = get ( 0 ).getText ( );
+
+        next ( );
+        consume ( TokenType.ASSIGN );
+
+        return new ImmutableObjectAssignmentStatement ( objectName , new VariableKey ( fieldName , immutable ) , expression ( ) );
+
+    }
+
+    private Statement VarObjectAssignement ( ) {
+
+        final Token current = get ( 0 );
+
+        consume ( TokenType.MUTTABLE_NAME );
+        final String objectName = current.getText ( );
+        consume ( TokenType.ARROW , "Expected arrow operator -> " );
+        boolean immutable = false;
+        if ( get ( 0 ).getType ( ) == TokenType.IMMUTABLE_NAME ) {
+            immutable = true;
+        } else if ( get ( 0 ).getType ( ) == TokenType.MUTTABLE_NAME ) {
+        } else {
+            throw new RuntimeException ( "Expected field name" );
+        }
+
+        String fieldName = get ( 0 ).getText ( );
+
+        next ( );
+        consume ( TokenType.ASSIGN );
+
+        return new MutableObjectAssignmentStatement ( objectName , new VariableKey ( fieldName , immutable ) , expression ( ) );
+
+    }
+
+
+    private Statement AssignementStatement () {
+
+        final Token current = get ( 0 );
+
+        if ( (current.getType ( ) == TokenType.MUTTABLE_NAME || current.getType ( ) == TokenType.IMMUTABLE_NAME) && get ( 1 ).getType ( ) == TokenType.ASSIGN )
+            return AssignVariableOrConstant ( );
+
+        if ( current.getType ( ) == TokenType.IMMUTABLE_NAME && get ( 1 ).getType ( ) == TokenType.LPAREN_SQUARE )
+            return AssignArray ( );
+
+        if ( current.getType ( ) == TokenType.IMMUTABLE_NAME && get ( 1 ).getType ( ) == TokenType.ARROW )
+            return ConstObjectAssignement ( );
+
+        if ( current.getType ( ) == TokenType.MUTTABLE_NAME && get ( 1 ).getType ( ) == TokenType.ARROW )
+            return VarObjectAssignement ( );
 
         throw new RuntimeException ( "Unknown operator!" + current + " Next " + get ( 1 ) + " -> " + get ( 2 ) );
     }
@@ -741,4 +762,5 @@ public final class Parser {
         if ( position >= size ) return EOF;
         return tokens.get ( position );
     }
+
 }
