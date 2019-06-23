@@ -1,0 +1,5 @@
+For($i=0$i<10;$i=$i+1){
+    If ($i>5){
+        PrintLine $i
+    }
+}

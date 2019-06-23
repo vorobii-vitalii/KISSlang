@@ -1,0 +1,12 @@
+$i=0
+Do{
+    Print $i+" "
+}
+While ($i!=0)
+
+$i=10
+Do{
+    Print $i+" "
+    $i=$i-1
+}
+While ($i!=0)
