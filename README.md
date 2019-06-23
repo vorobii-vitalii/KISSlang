@@ -156,4 +156,4 @@ PrintLine $obj->another_key->$key
 ````
 ****
 
-<a href="https://github.com/vrb123/KISSlang/blob/master/docs/index.html">Documentation</a>
+<a href="index.html">Documentation</a>
