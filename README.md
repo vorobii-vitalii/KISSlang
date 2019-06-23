@@ -14,6 +14,14 @@ $x = 10
 $y = 3
 PrintLine ($x+$y)*2
 ```
+##### Some logical expressions:
+```
+$a = True
+$b = False
+PrintLine $a && $b
+PrintLine $a || $b
+PrintLine !$a
+```
 ##### Some user input:
 ```
 Input line
