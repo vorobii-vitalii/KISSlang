@@ -156,4 +156,4 @@ PrintLine $obj->another_key->$key
 ````
 ****
 
-<a href="index.html">Documentation</a>
+<a href="docs.html">Documentation</a>
