@@ -55,10 +55,6 @@ public final class OperatorsTable {
         OPERATORS.put ( "->" , TokenType.ARROW );
     }
 
-    public static boolean isEmpty(){
-        return OPERATORS.isEmpty ();
-    }
-
     public static boolean hasKey(String key){
         return OPERATORS.containsKey ( key );
     }
@@ -70,4 +66,5 @@ public final class OperatorsTable {
         }
         throw new RuntimeException ( "No such operator ..." );
     }
+
 }

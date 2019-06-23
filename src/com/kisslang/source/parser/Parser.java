@@ -160,8 +160,6 @@ public final class Parser {
 
     private Statement FunctionDeclaration () {
 
-        next ( );
-
         final String functionName = get ( 0 ).getText ( );
 
         final TokenType functionNameType = get ( 0 ).getType ( );
@@ -422,7 +420,7 @@ public final class Parser {
     }
 
     private Statement For () {
-        next ( );
+//        next ( );
         consume ( TokenType.LPAREN , "No expected (" );
         final Statement init = AssignementStatement ( );
         consume ( TokenType.DELIMITER_FOR , "No expected delimiter after initializing" );
@@ -750,7 +748,7 @@ public final class Parser {
 
     private Token consume ( TokenType type , String message ) {
         final Token current = get ( 0 );
-        if ( type != current.getType ( ) ) throw new RuntimeException ( message );
+        if ( type != current.getType ( ) ) throw new RuntimeException ( message+"\n"+get ( 0 )+" "+get ( 1 ) );
         pos++;
         return current;
     }

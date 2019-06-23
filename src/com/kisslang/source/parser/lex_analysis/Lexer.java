@@ -1,13 +1,12 @@
 package com.kisslang.source.parser.lex_analysis;
 
 
+import com.kisslang.source.parser.lex_analysis.tokenize_handlers.*;
 import com.kisslang.source.parser.tokenization.Token;
 import com.kisslang.source.parser.tokenization.TokenType;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /*
  * Copyright (C) 2019 The KISSlang Project by Vitalii Vorobii
@@ -30,218 +29,53 @@ public final class Lexer {
 
     private static final String OPERATOR_CHARS = "+-*/()=^<>&|!{};,[]->";
 
-    private final String input;
-    private final int length;
-
-    private final List<Token> tokens;
-
-    private int pos;
+    private SourceCode sourceCode;
 
     public Lexer ( String input ) {
-        this.input = input;
-        length = input.length ( );
-
-        tokens = new ArrayList<> ( );
+        sourceCode=SourceCode.getInstance ();
+        sourceCode.setCodeText ( input );
     }
 
     public List<Token> tokenize () {
-        while (pos < length) {
-            final char current = peek ( 0 );
-            if ( Character.isDigit ( current ) ) tokenizeNumber ( );
-            else if ( Character.isLetter ( current ) || current == '$' ) tokenizeWord ( );
-            else if ( current == '#' ) {
-                next ( );
-                tokenizeHexNumber ( );
-            } else if ( current == '"' || current == '\'' ) {
-                next ( );
-                if ( current == '"' ) {
-                    tokenizeStringValue ( '"' );
-                } else {
-                    tokenizeStringValue ( '\'' );
-                }
 
-            } else if ( OPERATOR_CHARS.indexOf ( current ) != -1 ) {
-                tokenizeOperator ( );
-            } else {
+        while (sourceCode.inBounds ()) {
+
+            final char current = sourceCode.peekCharacter ( 0 );
+
+            TokenizeHandler handler;
+
+            if ( Character.isDigit ( current ) )
+                handler=new NormalNumberTokenizeHandler ( sourceCode );
+            else if ( isValidWordStart(current) )
+                handler= new WordTokenizeHandler ( sourceCode );
+            else if ( current == '#' )
+                handler=new HexNumberTokenizeHandler ( sourceCode);
+            else if ( current == '"' || current == '\'' ) {
+                sourceCode.nextCharacter ();
+                if ( current == '"' )
+                    handler = new StringTokenizeHandler ( sourceCode , '"' );
+                else
+                    handler = new StringTokenizeHandler ( sourceCode , '\'' );
+            }
+            else if ( OPERATOR_CHARS.indexOf ( current ) != -1 )
+                handler = new OperatorTokenizeHandler ( sourceCode );
+            else {
                 // whitespaces
-                next ( );
-            }
-        }
-        return tokens;
-    }
-
-    private void tokenizeStringValue ( char c ) {
-        final StringBuilder buffer = new StringBuilder ( );
-        char current = peek ( 0 );
-        while (current != c) {
-            buffer.append ( current );
-            current = next ( );
-        }
-        next ( );
-        addToken ( TokenType.STRING_TEXT , buffer.toString ( ) );
-    }
-
-    private void tokenizeWord () {
-        final StringBuilder buffer = new StringBuilder ( );
-        char current = peek ( 0 );
-        while (Character.isLetterOrDigit ( current ) || current == '_' || current == '$') {
-            buffer.append ( current );
-            current = next ( );
-        }
-        if ( buffer.toString ( ).equals ( "Print" ) ) {
-            addToken ( TokenType.PRINT );
-            return;
-        }
-        if ( buffer.toString ( ).equals ( "PrintLine" ) ) {
-            addToken ( TokenType.PRINTLINE );
-            return;
-        }
-        if ( buffer.toString ( ).equals ( "If" ) ) {
-            addToken ( TokenType.IF );
-            return;
-        }
-        if ( buffer.toString ( ).equals ( "Else" ) ) {
-            addToken ( TokenType.ELSE );
-            return;
-        }
-        if ( buffer.toString ( ).equals ( "While" ) ) {
-            addToken ( TokenType.WHILE );
-            return;
-        }
-        if ( buffer.toString ( ).equals ( "Do" ) ) {
-            addToken ( TokenType.DO_LOOP );
-            return;
-        }
-        if ( buffer.toString ( ).equals ( "For" ) ) {
-            addToken ( TokenType.FOR );
-        }
-        if ( buffer.toString ( ).equals ( "Input" ) ) {
-            addToken ( TokenType.INPUT );
-        }
-        if ( buffer.toString ( ).equals ( "Return" ) ) {
-            addToken ( TokenType.RETURN_FROM_METHOD );
-        }
-        if ( buffer.toString ( ).equals ( "Continue" ) ) {
-            addToken ( TokenType.CONTINUE );
-        }
-        if ( buffer.toString ( ).equals ( "Break" ) ) {
-            addToken ( TokenType.BREAK );
-        }
-        if ( buffer.toString ( ).equals ( "Function" ) ) {
-            addToken ( TokenType.FUNCTION_DECLARATION );
-        }
-        if ( buffer.toString ( ).startsWith ( "$" ) ) {
-            addToken ( TokenType.MUTTABLE_NAME , buffer.toString ( ).substring ( 1 ) );
-            return;
-        }
-        addToken ( TokenType.IMMUTABLE_NAME , buffer.toString ( ) );
-    }
-
-    private void tokenizeNumber () {
-        final StringBuilder buffer = new StringBuilder ( );
-
-        char current = peek ( 0 );
-
-        boolean isFloatingNumber = false;
-
-        while (Character.isDigit ( current ) || current == '.') {
-            if ( current == '.' ) {
-                if ( buffer.indexOf ( "." ) != -1 ) {
-                    throw new RuntimeException ( "Invalid number declaration" );
-                }
-                isFloatingNumber = true;
-            }
-            buffer.append ( current );
-            current = next ( );
-        }
-
-        addToken ( TokenType.NUMBER , buffer.toString ( ) );
-    }
-
-    private void tokenizeHexNumber () {
-        final StringBuilder buffer = new StringBuilder ( );
-        char current = peek ( 0 );
-        while (Character.isDigit ( current ) || isHexNumber ( current )) {
-            buffer.append ( current );
-            current = next ( );
-        }
-        addToken ( TokenType.HEX_NUMBER , buffer.toString ( ) );
-    }
-
-    private static boolean isHexNumber ( char current ) {
-        return "abcdef".indexOf ( Character.toLowerCase ( current ) ) != -1;
-    }
-
-    private void tokenizeOperator () {
-        char current = peek ( 0 );
-        if ( current == '/' ) {
-            if ( peek ( 1 ) == '/' ) {
-                //System.out.println("Found");
-                next ( );
-                next ( );
-                tokenizeSingleLineCommentary ( );
-                return;
-            } else if ( peek ( 1 ) == '*' ) {
-                next ( );
-                next ( );
-                tokenizeMultiLineCommentary ( );
-                return;
-
-            }
-        }
-        StringBuffer buffer = new StringBuffer ( );
-        while (true) {
-            String curStr = buffer.toString ( );
-            if ( !OperatorsTable.hasKey ( curStr + current ) && !curStr.isEmpty ( ) ) {
-                addToken ( OperatorsTable.get ( curStr ) );
-                return;
-            }
-            buffer.append ( current );
-            current = next ( );
-
-        }
-    }
-
-    private void tokenizeMultiLineCommentary () {
-
-        while (peek ( 0 ) != '*' && peek ( 1 ) != '/') {
-
-            if ( peek ( 0 ) == '\0' ) {
-                throw new RuntimeException ( "Not found closing */ comment declaration" );
+                sourceCode.nextCharacter ();
+                continue;
             }
 
-            next ( );
+            handler.handle ();
+            handler.addToken ();
+
         }
 
-        next ( );
-        next ( );
-    }
-
-    private void tokenizeSingleLineCommentary () {
-        char current = peek ( 0 );
-
-        while ("\r\n\0".indexOf ( current ) == -1) {
-            current = next ( );
-        }
+        return Tokens.getInstance ().getTokens ();
 
     }
 
-    private char next () {
-        pos++;
-        return peek ( 0 );
+    private boolean isValidWordStart(char c){
+        return Character.isLetter ( c ) || c == '$';
     }
 
-    private char peek ( int relativePosition ) {
-        final int position = pos + relativePosition;
-        if ( position >= length ) return '\0';
-        return input.charAt ( position );
-    }
-
-    private void addToken ( TokenType type ) {
-        addToken ( type , "" );
-    }
-
-    private void addToken ( TokenType type , String text ) {
-        tokens.add ( new Token ( type , text ) );
-    }
 }
