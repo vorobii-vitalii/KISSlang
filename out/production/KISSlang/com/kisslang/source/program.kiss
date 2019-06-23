@@ -90,3 +90,5 @@ $b1=True
 $b2=False
 
 PrintLine $b1 || $b2
+
+PrintLine !$b1+"\n"

@@ -55,13 +55,13 @@ public final class OperatorsTable {
         OPERATORS.put ( "->" , TokenType.ARROW );
     }
 
-    public static boolean hasKey(String key){
+    public static boolean hasKey ( String key ) {
         return OPERATORS.containsKey ( key );
     }
 
-    public static TokenType get (String key) {
+    public static TokenType get ( String key ) {
 
-        if ( hasKey ( key ) ){
+        if ( hasKey ( key ) ) {
             return OPERATORS.get ( key );
         }
         throw new RuntimeException ( "No such operator ..." );

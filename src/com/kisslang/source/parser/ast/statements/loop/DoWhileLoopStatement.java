@@ -26,18 +26,18 @@ public class DoWhileLoopStatement implements Statement {
 
     private final Expression expression;
 
-    public DoWhileLoopStatement(Statement statementOrBlock,Expression expression){
-        this.statementOrBlock=statementOrBlock;
-        this.expression=expression;
+    public DoWhileLoopStatement ( Statement statementOrBlock , Expression expression ) {
+        this.statementOrBlock = statementOrBlock;
+        this.expression = expression;
     }
 
     @Override
     public void execute () {
 
-        do{
-            statementOrBlock.execute ();
+        do {
+            statementOrBlock.execute ( );
         }
-        while (expression.eval ().asBoolean ());
+        while (expression.eval ( ).asBoolean ( ));
 
     }
 

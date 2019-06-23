@@ -26,8 +26,8 @@ public final class HexNumberTokenizeHandler extends TokenizeHandler {
 
     private SourceCode sourceCode;
 
-    public HexNumberTokenizeHandler(SourceCode sourceCode){
-        this.sourceCode=sourceCode;
+    public HexNumberTokenizeHandler ( SourceCode sourceCode ) {
+        this.sourceCode = sourceCode;
     }
 
 
@@ -37,14 +37,14 @@ public final class HexNumberTokenizeHandler extends TokenizeHandler {
 
     @Override
     public void handle () {
-        sourceCode.nextCharacter ();
+        sourceCode.nextCharacter ( );
         final StringBuilder buffer = new StringBuilder ( );
         char current = sourceCode.peekCharacter ( 0 );
         while (Character.isDigit ( current ) || isHexNumber ( current )) {
             buffer.append ( current );
-            current = sourceCode.nextCharacter ();
+            current = sourceCode.nextCharacter ( );
         }
-        this.token=new Token ( TokenType.HEX_NUMBER , buffer.toString ( ));
+        this.token = new Token ( TokenType.HEX_NUMBER , buffer.toString ( ) );
     }
 
 }

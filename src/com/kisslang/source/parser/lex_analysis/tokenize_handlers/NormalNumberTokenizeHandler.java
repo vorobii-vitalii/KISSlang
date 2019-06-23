@@ -26,8 +26,8 @@ public final class NormalNumberTokenizeHandler extends TokenizeHandler {
 
     private SourceCode sourceCode;
 
-    public NormalNumberTokenizeHandler(SourceCode sourceCode){
-        this.sourceCode=sourceCode;
+    public NormalNumberTokenizeHandler ( SourceCode sourceCode ) {
+        this.sourceCode = sourceCode;
     }
 
     @Override
@@ -44,9 +44,9 @@ public final class NormalNumberTokenizeHandler extends TokenizeHandler {
                 }
             }
             buffer.append ( current );
-            current = sourceCode.nextCharacter ();
+            current = sourceCode.nextCharacter ( );
         }
 
-        this.token= new Token ( TokenType.NUMBER , buffer.toString ( ) ) ;
+        this.token = new Token ( TokenType.NUMBER , buffer.toString ( ) );
     }
 }

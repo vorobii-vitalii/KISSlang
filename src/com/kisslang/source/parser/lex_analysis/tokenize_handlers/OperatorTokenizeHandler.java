@@ -26,15 +26,15 @@ public final class OperatorTokenizeHandler extends TokenizeHandler {
 
     private SourceCode sourceCode;
 
-    public OperatorTokenizeHandler(SourceCode sourceCode){
-        this.sourceCode=sourceCode;
+    public OperatorTokenizeHandler ( SourceCode sourceCode ) {
+        this.sourceCode = sourceCode;
     }
 
     private void tokenizeSingleLineCommentary () {
         char current = sourceCode.peekCharacter ( 0 );
 
         while ("\r\n\0".indexOf ( current ) == -1) {
-            current = sourceCode.nextCharacter ();
+            current = sourceCode.nextCharacter ( );
         }
 
     }
@@ -44,8 +44,8 @@ public final class OperatorTokenizeHandler extends TokenizeHandler {
         char current = sourceCode.peekCharacter ( 0 );
         if ( current == '/' ) {
             if ( sourceCode.peekCharacter ( 1 ) == '/' ) {
-                sourceCode.nextCharacter ();
-                sourceCode.nextCharacter ();
+                sourceCode.nextCharacter ( );
+                sourceCode.nextCharacter ( );
                 tokenizeSingleLineCommentary ( );
                 return;
             }
@@ -54,11 +54,11 @@ public final class OperatorTokenizeHandler extends TokenizeHandler {
         while (true) {
             String curStr = buffer.toString ( );
             if ( !OperatorsTable.hasKey ( curStr + current ) && !curStr.isEmpty ( ) ) {
-                this.token=  new Token ( OperatorsTable.get ( curStr ) );
+                this.token = new Token ( OperatorsTable.get ( curStr ) );
                 return;
             }
             buffer.append ( current );
-            current = sourceCode.nextCharacter ();
+            current = sourceCode.nextCharacter ( );
 
         }
     }

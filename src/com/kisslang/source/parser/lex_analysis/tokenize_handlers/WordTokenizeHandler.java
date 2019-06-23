@@ -21,12 +21,12 @@ import com.kisslang.source.parser.lex_analysis.SourceCode;
 import com.kisslang.source.parser.lex_analysis.TokenizeHandler;
 import com.kisslang.source.parser.lex_analysis.WordTable;
 
-public final class WordTokenizeHandler extends TokenizeHandler{
+public final class WordTokenizeHandler extends TokenizeHandler {
 
     private SourceCode sourceCode;
 
-    public WordTokenizeHandler(SourceCode sourceCode){
-        this.sourceCode=sourceCode;
+    public WordTokenizeHandler ( SourceCode sourceCode ) {
+        this.sourceCode = sourceCode;
     }
 
     @Override
@@ -37,11 +37,11 @@ public final class WordTokenizeHandler extends TokenizeHandler{
 
         while (Character.isLetterOrDigit ( current ) || current == '_' || current == '$') {
             buffer.append ( current );
-            current = sourceCode.nextCharacter ();
+            current = sourceCode.nextCharacter ( );
         }
 
-        System.out.println ( WordTable.get ( buffer.toString () ) );
+        System.out.println ( WordTable.get ( buffer.toString ( ) ) );
 
-        this.token= WordTable.get ( buffer.toString () ) ;
+        this.token = WordTable.get ( buffer.toString ( ) );
     }
 }

@@ -23,9 +23,9 @@ public abstract class TokenizeHandler {
 
     protected Token token;
 
-    void addToken (){
-        Tokens tokens=Tokens.getInstance ();
-        tokens.addToken ( token);
+    void addToken () {
+        Tokens tokens = Tokens.getInstance ( );
+        tokens.addToken ( token );
     }
 
     public abstract void handle ();

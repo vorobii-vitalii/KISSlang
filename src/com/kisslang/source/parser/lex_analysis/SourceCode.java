@@ -27,23 +27,23 @@ public final class SourceCode {
 
     private int currentCharacterIndex;
 
-    static SourceCode getInstance (){
+    static SourceCode getInstance () {
 
-        if(singletonObject==null){
-            singletonObject = new SourceCode ();
+        if ( singletonObject == null ) {
+            singletonObject = new SourceCode ( );
         }
 
         return singletonObject;
     }
 
-    boolean inBounds (){
-        return currentCharacterIndex<codeLength;
+    boolean inBounds () {
+        return currentCharacterIndex < codeLength;
     }
 
-    void setCodeText ( String codeText ){
+    void setCodeText ( String codeText ) {
         this.codeText = codeText;
-        this.codeLength=codeText.length ();
-        this.currentCharacterIndex=0;
+        this.codeLength = codeText.length ( );
+        this.currentCharacterIndex = 0;
     }
 
     public char peekCharacter ( int relativePosition ) {
@@ -52,12 +52,12 @@ public final class SourceCode {
         return codeText.charAt ( position );
     }
 
-    public char nextCharacter ( ) {
+    public char nextCharacter () {
         currentCharacterIndex++;
         return peekCharacter ( 0 );
     }
 
-    private SourceCode(){
+    private SourceCode () {
 
     }
 

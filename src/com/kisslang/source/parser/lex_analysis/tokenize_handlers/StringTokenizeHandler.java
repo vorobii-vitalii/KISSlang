@@ -28,20 +28,38 @@ public final class StringTokenizeHandler extends TokenizeHandler {
 
     private SourceCode sourceCode;
 
-    public StringTokenizeHandler ( SourceCode sourceCode,char strEscape ){
-        this.sourceCode=sourceCode;
-        this.strEscape=strEscape;
+    public StringTokenizeHandler ( SourceCode sourceCode , char strEscape ) {
+        this.sourceCode = sourceCode;
+        this.strEscape = strEscape;
     }
 
     @Override
     public void handle () {
         final StringBuilder buffer = new StringBuilder ( );
         char current = sourceCode.peekCharacter ( 0 );
+
         while (current != strEscape) {
-            buffer.append ( current );
-            current = sourceCode.nextCharacter ();
+
+            if (current=='\\' && sourceCode.peekCharacter ( 1 )=='n'){
+                sourceCode.nextCharacter ();
+                buffer.append ( "\n" );
+            }
+            else if (current=='\\' && sourceCode.peekCharacter ( 1 )=='t'){
+                sourceCode.nextCharacter ();
+                buffer.append ( "\t" );
+            }
+            else if (current=='\\' && sourceCode.peekCharacter ( 1 )=='r'){
+                sourceCode.nextCharacter ();
+                buffer.append ( "\r" );
+            }
+            else {
+                buffer.append ( current );
+            }
+            current = sourceCode.nextCharacter ( );
+
         }
-        sourceCode.nextCharacter ();
-        this.token = new Token (TokenType.STRING_TEXT , buffer.toString ( ) ) ;
+
+        sourceCode.nextCharacter ( );
+        this.token = new Token ( TokenType.STRING_TEXT , buffer.toString ( ) );
     }
 }

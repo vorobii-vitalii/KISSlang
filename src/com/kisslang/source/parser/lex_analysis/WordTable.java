@@ -29,36 +29,34 @@ public final class WordTable {
 
     static {
         KEYWORDS = new HashMap<> ( );
-        KEYWORDS.put ( "Print",TokenType.PRINT);
-        KEYWORDS.put ( "PrintLine",TokenType.PRINTLINE);
-        KEYWORDS.put ( "True",TokenType.TRUE_LITERAL);
-        KEYWORDS.put ( "False",TokenType.FALSE_LITERAL);
-        KEYWORDS.put ( "If",TokenType.IF);
-        KEYWORDS.put ( "Else",TokenType.ELSE);
-        KEYWORDS.put ( "Do",TokenType.DO_LOOP);
-        KEYWORDS.put ( "While",TokenType.WHILE );
-        KEYWORDS.put ( "For", TokenType.FOR );
-        KEYWORDS.put ( "Input",TokenType.INPUT);
-        KEYWORDS.put ( "Return",TokenType.RETURN_FROM_METHOD );
-        KEYWORDS.put ( "Continue",TokenType.CONTINUE );
-        KEYWORDS.put ( "Break",TokenType.BREAK );
-        KEYWORDS.put ( "Function",TokenType.FUNCTION_DECLARATION );
+        KEYWORDS.put ( "Print" , TokenType.PRINT );
+        KEYWORDS.put ( "PrintLine" , TokenType.PRINTLINE );
+        KEYWORDS.put ( "True" , TokenType.TRUE_LITERAL );
+        KEYWORDS.put ( "False" , TokenType.FALSE_LITERAL );
+        KEYWORDS.put ( "If" , TokenType.IF );
+        KEYWORDS.put ( "Else" , TokenType.ELSE );
+        KEYWORDS.put ( "Do" , TokenType.DO_LOOP );
+        KEYWORDS.put ( "While" , TokenType.WHILE );
+        KEYWORDS.put ( "For" , TokenType.FOR );
+        KEYWORDS.put ( "Input" , TokenType.INPUT );
+        KEYWORDS.put ( "Return" , TokenType.RETURN_FROM_METHOD );
+        KEYWORDS.put ( "Continue" , TokenType.CONTINUE );
+        KEYWORDS.put ( "Break" , TokenType.BREAK );
+        KEYWORDS.put ( "Function" , TokenType.FUNCTION_DECLARATION );
     }
 
-    private static boolean hasKey(String key){
+    private static boolean hasKey ( String key ) {
         return KEYWORDS.containsKey ( key );
     }
 
-    public static Token get ( String key) {
+    public static Token get ( String key ) {
 
-        if ( hasKey ( key ) ){
-            return new Token (  KEYWORDS.get ( key ) );
-        }
-        else if ( key.startsWith ( "$" ) ){
-            return new Token ( TokenType.MUTTABLE_NAME,key.substring ( 1 ));
-        }
-        else{
-            return new Token ( TokenType.IMMUTABLE_NAME,key );
+        if ( hasKey ( key ) ) {
+            return new Token ( KEYWORDS.get ( key ) );
+        } else if ( key.startsWith ( "$" ) ) {
+            return new Token ( TokenType.MUTTABLE_NAME , key.substring ( 1 ) );
+        } else {
+            return new Token ( TokenType.IMMUTABLE_NAME , key );
         }
     }
 

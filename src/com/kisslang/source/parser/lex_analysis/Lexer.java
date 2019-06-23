@@ -32,49 +32,48 @@ public final class Lexer {
     private SourceCode sourceCode;
 
     public Lexer ( String input ) {
-        sourceCode=SourceCode.getInstance ();
+        sourceCode = SourceCode.getInstance ( );
         sourceCode.setCodeText ( input );
     }
 
     public List<Token> tokenize () {
 
-        while (sourceCode.inBounds ()) {
+        while (sourceCode.inBounds ( )) {
 
             final char current = sourceCode.peekCharacter ( 0 );
 
             TokenizeHandler handler;
 
             if ( Character.isDigit ( current ) )
-                handler=new NormalNumberTokenizeHandler ( sourceCode );
-            else if ( isValidWordStart(current) )
-                handler= new WordTokenizeHandler ( sourceCode );
+                handler = new NormalNumberTokenizeHandler ( sourceCode );
+            else if ( isValidWordStart ( current ) )
+                handler = new WordTokenizeHandler ( sourceCode );
             else if ( current == '#' )
-                handler=new HexNumberTokenizeHandler ( sourceCode);
+                handler = new HexNumberTokenizeHandler ( sourceCode );
             else if ( current == '"' || current == '\'' ) {
-                sourceCode.nextCharacter ();
+                sourceCode.nextCharacter ( );
                 if ( current == '"' )
                     handler = new StringTokenizeHandler ( sourceCode , '"' );
                 else
                     handler = new StringTokenizeHandler ( sourceCode , '\'' );
-            }
-            else if ( OPERATOR_CHARS.indexOf ( current ) != -1 )
+            } else if ( OPERATOR_CHARS.indexOf ( current ) != -1 )
                 handler = new OperatorTokenizeHandler ( sourceCode );
             else {
                 // whitespaces
-                sourceCode.nextCharacter ();
+                sourceCode.nextCharacter ( );
                 continue;
             }
 
-            handler.handle ();
-            handler.addToken ();
+            handler.handle ( );
+            handler.addToken ( );
 
         }
 
-        return Tokens.getInstance ().getTokens ();
+        return Tokens.getInstance ( ).getTokens ( );
 
     }
 
-    private boolean isValidWordStart(char c){
+    private boolean isValidWordStart ( char c ) {
         return Character.isLetter ( c ) || c == '$';
     }
 

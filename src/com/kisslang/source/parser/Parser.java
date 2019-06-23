@@ -117,8 +117,8 @@ public final class Parser {
         if ( match ( TokenType.WHILE ) ) {
             return While ( );
         }
-        if( match ( TokenType.DO_LOOP )) {
-            return DoWhile();
+        if ( match ( TokenType.DO_LOOP ) ) {
+            return DoWhile ( );
         }
         if ( match ( TokenType.RETURN_FROM_METHOD ) ) {
             return Return ( );
@@ -144,7 +144,6 @@ public final class Parser {
 
         return AssignementStatement ( );
     }
-
 
 
     private Statement Input () {
@@ -280,7 +279,7 @@ public final class Parser {
         return new ReturnStatement ( expression ( ) );
     }
 
-    private Statement AssignVariableOrConstant ( ) {
+    private Statement AssignVariableOrConstant () {
 
         final Token current = get ( 0 );
 
@@ -289,9 +288,7 @@ public final class Parser {
             final String varName = current.getText ( );
             consume ( TokenType.ASSIGN );
             return new AssignmentVariableStatement ( varName , expression ( ) );
-        }
-
-        else if ( current.getType ( ) == TokenType.IMMUTABLE_NAME && get ( 1 ).getType ( ) == TokenType.ASSIGN ) {
+        } else if ( current.getType ( ) == TokenType.IMMUTABLE_NAME && get ( 1 ).getType ( ) == TokenType.ASSIGN ) {
             consume ( TokenType.IMMUTABLE_NAME );
             final String varName = current.getText ( );
             consume ( TokenType.ASSIGN );
@@ -302,7 +299,7 @@ public final class Parser {
 
     }
 
-    private Statement AssignArray ( ) {
+    private Statement AssignArray () {
 
         final Token current = get ( 0 );
 
@@ -329,7 +326,7 @@ public final class Parser {
 
     }
 
-    private Statement ConstObjectAssignement ( ) {
+    private Statement ConstObjectAssignement () {
 
         final Token current = get ( 0 );
 
@@ -353,7 +350,7 @@ public final class Parser {
 
     }
 
-    private Statement VarObjectAssignement ( ) {
+    private Statement VarObjectAssignement () {
 
         final Token current = get ( 0 );
 
@@ -414,10 +411,10 @@ public final class Parser {
     }
 
     private Statement DoWhile () {
-        final Statement statementOrBlock=blockOrSingle ();
-        consume ( TokenType.WHILE,"Expected condition during do-while loop declaration ..." );
-        final Expression condition=expression ();
-        return new DoWhileLoopStatement (statementOrBlock,condition);
+        final Statement statementOrBlock = blockOrSingle ( );
+        consume ( TokenType.WHILE , "Expected condition during do-while loop declaration ..." );
+        final Expression condition = expression ( );
+        return new DoWhileLoopStatement ( statementOrBlock , condition );
     }
 
     private Statement For () {
@@ -697,11 +694,11 @@ public final class Parser {
         if ( match ( TokenType.NUMBER ) ) {
             return new NumberExpression ( Double.parseDouble ( current.getText ( ) ) );
         }
-        if (match ( TokenType.TRUE_LITERAL)){
-            return new BooleanExpression ( true);
+        if ( match ( TokenType.TRUE_LITERAL ) ) {
+            return new BooleanExpression ( true );
         }
-        if (match ( TokenType.FALSE_LITERAL)){
-            return new BooleanExpression ( false);
+        if ( match ( TokenType.FALSE_LITERAL ) ) {
+            return new BooleanExpression ( false );
         }
         if ( match ( TokenType.HEX_NUMBER ) ) {
             return new NumberExpression ( Long.parseLong ( current.getText ( ) , 16 ) );
@@ -755,7 +752,7 @@ public final class Parser {
 
     private Token consume ( TokenType type , String message ) {
         final Token current = get ( 0 );
-        if ( type != current.getType ( ) ) throw new RuntimeException ( message+"\n"+get ( 0 )+" "+get ( 1 ) );
+        if ( type != current.getType ( ) ) throw new RuntimeException ( message + "\n" + get ( 0 ) + " " + get ( 1 ) );
         pos++;
         return current;
     }

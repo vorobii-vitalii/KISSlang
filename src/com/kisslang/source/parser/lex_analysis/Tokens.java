@@ -28,22 +28,22 @@ public final class Tokens {
 
     private List<Token> tokens;
 
-    private Tokens(){
-        tokens=new ArrayList<> (  );
+    private Tokens () {
+        tokens = new ArrayList<> ( );
     }
 
-    public void addToken(Token token){
+    public void addToken ( Token token ) {
         tokens.add ( token );
     }
 
-    public List<Token> getTokens() {
+    public List<Token> getTokens () {
         return tokens;
     }
 
-    public static Tokens getInstance(){
+    public static Tokens getInstance () {
 
-        if(singletonObject==null){
-            singletonObject=new Tokens ();
+        if ( singletonObject == null ) {
+            singletonObject = new Tokens ( );
         }
 
         return singletonObject;

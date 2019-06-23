@@ -40,8 +40,7 @@ public class IfConditionalStatement implements Statement {
 
         if ( result == true ) {
             ifStatement.execute ( );
-        }
-        else {
+        } else {
             if ( elseStatement != null ) {
                 elseStatement.execute ( );
             }

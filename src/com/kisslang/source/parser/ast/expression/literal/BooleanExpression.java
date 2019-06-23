@@ -25,12 +25,12 @@ public class BooleanExpression implements Expression {
 
     private boolean value;
 
-    public BooleanExpression(boolean value){
-        this.value=value;
+    public BooleanExpression ( boolean value ) {
+        this.value = value;
     }
 
     @Override
     public Value eval () {
-        return new LogicalValue ( value);
+        return new LogicalValue ( value );
     }
 }
