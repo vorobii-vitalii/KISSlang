@@ -31,6 +31,7 @@ public enum TokenType {
     ELSE,
     EOF,
     EQUAL,
+    FALSE_LITERAL,
     FOR,
     FUNCTION_DECLARATION,
     GREATER_OR_EQUAL_THAN,
@@ -61,6 +62,7 @@ public enum TokenType {
     SLASH,
     STAR,
     STRING_TEXT,
+    TRUE_LITERAL,
     WHILE
 
 

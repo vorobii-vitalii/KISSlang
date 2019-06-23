@@ -11,6 +11,7 @@ import com.kisslang.source.parser.ast.expression.binary.ConditionalExpression;
 import com.kisslang.source.parser.ast.expression.binary.LogicalBinaryExpression;
 import com.kisslang.source.parser.ast.expression.functional.ImmutableFunctionalCallExpression;
 import com.kisslang.source.parser.ast.expression.functional.MutableFunctionalCallExpression;
+import com.kisslang.source.parser.ast.expression.literal.BooleanExpression;
 import com.kisslang.source.parser.ast.expression.literal.NumberExpression;
 import com.kisslang.source.parser.ast.expression.literal.StringExpression;
 import com.kisslang.source.parser.ast.expression.object.ImmutableObjectAccessGettingExpression;
@@ -695,6 +696,12 @@ public final class Parser {
         final Token current = get ( 0 );
         if ( match ( TokenType.NUMBER ) ) {
             return new NumberExpression ( Double.parseDouble ( current.getText ( ) ) );
+        }
+        if (match ( TokenType.TRUE_LITERAL)){
+            return new BooleanExpression ( true);
+        }
+        if (match ( TokenType.FALSE_LITERAL)){
+            return new BooleanExpression ( false);
         }
         if ( match ( TokenType.HEX_NUMBER ) ) {
             return new NumberExpression ( Long.parseLong ( current.getText ( ) , 16 ) );

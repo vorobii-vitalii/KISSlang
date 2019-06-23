@@ -85,3 +85,8 @@ Do{
     $i=$i+1
 }
 While ($i<10)
+PrintLine ''
+$b1=True
+$b2=False
+
+PrintLine $b1 || $b2

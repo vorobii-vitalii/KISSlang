@@ -31,6 +31,8 @@ public final class WordTable {
         KEYWORDS = new HashMap<> ( );
         KEYWORDS.put ( "Print",TokenType.PRINT);
         KEYWORDS.put ( "PrintLine",TokenType.PRINTLINE);
+        KEYWORDS.put ( "True",TokenType.TRUE_LITERAL);
+        KEYWORDS.put ( "False",TokenType.FALSE_LITERAL);
         KEYWORDS.put ( "If",TokenType.IF);
         KEYWORDS.put ( "Else",TokenType.ELSE);
         KEYWORDS.put ( "Do",TokenType.DO_LOOP);
