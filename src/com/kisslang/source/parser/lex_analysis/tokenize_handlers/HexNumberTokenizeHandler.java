@@ -36,7 +36,7 @@ public final class HexNumberTokenizeHandler extends TokenizeHandler {
     }
 
     @Override
-    public void handle () {
+    public void handle ( ) {
         sourceCode.nextCharacter ( );
         final StringBuilder buffer = new StringBuilder ( );
         char current = sourceCode.peekCharacter ( 0 );

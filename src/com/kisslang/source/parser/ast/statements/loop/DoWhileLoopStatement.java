@@ -35,7 +35,15 @@ public class DoWhileLoopStatement implements Statement {
     public void execute () {
 
         do {
-            statementOrBlock.execute ( );
+            try {
+                statementOrBlock.execute ( );
+            }
+            catch (BreakLoopStatement e) {
+                break;
+            }
+            catch (ContinueLoopStatement e) {
+                continue;
+            }
         }
         while (expression.eval ( ).asBoolean ( ));
 

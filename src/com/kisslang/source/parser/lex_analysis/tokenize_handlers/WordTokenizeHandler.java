@@ -31,11 +31,12 @@ public final class WordTokenizeHandler extends TokenizeHandler {
 
     @Override
     public void handle () {
+
         final StringBuilder buffer = new StringBuilder ( );
 
         char current = sourceCode.peekCharacter ( 0 );
 
-        while (Character.isLetterOrDigit ( current ) || current == '_' || current == '$') {
+        while (isValidCharacter ( current )) {
             buffer.append ( current );
             current = sourceCode.nextCharacter ( );
         }
@@ -44,4 +45,9 @@ public final class WordTokenizeHandler extends TokenizeHandler {
 
         this.token = WordTable.get ( buffer.toString ( ) );
     }
+
+    private boolean isValidCharacter ( char c ) {
+        return Character.isLetterOrDigit ( c ) || c == '_' || c == '$';
+    }
+
 }

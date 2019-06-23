@@ -40,19 +40,16 @@ public final class StringTokenizeHandler extends TokenizeHandler {
 
         while (current != strEscape) {
 
-            if (current=='\\' && sourceCode.peekCharacter ( 1 )=='n'){
-                sourceCode.nextCharacter ();
+            if ( current == '\\' && sourceCode.peekCharacter ( 1 ) == 'n' ) {
+                sourceCode.nextCharacter ( );
                 buffer.append ( "\n" );
-            }
-            else if (current=='\\' && sourceCode.peekCharacter ( 1 )=='t'){
-                sourceCode.nextCharacter ();
+            } else if ( current == '\\' && sourceCode.peekCharacter ( 1 ) == 't' ) {
+                sourceCode.nextCharacter ( );
                 buffer.append ( "\t" );
-            }
-            else if (current=='\\' && sourceCode.peekCharacter ( 1 )=='r'){
-                sourceCode.nextCharacter ();
+            } else if ( current == '\\' && sourceCode.peekCharacter ( 1 ) == 'r' ) {
+                sourceCode.nextCharacter ( );
                 buffer.append ( "\r" );
-            }
-            else {
+            } else {
                 buffer.append ( current );
             }
             current = sourceCode.nextCharacter ( );

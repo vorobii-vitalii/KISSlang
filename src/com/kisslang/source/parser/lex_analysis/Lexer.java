@@ -56,7 +56,8 @@ public final class Lexer {
                     handler = new StringTokenizeHandler ( sourceCode , '"' );
                 else
                     handler = new StringTokenizeHandler ( sourceCode , '\'' );
-            } else if ( OPERATOR_CHARS.indexOf ( current ) != -1 )
+            }
+            else if ( OPERATOR_CHARS.indexOf ( current ) != -1 )
                 handler = new OperatorTokenizeHandler ( sourceCode );
             else {
                 // whitespaces
@@ -70,7 +71,6 @@ public final class Lexer {
         }
 
         return Tokens.getInstance ( ).getTokens ( );
-
     }
 
     private boolean isValidWordStart ( char c ) {
