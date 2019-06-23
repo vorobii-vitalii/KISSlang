@@ -22,6 +22,7 @@ import com.kisslang.source.parser.tokenization.Token;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public final class Tokens {
 
     private static Tokens singletonObject;

@@ -23,6 +23,11 @@ public abstract class TokenizeHandler {
 
     protected Token token;
 
+    /**
+     * Method that performs token putting to List
+     * @see Tokens
+     * @see Token
+     */
     void addToken () {
         Tokens tokens = Tokens.getInstance ( );
         tokens.addToken ( token );

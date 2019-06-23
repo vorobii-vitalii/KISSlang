@@ -3,9 +3,7 @@ package com.kisslang.source.parser.lex_analysis;
 
 import com.kisslang.source.parser.lex_analysis.tokenize_handlers.*;
 import com.kisslang.source.parser.tokenization.Token;
-import com.kisslang.source.parser.tokenization.TokenType;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /*
@@ -25,17 +23,40 @@ import java.util.List;
  *
  */
 
+/**
+ * Provides lexical analysis of source code
+ */
 public final class Lexer {
 
     private static final String OPERATOR_CHARS = "+-*/()=^<>&|!{};,[]->";
 
     private SourceCode sourceCode;
 
+    /**
+     * Takes the input string as the source code and immediately initalizes SourceCode Singleton Object
+     * @see SourceCode
+     * @param input the actual source code
+     */
     public Lexer ( String input ) {
         sourceCode = SourceCode.getInstance ( );
         sourceCode.setCodeText ( input );
     }
 
+    /**
+     * While the <b>current</b> position of character is in bounds of source code
+     * we literary check the context of each character
+     * And call appropriate <i>handle()</i> method , if token is not <i>empty</i>
+     * After save token in List
+     * @see SourceCode
+     * @see TokenizeHandler
+     * @see NormalNumberTokenizeHandler
+     * @see WordTokenizeHandler
+     * @see HexNumberTokenizeHandler
+     * @see StringTokenizeHandler
+     * @see OperatorTokenizeHandler
+     * @see Tokens
+     * @return The list of Tokens parsed
+     */
     public List<Token> tokenize () {
 
         while (sourceCode.inBounds ( )) {
@@ -73,6 +94,12 @@ public final class Lexer {
         return Tokens.getInstance ( ).getTokens ( );
     }
 
+    /**
+     * Every variable or constant in KISSlang should start either from dollar sign or letter
+     * @see Character
+     * @param c the character
+     * @return boolean value accordingly, the symbol corresponds to the condition
+     */
     private boolean isValidWordStart ( char c ) {
         return Character.isLetter ( c ) || c == '$';
     }

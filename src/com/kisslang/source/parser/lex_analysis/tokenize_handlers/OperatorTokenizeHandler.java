@@ -22,6 +22,9 @@ import com.kisslang.source.parser.lex_analysis.SourceCode;
 import com.kisslang.source.parser.lex_analysis.TokenizeHandler;
 import com.kisslang.source.parser.tokenization.Token;
 
+/**
+ * Provides operators and single-line comments tokenizations
+ */
 public final class OperatorTokenizeHandler extends TokenizeHandler {
 
     private SourceCode sourceCode;
@@ -30,6 +33,9 @@ public final class OperatorTokenizeHandler extends TokenizeHandler {
         this.sourceCode = sourceCode;
     }
 
+    /**
+     * Provides each character ignoring till either EOF,\n or \r meets up
+     */
     private void tokenizeSingleLineCommentary () {
         char current = sourceCode.peekCharacter ( 0 );
 
@@ -39,6 +45,11 @@ public final class OperatorTokenizeHandler extends TokenizeHandler {
 
     }
 
+    /**
+     * If current character is / so move to <i>tokenizeSingleLineCommentary()</i>
+     * Else add to buffer symbol by symbol till currentBuffer+currentCharacter doesnt exist in OperatorsTable
+     * @see OperatorsTable
+     */
     @Override
     public void handle () {
         char current = sourceCode.peekCharacter ( 0 );

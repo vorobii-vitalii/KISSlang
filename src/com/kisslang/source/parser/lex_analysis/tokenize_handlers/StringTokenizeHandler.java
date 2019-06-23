@@ -22,17 +22,31 @@ import com.kisslang.source.parser.lex_analysis.TokenizeHandler;
 import com.kisslang.source.parser.tokenization.Token;
 import com.kisslang.source.parser.tokenization.TokenType;
 
+/**
+ * Provides sequence of characters (strings) tokenization
+ * @author Vitalii Vorobii
+ */
 public final class StringTokenizeHandler extends TokenizeHandler {
+
 
     private char strEscape;
 
     private SourceCode sourceCode;
 
+    /**
+     *
+     * @param sourceCode
+     * @param strEscape Appropriate escape character that should happen while reading string
+     */
     public StringTokenizeHandler ( SourceCode sourceCode , char strEscape ) {
         this.sourceCode = sourceCode;
         this.strEscape = strEscape;
     }
 
+    /**
+     * While current character is not equal to strEscape character
+     * If current matches with \ escape character checks for next character to determinate \n \t \r bytes
+     */
     @Override
     public void handle () {
         final StringBuilder buffer = new StringBuilder ( );

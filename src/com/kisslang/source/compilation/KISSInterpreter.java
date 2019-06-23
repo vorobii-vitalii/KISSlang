@@ -7,6 +7,7 @@ import com.kisslang.source.parser.ast.statements.Statement;
 
 import java.util.List;
 
+
 public class KISSInterpreter {
 
     private String codeToBeCompiled;
@@ -19,6 +20,10 @@ public class KISSInterpreter {
 
     private volatile static KISSInterpreter compilerSingleton;
 
+    /**
+     *
+     * @param codeToBeCompiled
+     */
     private KISSInterpreter ( String codeToBeCompiled ) {
         this.codeToBeCompiled = codeToBeCompiled;
         expressionsProvided = false;

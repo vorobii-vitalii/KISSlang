@@ -22,6 +22,9 @@ import com.kisslang.source.parser.lex_analysis.TokenizeHandler;
 import com.kisslang.source.parser.tokenization.Token;
 import com.kisslang.source.parser.tokenization.TokenType;
 
+/**
+ * Provides normal number tokenization
+ */
 public final class NormalNumberTokenizeHandler extends TokenizeHandler {
 
     private SourceCode sourceCode;
@@ -30,6 +33,9 @@ public final class NormalNumberTokenizeHandler extends TokenizeHandler {
         this.sourceCode = sourceCode;
     }
 
+    /**
+     * Appends to buffer characters till character isDigit() or '.' (can happen only once)
+     */
     @Override
     public void handle () {
 

@@ -21,6 +21,9 @@ import com.kisslang.source.parser.lex_analysis.SourceCode;
 import com.kisslang.source.parser.lex_analysis.TokenizeHandler;
 import com.kisslang.source.parser.lex_analysis.WordTable;
 
+/**
+ * Performs words tokenization
+ */
 public final class WordTokenizeHandler extends TokenizeHandler {
 
     private SourceCode sourceCode;
@@ -29,6 +32,10 @@ public final class WordTokenizeHandler extends TokenizeHandler {
         this.sourceCode = sourceCode;
     }
 
+    /**
+     * Reads characters to buffer till character is valid in word
+     * Can consists letter or digit, '_' and dollar sign '$'
+     */
     @Override
     public void handle () {
 
@@ -40,8 +47,6 @@ public final class WordTokenizeHandler extends TokenizeHandler {
             buffer.append ( current );
             current = sourceCode.nextCharacter ( );
         }
-
-        System.out.println ( WordTable.get ( buffer.toString ( ) ) );
 
         this.token = WordTable.get ( buffer.toString ( ) );
     }

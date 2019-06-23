@@ -22,6 +22,11 @@ import com.kisslang.source.parser.tokenization.TokenType;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Key-value pair of appropriate operator and its TokenType
+ * @see TokenType
+ * @see Map
+ */
 public final class OperatorsTable {
 
     private static Map<String, TokenType> OPERATORS;
@@ -59,6 +64,14 @@ public final class OperatorsTable {
         return OPERATORS.containsKey ( key );
     }
 
+    /**
+     * Method that takes the string key(string representation of operator) and accordingly whether
+     * such operator exists returns TokenType or throws the Exception
+     * @param key
+     * @see TokenType
+     * @see RuntimeException
+     * @return TokenType of operator
+     */
     public static TokenType get ( String key ) {
 
         if ( hasKey ( key ) ) {

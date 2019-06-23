@@ -22,6 +22,9 @@ import com.kisslang.source.parser.lex_analysis.TokenizeHandler;
 import com.kisslang.source.parser.tokenization.Token;
 import com.kisslang.source.parser.tokenization.TokenType;
 
+/**
+ * Provides hex numbers tokenization
+ */
 public final class HexNumberTokenizeHandler extends TokenizeHandler {
 
     private SourceCode sourceCode;
@@ -30,11 +33,19 @@ public final class HexNumberTokenizeHandler extends TokenizeHandler {
         this.sourceCode = sourceCode;
     }
 
-
+    /**
+     *
+     * @param current
+     * @return boolean value accordingly, the symbol corresponds to the condition
+     * current should be either Number or ABCDEF (case insensitive)
+     */
     private boolean isHexNumber ( char current ) {
         return "abcdef".indexOf ( Character.toLowerCase ( current ) ) != -1;
     }
 
+    /**
+     * Throw away the first symbol and append to buffer characters till character isHex() or isDigit()
+     */
     @Override
     public void handle ( ) {
         sourceCode.nextCharacter ( );

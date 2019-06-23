@@ -23,6 +23,11 @@ import com.kisslang.source.parser.tokenization.TokenType;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Key-value pair of appropriate keywords and literals and its TokenType
+ * @see TokenType
+ * @see Map
+ */
 public final class WordTable {
 
     private static Map<String, TokenType> KEYWORDS;
@@ -49,6 +54,16 @@ public final class WordTable {
         return KEYWORDS.containsKey ( key );
     }
 
+    /**
+     * Method that takes the string key(string representation of keyword or variable or constant) and
+     * accordingly whether
+     * such keyword exists returns Token of keyword or Token of either constant or variable
+     * Variable names start with dollar sign while constants names start with letter
+     * @param key
+     * @see TokenType
+     * @see RuntimeException
+     * @return TokenType of operator
+     */
     public static Token get ( String key ) {
 
         if ( hasKey ( key ) ) {

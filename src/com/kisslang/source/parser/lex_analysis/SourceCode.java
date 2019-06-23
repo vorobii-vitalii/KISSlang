@@ -17,6 +17,10 @@ package com.kisslang.source.parser.lex_analysis;
  *
  */
 
+/**
+ * Source code representation in object.
+ * Also provides some utilities to encapsulate string processing
+ */
 public final class SourceCode {
 
     private static volatile SourceCode singletonObject;
@@ -36,22 +40,36 @@ public final class SourceCode {
         return singletonObject;
     }
 
+    /**
+     * @return boolean accordingly current character index is lower than source code length or not
+     */
     boolean inBounds () {
         return currentCharacterIndex < codeLength;
     }
 
+    /**
+     * @param codeText the source code
+     */
     void setCodeText ( String codeText ) {
         this.codeText = codeText;
         this.codeLength = codeText.length ( );
         this.currentCharacterIndex = 0;
     }
 
+    /**
+     * @param relativePosition
+     * @return symbol in code with position relative to current on relativePosition arg or '\0' if out of bounds
+     */
     public char peekCharacter ( int relativePosition ) {
         final int position = currentCharacterIndex + relativePosition;
         if ( position >= codeLength ) return '\0';
         return codeText.charAt ( position );
     }
 
+    /**
+     * Moves to next character in source code
+     * @return next symbol
+     */
     public char nextCharacter () {
         currentCharacterIndex++;
         return peekCharacter ( 0 );
