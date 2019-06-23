@@ -155,3 +155,5 @@ $obj={ $key->"value1" , another_key -> {$key->"value2"} }
 PrintLine $obj->another_key->$key
 ````
 ****
+
+<a href="https://github.com/vrb123/KISSlang/blob/master/docs/index.html">Documentation</a>
